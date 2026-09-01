@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /talk-to-strategist
+
+Sitemap: https://www.infomist.com/sitemap.xml

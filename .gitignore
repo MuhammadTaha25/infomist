@@ -1,0 +1,28 @@
+# dependencies
+node_modules/
+
+# build output
+dist/
+**/dist/
+.vite-temp/
+**/.vite-temp/
+
+# typescript incremental build
+*.tsbuildinfo
+**/*.tsbuildinfo
+
+# logs
+*.log
+npm-debug.log*
+pnpm-debug.log*
+
+# env
+.env
+.env.*
+!.env.example
+
+# editor / os
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
