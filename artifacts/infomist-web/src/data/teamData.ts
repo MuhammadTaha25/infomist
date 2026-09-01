@@ -11,10 +11,10 @@ const IMG = (file: string) => `${import.meta.env.BASE_URL}team/${file}`;
 
 export const CEO: TeamMember = {
   slug: "warda-hisham",
-  name: "Warda Hisham",
+  name: "Vardah Hisham",
   role: "Chief Executive Officer",
   image: IMG("warda-hisham-ceo.jpg"),
-  bio: "Warda Hisham is the CEO of Infomist, a software development company delivering AI, web, and mobile engineering for businesses in the US, UK, and Canada.",
+  bio: "Vardah Hisham is the CEO of Infomist, a software development company delivering AI, web, and mobile engineering for businesses in the US, UK, and Canada.",
 };
 
 /**

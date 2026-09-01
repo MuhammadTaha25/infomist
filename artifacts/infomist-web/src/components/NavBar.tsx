@@ -23,7 +23,7 @@ const IconChevron = ({ open }: { open: boolean }) => (
 
 /* ─── Company data ─── */
 const COMPANY_NAV = [
-  { icon: <IconLeader />, label: "Leadership", desc: "CEO Hisham Sarwar — founder & architect", href: "/company" },
+  { icon: <IconLeader />, label: "Leadership", desc: "CEO Vardah Hisham — leadership & vision", href: "/company" },
 ];
 
 /* ─── Solutions dropdown — 3 + 3 + 1 grid layout ─── */
@@ -246,7 +246,7 @@ function MobileMenu({ open, onClose }: { open: boolean; onClose: () => void }) {
     {
       heading: "Company",
       items: [
-        { label: "Leadership — Hisham Sarwar", href: "/company" },
+        { label: "Leadership — Vardah Hisham", href: "/company" },
         { label: "Wall of Love", href: "/company" },
       ],
     },

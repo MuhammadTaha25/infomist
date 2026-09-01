@@ -23,7 +23,7 @@ export function FounderSection() {
           <div className="w-full h-full aspect-[4/5] overflow-hidden">
             <img
               src={`${import.meta.env.BASE_URL}hisham-sarwar.png`}
-              alt="Hisham Sarwar, CEO of Infomist — a software development company"
+              alt="Vardah Hisham, CEO of Infomist — a software development company"
               className="object-cover w-full h-full"
             />
           </div>
@@ -39,7 +39,7 @@ export function FounderSection() {
           style={{ background: "linear-gradient(to top, rgba(0,0,0,0.85) 0%, transparent 100%)" }}
         >
           <div>
-            <p className="text-white font-bold text-sm tracking-wide" style={{ letterSpacing: "0.05em" }}>Hisham Sarwar</p>
+            <p className="text-white font-bold text-sm tracking-wide" style={{ letterSpacing: "0.05em" }}>Vardah Hisham</p>
             <p className="text-xs" style={{ color: "rgba(255,255,255,0.45)", letterSpacing: "0.1em" }}>Founder & Chief Architect</p>
           </div>
           <div className="w-px h-10 mx-4" style={{ background: "rgba(255,255,255,0.12)" }} />
@@ -77,7 +77,7 @@ export function FounderSection() {
           >
             Engineered by{" "}
             <span style={{ background: "linear-gradient(90deg, #FFFFFF 0%, #94A3B8 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>
-              Hisham Sarwar.
+              Vardah Hisham.
             </span>
           </h2>
 
