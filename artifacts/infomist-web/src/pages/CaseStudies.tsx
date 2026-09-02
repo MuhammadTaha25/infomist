@@ -1,25 +1,35 @@
+import { useMemo, useState } from "react";
 import { ArrowRight, FolderGit2 } from "lucide-react";
 import { useMeta } from "@/components/site/useMeta";
+import { useSocialMeta } from "@/components/site/useSocialMeta";
 import { Reveal, RevealGroup, RevealItem } from "@/components/Reveal";
 import { GridOverlay, Blob, GradientText, Eyebrow, DarkCTA, CTAButton } from "@/components/site/primitives";
 import { ClientImpactSlider } from "@/components/ClientImpactSlider";
+import { CaseStudyCard } from "@/components/case-studies/CaseStudyCard";
+import { getCaseStudies, CASE_STUDY_CATEGORIES } from "@/data/caseStudies";
 
-const PROJECTS = [
-  { initials: "M", name: "MedEZ", location: "Florida, USA", industry: "Healthcare Tech", color: "#0EA5E9", desc: "Enterprise EHR platform for behavioral health facilities across North America and the Middle East.", tags: ["Website Designing", "Website Development", "Digital Marketing"] },
-  { initials: "B", name: "BeingGuru", location: "Pakistan", industry: "Media & Education", color: "#F59E0B", desc: "Pakistan's leading tech news, freelancing education, and motivation platform serving the GCC market.", tags: ["Website Designing", "Website Development", "Digital Marketing"] },
-  { initials: "W", name: "WorkChest", location: "Pakistan", industry: "Freelance Platform", color: "#8B5CF6", desc: "Pakistan's first freelance marketplace — 200,000+ registered freelancers, 3,000+ global projects.", tags: ["Website Designing", "Website Development", "Digital Marketing"] },
-  { initials: "GWC", name: "Grey Wolf Consulting", location: "Connecticut, USA", industry: "Defense & Security", color: "#94A3B8", desc: "Tactical firearms training for military, law enforcement, and private security across Connecticut.", tags: ["Website Designing", "Website Development", "Digital Marketing"] },
-  { initials: "S", name: "SyncBenefits", location: "San Francisco, CA, USA", industry: "InsurTech & Benefits", color: "#10B981", desc: "Full-service insurance and employee benefits agency built exclusively for high-growth startups.", tags: ["Website Designing", "Website Development", "Digital Marketing"] },
-  { initials: "AP", name: "Aegis PropTech", location: "United Kingdom", industry: "PropTech", color: "#14B8A6", desc: "24/7 voice AI agent that eliminated after-hours lead drop-off for a UK property firm.", tags: ["AI Agent Development", "Workflow Automation", "CRM Integration"] },
-  { initials: "MHS", name: "Meridian Health Systems", location: "United States", industry: "HealthTech", color: "#22C55E", desc: "HIPAA-compliant RAG AI assistant that cut patient intake admin time from 45 to 12 minutes.", tags: ["AI Agent Development", "RAG Systems", "EHR Integration"] },
-  { initials: "NC", name: "NovaBridge Capital", location: "United States", industry: "FinTech", color: "#A855F7", desc: "Full-stack investor portal with real-time dashboards and automated regulatory reporting — delivered in 10 weeks.", tags: ["Full-Stack Development", "Portal Architecture", "RegTech"] },
+const STATS = [
+  { value: "08+", label: "Projects" },
+  { value: "Multiple", label: "Industries" },
+  { value: "AI +", label: "Automation" },
+  { value: "End-to-End", label: "Delivery" },
 ];
 
 export function CaseStudiesPage() {
   useMeta(
-    "Case Studies | Infomist — Real Results for Real Clients",
-    "See what Infomist has built for clients across healthcare, fintech, proptech, and more — plus verified reviews sourced directly from Guru.com.",
+    "Case Studies | Infomist — Real Products, Real Systems, Real Results",
+    "A closer look at the digital products, AI systems, automation workflows and platforms Infomist has designed and engineered for ambitious businesses.",
   );
+  useSocialMeta({
+    title: "Case Studies | Infomist",
+    description:
+      "The digital products, AI systems and automation workflows we've designed and engineered for ambitious businesses.",
+    path: "/case-studies",
+  });
+
+  const studies = useMemo(() => getCaseStudies(), []);
+  const [filter, setFilter] = useState<string>("All");
+  const visible = filter === "All" ? studies : studies.filter((s) => s.category === filter);
 
   return (
     <>
@@ -32,46 +42,68 @@ export function CaseStudiesPage() {
           <Blob color="rgba(14,165,233,0.2)" className="-top-24 -left-16" size={520} />
           <Blob color="rgba(132,204,22,0.14)" className="top-10 right-0" size={400} />
 
-          <div className="relative max-w-6xl mx-auto px-6 pt-16 pb-24 md:pt-20 md:pb-28">
+          <div className="relative max-w-6xl mx-auto px-6 pt-16 pb-20 md:pt-20 md:pb-24">
             <Reveal className="flex flex-col gap-5 max-w-3xl">
-              <Eyebrow icon={FolderGit2} dark>Portfolio</Eyebrow>
-              <h1 className="font-black text-white leading-[1.02]" style={{ fontSize: "clamp(2.6rem, 6.2vw, 4.25rem)", letterSpacing: "-0.045em" }}>
-                Real clients. <GradientText>Real results.</GradientText>
+              <Eyebrow icon={FolderGit2} dark>Selected Work</Eyebrow>
+              <h1
+                className="font-black text-white leading-[1.02]"
+                style={{ fontSize: "clamp(2.6rem, 6.2vw, 4.25rem)", letterSpacing: "-0.045em" }}
+              >
+                Real products. Real systems. <GradientText>Real results.</GradientText>
               </h1>
               <p className="text-slate-400 text-xl leading-relaxed">
-                A selection of the products, platforms, and automation systems we've shipped —
-                no vanity projects.
+                A closer look at the digital products, AI systems, automation workflows, and platforms
+                we've designed and engineered for ambitious businesses.
               </p>
+              <div className="mt-2">
+                <CTAButton href="/contact" variant="lime" icon={ArrowRight}>
+                  Start a Project
+                </CTAButton>
+              </div>
             </Reveal>
 
-            <RevealGroup className="mt-14 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-              {PROJECTS.map((p) => (
-                <RevealItem key={p.name}>
-                  <div
-                    className="h-full rounded-2xl p-6 flex flex-col gap-4 transition-all duration-300 hover:-translate-y-1.5"
-                    style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.08)" }}
-                  >
-                    <div className="flex items-start justify-between gap-3">
-                      <div className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 text-xs font-black" style={{ background: `${p.color}22`, color: p.color, border: `1px solid ${p.color}3a` }}>
-                        {p.initials}
-                      </div>
-                      <span className="text-[10px] font-bold tracking-widest uppercase px-2.5 py-1 rounded-full whitespace-nowrap" style={{ background: `${p.color}18`, color: p.color, border: `1px solid ${p.color}30` }}>
-                        {p.industry}
-                      </span>
-                    </div>
-                    <div className="flex flex-col gap-1">
-                      <h3 className="text-white font-bold text-lg leading-snug">{p.name}</h3>
-                      <p className="text-[11px] text-slate-500">{p.location}</p>
-                    </div>
-                    <p className="text-sm text-slate-400 leading-relaxed flex-1">{p.desc}</p>
-                    <div className="flex flex-wrap gap-1.5">
-                      {p.tags.map((t) => (
-                        <span key={t} className="text-[10px] font-semibold px-2.5 py-1 rounded-full text-slate-300" style={{ background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.08)" }}>
-                          {t}
-                        </span>
-                      ))}
-                    </div>
+            {/* Hero stats — subtle, uses the existing dark divider treatment */}
+            <Reveal>
+              <dl className="mt-14 grid grid-cols-2 sm:grid-cols-4 gap-px rounded-2xl overflow-hidden" style={{ background: "rgba(255,255,255,0.08)" }}>
+                {STATS.map((s) => (
+                  <div key={s.label} className="flex flex-col gap-1 px-5 py-6" style={{ background: "#0F172A" }}>
+                    <dt className="sr-only">{s.label}</dt>
+                    <dd className="text-2xl font-black text-white leading-none">{s.value}</dd>
+                    <span className="text-xs font-semibold uppercase tracking-widest text-slate-500">{s.label}</span>
                   </div>
+                ))}
+              </dl>
+            </Reveal>
+
+            {/* Category filter — reuses the dark chip style from the cards */}
+            <Reveal>
+              <div className="mt-12 flex flex-wrap gap-2">
+                {CASE_STUDY_CATEGORIES.map((cat) => {
+                  const active = filter === cat;
+                  return (
+                    <button
+                      key={cat}
+                      type="button"
+                      onClick={() => setFilter(cat)}
+                      aria-pressed={active}
+                      className="text-xs font-bold uppercase tracking-widest px-4 py-2 rounded-full transition-colors duration-200 outline-none focus-visible:ring-2 focus-visible:ring-[#0EA5E9]"
+                      style={
+                        active
+                          ? { background: "#0EA5E9", color: "#fff", border: "1px solid #0EA5E9" }
+                          : { background: "rgba(255,255,255,0.04)", color: "#94A3B8", border: "1px solid rgba(255,255,255,0.10)" }
+                      }
+                    >
+                      {cat}
+                    </button>
+                  );
+                })}
+              </div>
+            </Reveal>
+
+            <RevealGroup className="mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+              {visible.map((study) => (
+                <RevealItem key={study.slug}>
+                  <CaseStudyCard study={study} />
                 </RevealItem>
               ))}
             </RevealGroup>

@@ -5,6 +5,7 @@ import { Footer } from "@/components/Footer";
 import { HomePage } from "@/pages/Home";
 import { SolutionsPage } from "@/pages/Solutions";
 import { CaseStudiesPage } from "@/pages/CaseStudies";
+import { CaseStudyDetailPage } from "@/pages/CaseStudyDetail";
 import { AboutPage } from "@/pages/About";
 import { LeadershipPage } from "@/pages/Leadership";
 import { CareersPage } from "@/pages/Careers";
@@ -44,6 +45,12 @@ function SolutionsRouter() {
 function JobDetailRouter() {
   const { slug } = useParams<{ slug: string }>();
   return <JobDetailPage key={slug} />;
+}
+
+/** Keyed remount so per-project meta/content resets between case studies. */
+function CaseStudyRouter() {
+  const { slug } = useParams<{ slug: string }>();
+  return <CaseStudyDetailPage key={slug} />;
 }
 
 /** Keyed remount so per-article state (meta, content) resets between insights. */
@@ -93,6 +100,7 @@ function MarketingSite() {
               <Route path="/" component={HomePage} />
               <Route path="/solutions" component={SolutionsPage} />
               <Route path="/case-studies" component={CaseStudiesPage} />
+              <Route path="/case-studies/:slug" component={CaseStudyRouter} />
               <Route path="/about" component={AboutPage} />
               <Route path="/leadership" component={LeadershipPage} />
               <Route path="/careers" component={CareersPage} />
