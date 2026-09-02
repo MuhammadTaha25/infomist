@@ -42,21 +42,12 @@ function MemberCard({ member, accent = "#0EA5E9" }: { member: TeamMember; accent
           className="w-28 h-28 rounded-full overflow-hidden flex-shrink-0"
           style={{ border: `3px solid ${accent}26` }}
         >
-          <div
-            className="h-full w-full"
-            style={
-              member.imageZoom
-                ? { transform: `scale(${member.imageZoom})`, transformOrigin: `center ${member.imageFocusY ?? "30%"}` }
-                : undefined
-            }
-          >
-            <img
-              src={member.image}
-              alt={`${member.name}, ${member.role} at Infomist`}
-              loading="lazy"
-              className="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-110"
-            />
-          </div>
+          <img
+            src={member.image}
+            alt={`${member.name}, ${member.role} at Infomist`}
+            loading="lazy"
+            className="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-110"
+          />
         </div>
         <div className="flex flex-col items-center gap-0.5">
           <h3 className="text-base font-bold text-[#0F172A]">{member.name}</h3>

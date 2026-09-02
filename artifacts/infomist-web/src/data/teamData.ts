@@ -5,11 +5,6 @@ export interface TeamMember {
   image: string;
   /** Short one-line description used for SEO alt text / meta and card subtitle */
   bio: string;
-  /** Optional crop tweak for the circular avatar — scale factor (>1 zooms in)
-   *  and a vertical focal point (default "30%"). Used when a source photo sits
-   *  too far back in the frame. */
-  imageZoom?: number;
-  imageFocusY?: string;
 }
 
 const IMG = (file: string) => `${import.meta.env.BASE_URL}team/${file}`;
@@ -57,8 +52,6 @@ export const LEADERSHIP_TEAM: TeamMember[] = [
     role: "UI/UX Lead",
     image: IMG("uzair-ahmad-uiux-lead.webp"),
     bio: "Uzair Ahmad is the UI/UX Lead at Infomist, designing research-driven, conversion-focused interfaces for web and mobile products.",
-    imageZoom: 1.4,
-    imageFocusY: "26%",
   },
   {
     slug: "murtaza-majid",
