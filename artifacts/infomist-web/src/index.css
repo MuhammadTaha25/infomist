@@ -229,3 +229,33 @@ a[href*="replit.com"],
   pointer-events: none !important;
   visibility: hidden !important;
 }
+
+/* ── Leadership card: revolving brand-gradient border + hover image zoom ── */
+@property --team-orbit {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+@keyframes team-orbit-spin {
+  to { --team-orbit: 360deg; }
+}
+.team-card {
+  --team-orbit: 0deg;
+  position: relative;
+  border-radius: 24px;
+  padding: 2px;
+  /* light-green arc leads, brand blue follows it around the edge */
+  background: conic-gradient(
+    from var(--team-orbit),
+    #0ea5e9 0deg,
+    #0ea5e9 150deg,
+    #84cc16 210deg,
+    #bef264 250deg,
+    #38bdf8 300deg,
+    #0ea5e9 360deg
+  );
+  animation: team-orbit-spin 5s linear infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .team-card { animation: none; }
+}

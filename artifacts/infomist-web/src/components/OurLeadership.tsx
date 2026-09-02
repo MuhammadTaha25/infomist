@@ -2,12 +2,12 @@ import { useEffect } from "react";
 import { Users } from "lucide-react";
 import { Reveal, RevealGroup, RevealItem } from "@/components/Reveal";
 import { SectionHead, accentFor } from "@/components/site/primitives";
-import { CEO, LEADERSHIP_TEAM, type TeamMember } from "@/data/teamData";
+import { LEADERSHIP_TEAM, type TeamMember } from "@/data/teamData";
 
 /** Person + Organization JSON-LD for the leadership team. */
 function useLeadershipSchema() {
   useEffect(() => {
-    const people = [CEO, ...LEADERSHIP_TEAM];
+    const people = LEADERSHIP_TEAM;
     const schema = {
       "@context": "https://schema.org",
       "@graph": people.map((p) => ({
@@ -31,25 +31,28 @@ function useLeadershipSchema() {
   }, []);
 }
 
-function MemberCard({ member, accent = "#0EA5E9", featured = false }: { member: TeamMember; accent?: string; featured?: boolean }) {
+function MemberCard({ member, accent = "#0EA5E9" }: { member: TeamMember; accent?: string }) {
   return (
     <div
       id={member.slug}
-      className="group relative rounded-3xl p-[1.5px] h-full transition-transform duration-300 hover:-translate-y-1.5"
-      style={{ background: `linear-gradient(150deg, ${accent}3a, ${accent}0a)` }}
+      className="team-card group relative h-full transition-transform duration-300 hover:-translate-y-1.5"
     >
-      <div className={`rounded-[22px] bg-white h-full flex flex-col items-center gap-4 text-center ${featured ? "p-8" : "p-6"}`}>
+      <div className="rounded-[22px] bg-white h-full flex flex-col items-center gap-4 text-center p-6">
         <div
-          className={`${featured ? "w-36 h-36" : "w-28 h-28"} rounded-full overflow-hidden flex-shrink-0`}
+          className="w-28 h-28 rounded-full overflow-hidden flex-shrink-0"
           style={{ border: `3px solid ${accent}26` }}
         >
-          <img src={member.image} alt={`${member.name}, ${member.role} at Infomist`} loading="lazy" className="w-full h-full object-cover" />
+          <img
+            src={member.image}
+            alt={`${member.name}, ${member.role} at Infomist`}
+            loading="lazy"
+            className="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-110"
+          />
         </div>
         <div className="flex flex-col items-center gap-0.5">
-          <h3 className={`${featured ? "text-xl" : "text-base"} font-bold text-[#0F172A]`}>{member.name}</h3>
+          <h3 className="text-base font-bold text-[#0F172A]">{member.name}</h3>
           <p className="text-sm font-semibold" style={{ color: accent }}>{member.role}</p>
         </div>
-        {featured && <p className="text-sm text-[#475569] leading-relaxed max-w-sm">{member.bio}</p>}
       </div>
     </div>
   );
@@ -72,7 +75,7 @@ export function OurLeadership() {
         </Reveal>
 
         <RevealGroup className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {[CEO, ...LEADERSHIP_TEAM].map((m, i) => (
+          {LEADERSHIP_TEAM.map((m, i) => (
             <RevealItem key={m.slug}>
               <MemberCard member={m} accent={accentFor(i)} />
             </RevealItem>

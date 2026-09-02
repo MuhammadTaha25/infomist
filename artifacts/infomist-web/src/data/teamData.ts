@@ -18,26 +18,26 @@ export const CEO: TeamMember = {
 };
 
 /**
- * Leadership grid order (excludes CEO, shown separately above the grid).
- * Ordered by organisational seniority — executives, then division leads, then craft leads:
- * Row 1: CTO, Operations Manager, Software Development Lead
+ * Leadership grid order (the CEO is not shown in this grid — see FounderSection).
+ * Operations Manager leads, then CTO, then division and craft leads:
+ * Row 1: Operations Manager, CTO, Software Development Lead
  * Row 2: UI/UX Lead, AI Lead, Creative Lead
  * Row 3: Content & SEO Lead, Video Editor Lead, Animation Lead
  */
 export const LEADERSHIP_TEAM: TeamMember[] = [
-  {
-    slug: "fahad-mubeen",
-    name: "Fahad Mubeen",
-    role: "Chief Technology Officer",
-    image: IMG("fahad-mubeen-cto.webp"),
-    bio: "Fahad Mubeen is the Chief Technology Officer at Infomist, leading software architecture and engineering strategy across web, mobile, and AI systems.",
-  },
   {
     slug: "sajid-shoaib",
     name: "Sajid Shoaib",
     role: "Operations Manager",
     image: IMG("sajid-shoaib-operations-manager.webp"),
     bio: "Sajid Shoaib is the Operations Manager at Infomist, overseeing project delivery, process, and client operations across every engagement.",
+  },
+  {
+    slug: "fahad-mubeen",
+    name: "Fahad Mubeen",
+    role: "Chief Technology Officer",
+    image: IMG("fahad-mubeen-cto.webp"),
+    bio: "Fahad Mubeen is the Chief Technology Officer at Infomist, leading software architecture and engineering strategy across web, mobile, and AI systems.",
   },
   {
     slug: "muhammad-taha",
