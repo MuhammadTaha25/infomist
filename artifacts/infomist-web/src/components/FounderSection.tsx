@@ -1,14 +1,29 @@
+import { Link } from "wouter";
+import { ArrowRight } from "lucide-react";
 import { Reveal } from "@/components/Reveal";
 import { CEO } from "@/data/teamData";
 
-export function FounderSection() {
+/**
+ * The CEO / founder split.
+ *
+ * `compact` — a shorter version used on the Leadership page, where this sits
+ * right under the hero: smaller image column, tighter copy, and the
+ * "Meet our leadership team" link is dropped (you're already there).
+ */
+export function FounderSection({ compact = false }: { compact?: boolean }) {
+  const sectionMinH = compact ? "lg:min-h-[460px]" : "lg:min-h-[78vh]";
+  const colMinH = compact ? "min-h-[42vh] lg:min-h-[460px]" : "min-h-[56vh] lg:min-h-[78vh]";
+  const contentPad = compact ? "px-10 md:px-14 lg:px-16 py-12 lg:py-14" : "px-10 md:px-16 lg:px-20 py-16 lg:py-20";
+  const headingSize = compact ? "clamp(1.9rem, 4vw, 2.75rem)" : "clamp(2.2rem, 5vw, 3.75rem)";
+  const bodyText = compact ? "text-sm md:text-base leading-[1.75]" : "text-base md:text-lg leading-[1.8]";
+
   return (
     <section
       id="founder"
-      className="w-full min-h-screen flex flex-col lg:flex-row overflow-hidden"
+      className={`w-full ${sectionMinH} flex flex-col lg:flex-row overflow-hidden`}
       style={{ background: "#080C10" }}
     >
-      <div className="relative w-full lg:w-1/2 min-h-[60vh] lg:min-h-screen flex-shrink-0 overflow-hidden">
+      <div className={`relative w-full lg:w-1/2 ${colMinH} flex-shrink-0 overflow-hidden`}>
         <div
           className="absolute inset-0"
           style={{ background: "linear-gradient(170deg, #1a1a1a 0%, #0d0d0d 40%, #050505 100%)" }}
@@ -66,7 +81,7 @@ export function FounderSection() {
         <div className="absolute top-0 right-0 w-64 h-64 pointer-events-none" style={{ background: "radial-gradient(ellipse at top right, rgba(14,165,233,0.12) 0%, transparent 70%)" }} />
         <div className="absolute bottom-0 left-0 w-48 h-48 pointer-events-none" style={{ background: "radial-gradient(ellipse at bottom left, rgba(132,204,22,0.08) 0%, transparent 70%)" }} />
 
-        <Reveal className="relative z-10 px-10 md:px-16 lg:px-20 py-20 flex flex-col gap-8 max-w-2xl">
+        <Reveal className={`relative z-10 ${contentPad} flex flex-col gap-6 max-w-xl`}>
           <div className="flex items-center gap-3">
             <div className="w-6 h-[2px]" style={{ background: "#84CC16" }} />
             <span className="text-xs font-bold uppercase" style={{ color: "#84CC16", letterSpacing: "0.28em" }}>Leadership</span>
@@ -74,7 +89,7 @@ export function FounderSection() {
 
           <h2
             className="text-white leading-[1.05]"
-            style={{ fontSize: "clamp(2.2rem, 5vw, 3.75rem)", fontWeight: 900, letterSpacing: "-0.03em" }}
+            style={{ fontSize: headingSize, fontWeight: 900, letterSpacing: "-0.03em" }}
           >
             Engineered by{" "}
             <span style={{ background: "linear-gradient(90deg, #FFFFFF 0%, #94A3B8 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>
@@ -84,26 +99,21 @@ export function FounderSection() {
 
           <div className="w-16 h-[3px] rounded-full" style={{ background: "linear-gradient(90deg, #0EA5E9 0%, #84CC16 100%)" }} />
 
-          <p className="leading-[1.85] text-base md:text-lg" style={{ color: "rgba(255,255,255,0.62)" }}>
-            Starting from the early days of the web, generating over{" "}
-            <span className="font-semibold" style={{ color: "rgba(255,255,255,0.92)" }}>$1.5 Million in verified freelance and enterprise contracts</span>
-            , to leading the AI automation revolution. Infomist isn't just an agency; it's the culmination of decades of{" "}
-            <span className="font-semibold" style={{ color: "rgba(255,255,255,0.92)" }}>battle-tested software architecture.</span>
+          <p className={bodyText} style={{ color: "rgba(255,255,255,0.62)" }}>
+            {CEO.name} leads Infomist — a software company delivering{" "}
+            <span className="font-semibold" style={{ color: "rgba(255,255,255,0.92)" }}>AI, web, and mobile engineering</span>{" "}
+            for businesses across the US, UK, and Canada.
           </p>
 
-          <div className="flex gap-8 py-2">
-            {[
-              { value: "$1.5M+", label: "Verified Contracts" },
-              { value: "25+", label: "Years Building" },
-              { value: "500+", label: "Projects Shipped" },
-            ].map((stat) => (
-              <div key={stat.label} className="flex flex-col gap-1">
-                <span className="font-black text-white" style={{ fontSize: "1.6rem", letterSpacing: "-0.04em" }}>{stat.value}</span>
-                <span className="text-[10px] font-semibold uppercase" style={{ color: "rgba(255,255,255,0.38)", letterSpacing: "0.14em" }}>{stat.label}</span>
-              </div>
-            ))}
-          </div>
-
+          {!compact && (
+            <Link
+              href="/leadership"
+              className="group inline-flex items-center gap-2 text-sm font-bold text-white w-fit transition-colors duration-200 hover:text-[#84CC16]"
+            >
+              Meet our leadership team
+              <ArrowRight size={16} strokeWidth={2.6} className="transition-transform duration-200 group-hover:translate-x-1" />
+            </Link>
+          )}
         </Reveal>
       </div>
     </section>
