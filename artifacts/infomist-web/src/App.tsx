@@ -5,7 +5,7 @@ import { Footer } from "@/components/Footer";
 import { HomePage } from "@/pages/Home";
 import { SolutionsPage } from "@/pages/Solutions";
 import { CaseStudiesPage } from "@/pages/CaseStudies";
-import { CompanyPage } from "@/pages/Company";
+import { AboutPage as CompanyPage } from "@/pages/About";
 import { ContactPage } from "@/pages/Contact";
 import { TalkToStrategistPage } from "@/pages/TalkToStrategist";
 import { ResourcesPage } from "@/pages/Resources";
@@ -14,6 +14,7 @@ import { SubcategoryPage } from "@/pages/SubcategoryPage";
 import { CategoryPage } from "@/pages/CategoryPage";
 import { CATEGORIES } from "@/data/solutionsData";
 import { ScrollToTop } from "@/components/ScrollToTop";
+import { BloggingApp } from "@/blogging/BloggingApp";
 
 const queryClient = new QueryClient();
 const base = import.meta.env.BASE_URL.replace(/\/$/, "");
@@ -50,6 +51,22 @@ export default function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <Router base={base}>
+        <Switch>
+          <Route path="/blogging" nest>
+            <BloggingApp />
+          </Route>
+          <Route>
+            <MarketingSite />
+          </Route>
+        </Switch>
+      </Router>
+    </QueryClientProvider>
+  );
+}
+
+function MarketingSite() {
+  return (
+    <>
         <ScrollToTop />
         <div className="w-full min-h-screen bg-white font-sans">
           <NavBar />
@@ -70,7 +87,6 @@ export default function App() {
           </main>
           <Footer />
         </div>
-      </Router>
-    </QueryClientProvider>
+    </>
   );
 }
