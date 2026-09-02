@@ -65,7 +65,6 @@ function SolutionsDropdown({ onNav }: { onNav: () => void }) {
 
   const GridCell = ({ cat }: { cat: (typeof CATEGORIES)[number] }) => {
     const Icon = cat.icon;
-    const isSeo = cat.slug === "seo";
     return (
       <Link
         href={`/solutions/${cat.slug}`}
@@ -75,10 +74,7 @@ function SolutionsDropdown({ onNav }: { onNav: () => void }) {
         <span className="w-8 h-8 rounded-lg flex items-center justify-center bg-sky-50 group-hover:bg-sky-100 flex-shrink-0 transition-colors duration-150">
           <Icon size={16} color="#0EA5E9" strokeWidth={1.8} />
         </span>
-        <span
-          className="text-sm font-semibold leading-snug transition-colors duration-150"
-          style={{ color: isSeo ? "#84CC16" : undefined }}
-        >
+        <span className="text-sm font-semibold leading-snug transition-colors duration-150">
           {cat.name}
         </span>
       </Link>
