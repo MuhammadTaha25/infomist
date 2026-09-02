@@ -3,5 +3,5 @@
   "framework": null,
   "buildCommand": "vite build --config vite.config.ts",
   "outputDirectory": "dist/public",
-  "rewrites": [{ "source": "/(.*)", "destination": "/index.html" }]
+  "rewrites": [{ "source": "/((?!api/).*)", "destination": "/index.html" }]
 }
