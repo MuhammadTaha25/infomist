@@ -144,7 +144,7 @@ export function ClientImpactSlider() {
     if (paused) return;
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (reduce) return;
-    const id = setInterval(goNext, 4200);
+    const id = setInterval(goNext, 3000);
     return () => clearInterval(id);
   }, [paused, goNext]);
 
