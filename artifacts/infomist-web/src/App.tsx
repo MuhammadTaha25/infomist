@@ -1,17 +1,22 @@
-import { Router, Route, Switch, useParams } from "wouter";
+import { Router, Route, Switch, Redirect, useParams } from "wouter";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { NavBar } from "@/components/NavBar";
 import { Footer } from "@/components/Footer";
 import { HomePage } from "@/pages/Home";
 import { SolutionsPage } from "@/pages/Solutions";
 import { CaseStudiesPage } from "@/pages/CaseStudies";
-import { AboutPage as CompanyPage } from "@/pages/About";
+import { AboutPage } from "@/pages/About";
+import { LeadershipPage } from "@/pages/Leadership";
+import { CareersPage } from "@/pages/Careers";
+import { JobDetailPage } from "@/pages/JobDetail";
 import { ContactPage } from "@/pages/Contact";
 import { TalkToStrategistPage } from "@/pages/TalkToStrategist";
 import { ResourcesPage } from "@/pages/Resources";
 import { SolutionsDirectoryPage } from "@/pages/SolutionsDirectory";
 import { SubcategoryPage } from "@/pages/SubcategoryPage";
 import { CategoryPage } from "@/pages/CategoryPage";
+import { WhoWeWorkWithPage } from "@/pages/WhoWeWorkWithPage";
+import { PersonaPage } from "@/pages/PersonaPage";
 import { CATEGORIES } from "@/data/solutionsData";
 import { ScrollToTop } from "@/components/ScrollToTop";
 import { BloggingApp } from "@/blogging/BloggingApp";
@@ -32,6 +37,12 @@ function SolutionsRouter() {
   const isCategory = slug ? CATEGORIES.some((c) => c.slug === slug) : false;
   if (isCategory) return <CategoryPage key={slug} />;
   return <SubcategoryPage key={slug} />;
+}
+
+/** Keyed remount on slug change — same rationale as SolutionsRouter above. */
+function JobDetailRouter() {
+  const { slug } = useParams<{ slug: string }>();
+  return <JobDetailPage key={slug} />;
 }
 
 function NotFound() {
@@ -75,7 +86,14 @@ function MarketingSite() {
               <Route path="/" component={HomePage} />
               <Route path="/solutions" component={SolutionsPage} />
               <Route path="/case-studies" component={CaseStudiesPage} />
-              <Route path="/company" component={CompanyPage} />
+              <Route path="/about" component={AboutPage} />
+              <Route path="/leadership" component={LeadershipPage} />
+              <Route path="/careers" component={CareersPage} />
+              <Route path="/careers/:slug" component={JobDetailRouter} />
+              {/* Legacy route — kept so old links / bookmarks resolve. */}
+              <Route path="/company">{() => <Redirect to="/about" />}</Route>
+              <Route path="/who-we-work-with" component={WhoWeWorkWithPage} />
+              <Route path="/who-we-work-with/:slug" component={PersonaPage} />
               <Route path="/contact" component={ContactPage} />
               <Route path="/talk-to-strategist" component={TalkToStrategistPage} />
               <Route path="/resources" component={ResourcesPage} />
