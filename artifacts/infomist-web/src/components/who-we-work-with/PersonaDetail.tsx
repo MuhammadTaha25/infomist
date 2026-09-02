@@ -1,6 +1,7 @@
 import { Link } from "wouter";
 import { ArrowRight, ArrowLeft, HelpCircle } from "lucide-react";
 import { useMeta } from "@/components/site/useMeta";
+import { useSocialMeta } from "@/components/site/useSocialMeta";
 import { JsonLd, faqSchema, FaqAccordion } from "@/components/site/Faq";
 import { Reveal } from "@/components/Reveal";
 import {
@@ -24,6 +25,12 @@ import { ChallengeSelector } from "./ChallengeSelector";
 
 export function PersonaDetail({ persona }: { persona: Persona }) {
   useMeta(persona.seo.title, persona.seo.description);
+  useSocialMeta({
+    title: persona.seo.title,
+    description: persona.seo.description,
+    path: `/who-we-work-with/${persona.slug}`,
+    image: persona.seo.image,
+  });
 
   const Icon = persona.icon;
   const neighbours = personaNeighbours(persona.slug);
@@ -224,6 +231,29 @@ export function PersonaDetail({ persona }: { persona: Persona }) {
               </Reveal>
             ))}
           </ol>
+        </div>
+      </section>
+
+      {/* Related on this site — internal links */}
+      <section className="w-full" style={{ background: "#F9FAFB" }}>
+        <div className="max-w-4xl mx-auto px-6 pt-24 md:pt-28">
+          <Reveal>
+            <SectionHead eyebrow="Keep exploring" title="Related" gradientWord="on this site" />
+          </Reveal>
+          <ul className="mt-8 grid gap-2 sm:grid-cols-2">
+            {persona.relatedLinks.map((l) => (
+              <li key={l.href}>
+                <Link
+                  href={l.href}
+                  className="group flex items-center gap-2.5 rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm font-semibold text-[#334155] transition-all duration-200 hover:-translate-y-0.5 hover:border-[#0EA5E9]/40 hover:text-[#0EA5E9]"
+                >
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#0EA5E9] flex-shrink-0" aria-hidden="true" />
+                  <span className="flex-1">{l.label}</span>
+                  <ArrowRight size={14} strokeWidth={2.4} aria-hidden="true" className="text-slate-300 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:text-[#0EA5E9]" />
+                </Link>
+              </li>
+            ))}
+          </ul>
         </div>
       </section>
 

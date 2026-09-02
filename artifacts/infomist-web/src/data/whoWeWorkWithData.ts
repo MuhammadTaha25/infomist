@@ -74,8 +74,19 @@ export interface Persona {
   faqs: PersonaFaq[];
   /** default proof tags for the persona (challenge tags take precedence) */
   proofTags: string[];
-  seo: { title: string; description: string };
+  /** internal cross-links rendered as the "related on this site" bullet list */
+  relatedLinks: CapabilityLink[];
+  seo: { title: string; description: string; image: string };
 }
+
+/** OG image + canonical for the /who-we-work-with index page */
+export const WWW_SEO = {
+  title: "Who We Work With | Infomist",
+  description:
+    "Infomist works with CEOs, CTOs, COOs, CMOs, and product and content leaders — mapping strategic, technical, and creative capability to the outcome you own.",
+  path: "/who-we-work-with",
+  image: "/og/who-we-work-with.jpg",
+};
 
 export const PERSONAS: Persona[] = [
   /* ───────────────────────── CEOs & Founders ───────────────────────── */
@@ -215,10 +226,18 @@ export const PERSONAS: Persona[] = [
       },
     ],
     proofTags: ["product-engineering", "software", "ai", "platform-scale"],
+    relatedLinks: [
+      { label: "Custom Software Development", href: "/solutions/custom-software-development" },
+      { label: "AI Automation Services", href: "/solutions/ai-automation-services" },
+      { label: "Case studies", href: "/case-studies" },
+      { label: "The team behind Infomist", href: "/leadership" },
+      { label: "Talk to a Strategist", href: "/talk-to-strategist" },
+    ],
     seo: {
       title: "For CEOs & Founders | Infomist",
       description:
         "Technology strategy, product engineering, and AI automation for founders and executive teams who need faster execution and systems that scale.",
+      image: "/og/persona-ceos-founders.jpg",
     },
   },
 
@@ -355,10 +374,18 @@ export const PERSONAS: Persona[] = [
       },
     ],
     proofTags: ["architecture", "integration", "software", "platform-scale"],
+    relatedLinks: [
+      { label: "Enterprise Software Development", href: "/solutions/enterprise-software-development" },
+      { label: "System Integration", href: "/solutions/system-integration" },
+      { label: "AI Agents", href: "/solutions/ai-agents" },
+      { label: "Case studies", href: "/case-studies" },
+      { label: "Talk to a Strategist", href: "/talk-to-strategist" },
+    ],
     seo: {
       title: "For CTOs & VPs of Engineering | Infomist",
       description:
         "Senior engineering capacity, architecture modernization, systems integration, and AI engineering that runs in your process and documents its decisions.",
+      image: "/og/persona-ctos-engineering.jpg",
     },
   },
 
@@ -495,10 +522,18 @@ export const PERSONAS: Persona[] = [
       },
     ],
     proofTags: ["automation", "operations", "integration", "ai"],
+    relatedLinks: [
+      { label: "Business Process Automation", href: "/solutions/business-process-automation" },
+      { label: "CRM Integration", href: "/solutions/crm-integration" },
+      { label: "Autonomous AI Agents", href: "/solutions/autonomous-ai-agents" },
+      { label: "Case studies", href: "/case-studies" },
+      { label: "Talk to a Strategist", href: "/talk-to-strategist" },
+    ],
     seo: {
       title: "For COOs & Operations Managers | Infomist",
       description:
         "Workflow automation, systems and CRM integration, AI agents, and internal tools that cut manual work without replacing the systems your team already uses.",
+      image: "/og/persona-coos-operations.jpg",
     },
   },
 
@@ -644,10 +679,18 @@ export const PERSONAS: Persona[] = [
       },
     ],
     proofTags: ["digital-marketing", "seo", "conversion", "web"],
+    relatedLinks: [
+      { label: "SEO Services", href: "/solutions/seo-services" },
+      { label: "Digital Marketing Agency", href: "/solutions/digital-marketing-agency" },
+      { label: "Conversion Rate Optimization", href: "/solutions/conversion-rate-optimization" },
+      { label: "Case studies", href: "/case-studies" },
+      { label: "Talk to a Strategist", href: "/talk-to-strategist" },
+    ],
     seo: {
       title: "For CMOs & Marketing Leads | Infomist",
       description:
         "SEO, paid acquisition, website conversion, and marketing operations measured against qualified pipeline and revenue.",
+      image: "/og/persona-cmos-marketing.jpg",
     },
   },
 
@@ -783,10 +826,18 @@ export const PERSONAS: Persona[] = [
       },
     ],
     proofTags: ["design", "product-strategy", "conversion", "web"],
+    relatedLinks: [
+      { label: "UI/UX Design Agency", href: "/solutions/ui-ux-design-agency" },
+      { label: "UX Design", href: "/solutions/ux-design" },
+      { label: "Brand Identity Design", href: "/solutions/brand-identity-design" },
+      { label: "Case studies", href: "/case-studies" },
+      { label: "Talk to a Strategist", href: "/talk-to-strategist" },
+    ],
     seo: {
       title: "For Heads of Product & Design | Infomist",
       description:
         "Product discovery, UX research and design, design systems, and a design-to-development handoff built by one team.",
+      image: "/og/persona-product-design.jpg",
     },
   },
 
@@ -929,10 +980,18 @@ export const PERSONAS: Persona[] = [
       },
     ],
     proofTags: ["content", "video", "brand", "digital-marketing"],
+    relatedLinks: [
+      { label: "Video Production", href: "/solutions/video-production" },
+      { label: "Content Marketing Services", href: "/solutions/content-marketing-services" },
+      { label: "Graphic Design Services", href: "/solutions/graphic-design-services" },
+      { label: "Case studies", href: "/case-studies" },
+      { label: "Talk to a Strategist", href: "/talk-to-strategist" },
+    ],
     seo: {
       title: "For Marketing & Content Managers | Infomist",
       description:
         "A repeatable production system for on-brand video and content — consistent output, predictable turnaround, and organized creative operations.",
+      image: "/og/persona-content-marketing.jpg",
     },
   },
 ];
