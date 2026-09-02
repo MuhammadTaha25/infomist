@@ -18,6 +18,7 @@ import {
   IconTile,
 } from "@/components/site/primitives";
 import { CaseStudyCard } from "@/components/case-studies/CaseStudyCard";
+import { CaseStudyGlyphPaths } from "@/components/case-studies/CaseStudyLogo";
 import { getCaseStudy, getRelatedCaseStudies } from "@/data/caseStudies";
 
 const SITE = "https://www.infomist.com";
@@ -104,47 +105,67 @@ export function CaseStudyDetailPage() {
                 {study.name}
               </h1>
               <p className="text-[#475569] text-xl leading-relaxed">{study.shortDescription}</p>
-              {study.websiteUrl ? (
-                <div>
+              <div className="flex flex-wrap items-center gap-3">
+                {study.websiteUrl ? (
                   <CTAButton href={study.websiteUrl} external variant="outline" icon={ArrowUpRight}>
                     {study.websiteLabel ?? "Visit Website"}
                   </CTAButton>
-                </div>
-              ) : null}
+                ) : null}
+                <Link
+                  href="/case-studies"
+                  className="inline-flex items-center gap-1.5 text-sm font-bold text-[#0EA5E9] px-2 py-1 rounded outline-none focus-visible:ring-2 focus-visible:ring-[#0EA5E9]"
+                >
+                  All case studies
+                  <ArrowRight size={15} strokeWidth={2.6} />
+                </Link>
+              </div>
             </div>
 
-            {/* Project visual — the existing monogram language, scaled up. No stock imagery. */}
+            {/* Project mark — the site's line-geometry language, scaled up. No stock imagery. */}
             <div
-              className="hidden md:flex w-56 h-56 rounded-3xl items-center justify-center text-5xl font-black flex-shrink-0"
+              className="hidden md:flex w-56 h-56 rounded-3xl items-center justify-center flex-shrink-0 relative overflow-hidden"
               style={{
-                background: `linear-gradient(150deg, ${c}22, ${c}08)`,
+                background: `linear-gradient(150deg, ${c}1f, ${c}06)`,
                 color: c,
                 border: `1px solid ${c}33`,
               }}
               aria-hidden="true"
             >
-              {study.initials}
+              <div
+                className="absolute inset-0 opacity-[0.35]"
+                style={{
+                  backgroundImage: `radial-gradient(circle at 30% 20%, ${c}44, transparent 60%)`,
+                }}
+              />
+              <svg width="88" height="88" viewBox="0 0 32 32" className="relative">
+                <CaseStudyGlyphPaths study={study} />
+              </svg>
             </div>
           </div>
         </div>
       </section>
 
+      {/* At a glance */}
+      <div className="border-y border-slate-100 bg-white">
+        <dl className="max-w-6xl mx-auto px-6 py-5 grid grid-cols-2 sm:grid-cols-4 gap-x-6 gap-y-4 text-sm">
+          <Fact label="Category" value={study.category} />
+          <Fact label="Industry" value={study.industry} />
+          <Fact label="Location" value={study.location} />
+          <Fact label="Engagement" value={`${study.services.length} workstreams`} />
+        </dl>
+      </div>
+
       {/* Overview */}
-      <Section tone="white">
-        <div className="grid gap-10 md:grid-cols-[220px_1fr]">
-          <Reveal>
-            <dl className="flex flex-col gap-4 text-sm">
-              <Meta label="Project" value={study.name} />
-              <Meta label="Category" value={study.category} />
-              <Meta label="Industry" value={study.industry} />
-              <Meta label="Location" value={study.location} />
-            </dl>
-          </Reveal>
-          <Reveal>
-            <SectionHead eyebrow="Overview" title="Project" gradientWord="overview" />
-            <p className="mt-5 text-lg leading-relaxed text-[#475569]">{study.overview}</p>
-          </Reveal>
-        </div>
+      <Section tone="white" narrow>
+        <Reveal>
+          <SectionHead eyebrow="Overview" title="Project" gradientWord="overview" />
+          <p className="mt-6 text-xl leading-relaxed text-[#334155]">{study.overview}</p>
+          {study.outcomes && study.outcomes.length > 0 ? (
+            <p className="mt-4 text-sm font-semibold" style={{ color: c }}>
+              {study.outcomes[0]}
+            </p>
+          ) : null}
+        </Reveal>
       </Section>
 
       {/* Challenge + Solution */}
@@ -252,11 +273,12 @@ export function CaseStudyDetailPage() {
   );
 }
 
-function Meta({ label, value }: { label: string; value: string }) {
+function Fact({ label, value }: { label: string; value: string }) {
   return (
     <div className="flex flex-col gap-0.5">
-      <dt className="text-[11px] font-bold uppercase tracking-widest text-[#94A3B8]">{label}</dt>
-      <dd className="text-[#0F172A] font-semibold">{value}</dd>
+      <dt className="text-[10px] font-bold uppercase tracking-widest text-[#94A3B8]">{label}</dt>
+      <dd className="text-[#0F172A] font-semibold leading-snug">{value}</dd>
     </div>
   );
 }
+

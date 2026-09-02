@@ -6,6 +6,7 @@ import { Reveal, RevealGroup, RevealItem } from "@/components/Reveal";
 import { GridOverlay, Blob, GradientText, Eyebrow, DarkCTA, CTAButton } from "@/components/site/primitives";
 import { ClientImpactSlider } from "@/components/ClientImpactSlider";
 import { CaseStudyCard } from "@/components/case-studies/CaseStudyCard";
+import { CaseStudyMarkWall } from "@/components/case-studies/CaseStudyLogo";
 import { getCaseStudies, CASE_STUDY_CATEGORIES } from "@/data/caseStudies";
 
 const STATS = [
@@ -43,24 +44,30 @@ export function CaseStudiesPage() {
           <Blob color="rgba(132,204,22,0.14)" className="top-10 right-0" size={400} />
 
           <div className="relative max-w-6xl mx-auto px-6 pt-16 pb-20 md:pt-20 md:pb-24">
-            <Reveal className="flex flex-col gap-5 max-w-3xl">
-              <Eyebrow icon={FolderGit2} dark>Selected Work</Eyebrow>
-              <h1
-                className="font-black text-white leading-[1.02]"
-                style={{ fontSize: "clamp(2.6rem, 6.2vw, 4.25rem)", letterSpacing: "-0.045em" }}
-              >
-                Real products. Real systems. <GradientText>Real results.</GradientText>
-              </h1>
-              <p className="text-slate-400 text-xl leading-relaxed">
-                A closer look at the digital products, AI systems, automation workflows, and platforms
-                we've designed and engineered for ambitious businesses.
-              </p>
-              <div className="mt-2">
-                <CTAButton href="/contact" variant="lime" icon={ArrowRight}>
-                  Start a Project
-                </CTAButton>
-              </div>
-            </Reveal>
+            <div className="grid gap-12 lg:grid-cols-[1fr_auto] lg:items-center">
+              <Reveal className="flex flex-col gap-5 max-w-2xl">
+                <Eyebrow icon={FolderGit2} dark>Selected Work</Eyebrow>
+                <h1
+                  className="font-black text-white leading-[1.02]"
+                  style={{ fontSize: "clamp(2.6rem, 6.2vw, 4.25rem)", letterSpacing: "-0.045em" }}
+                >
+                  Real products. Real systems. <GradientText>Real results.</GradientText>
+                </h1>
+                <p className="text-slate-400 text-xl leading-relaxed">
+                  A closer look at the digital products, AI systems, automation workflows, and platforms
+                  we've designed and engineered for ambitious businesses.
+                </p>
+                <div className="mt-2">
+                  <CTAButton href="/contact" variant="lime" icon={ArrowRight}>
+                    Start a Project
+                  </CTAButton>
+                </div>
+              </Reveal>
+
+              <Reveal className="hidden lg:block">
+                <CaseStudyMarkWall studies={studies} />
+              </Reveal>
+            </div>
 
             {/* Hero stats — subtle, uses the existing dark divider treatment */}
             <Reveal>

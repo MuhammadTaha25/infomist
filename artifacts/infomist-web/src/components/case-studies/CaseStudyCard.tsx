@@ -2,6 +2,7 @@ import type { MouseEvent } from "react";
 import { Link, useLocation } from "wouter";
 import { ArrowRight, ArrowUpRight } from "lucide-react";
 import type { CaseStudy } from "@/data/caseStudies";
+import { CaseStudyMark } from "./CaseStudyLogo";
 
 /**
  * Case Study card — reuses the existing dark portfolio-card language from
@@ -24,12 +25,7 @@ export function CaseStudyCard({ study }: { study: CaseStudy }) {
       style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.08)" }}
     >
       <div className="flex items-start justify-between gap-3">
-        <div
-          className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 text-xs font-black"
-          style={{ background: `${study.color}22`, color: study.color, border: `1px solid ${study.color}3a` }}
-        >
-          {study.initials}
-        </div>
+        <CaseStudyMark study={study} size={40} dark />
         <span
           className="text-[10px] font-bold tracking-widest uppercase px-2.5 py-1 rounded-full whitespace-nowrap"
           style={{ background: `${study.color}18`, color: study.color, border: `1px solid ${study.color}30` }}

@@ -12,6 +12,16 @@
  * intentionally have no external link rather than a guessed one.
  */
 
+export type GlyphKey =
+  | "pulse"
+  | "signal"
+  | "grid"
+  | "shield"
+  | "layers"
+  | "wave"
+  | "spark"
+  | "bars";
+
 export interface CaseStudy {
   id: string;
   slug: string;
@@ -23,6 +33,8 @@ export interface CaseStudy {
   /** monogram + accent, matching the existing Case Studies card language */
   initials: string;
   color: string;
+  /** geometric brand-mark glyph (see CaseStudyLogo) */
+  glyph: GlyphKey;
   /** one-line card / meta description */
   shortDescription: string;
   /** 1–2 sentence framing shown in the detail Overview */
@@ -51,6 +63,7 @@ export const CASE_STUDIES: CaseStudy[] = [
     location: "Florida, USA",
     initials: "M",
     color: "#0EA5E9",
+    glyph: "pulse",
     shortDescription:
       "Enterprise EHR platform for behavioral-health facilities across North America and the Middle East.",
     overview:
@@ -73,6 +86,7 @@ export const CASE_STUDIES: CaseStudy[] = [
     location: "Pakistan",
     initials: "B",
     color: "#F59E0B",
+    glyph: "signal",
     shortDescription:
       "Pakistan's tech-news, freelancing-education and community platform serving the GCC market.",
     overview:
@@ -95,6 +109,7 @@ export const CASE_STUDIES: CaseStudy[] = [
     location: "Pakistan",
     initials: "W",
     color: "#8B5CF6",
+    glyph: "grid",
     shortDescription:
       "Freelance marketplace — 200,000+ registered freelancers and 3,000+ global projects.",
     overview:
@@ -118,6 +133,7 @@ export const CASE_STUDIES: CaseStudy[] = [
     location: "Connecticut, USA",
     initials: "GWC",
     color: "#94A3B8",
+    glyph: "shield",
     shortDescription:
       "Tactical firearms-training firm serving military, law enforcement and private security.",
     overview:
@@ -140,6 +156,7 @@ export const CASE_STUDIES: CaseStudy[] = [
     location: "San Francisco, CA, USA",
     initials: "S",
     color: "#10B981",
+    glyph: "layers",
     shortDescription:
       "Full-service insurance and employee-benefits agency built for high-growth startups.",
     overview:
@@ -160,6 +177,7 @@ export const CASE_STUDIES: CaseStudy[] = [
     location: "United Kingdom",
     initials: "AP",
     color: "#14B8A6",
+    glyph: "wave",
     shortDescription:
       "24/7 voice-AI agent that eliminated after-hours lead drop-off for a UK property firm.",
     overview:
@@ -181,6 +199,7 @@ export const CASE_STUDIES: CaseStudy[] = [
     location: "United States",
     initials: "MHS",
     color: "#22C55E",
+    glyph: "spark",
     shortDescription:
       "HIPAA-compliant RAG AI assistant that cut patient-intake admin time from 45 to 12 minutes.",
     overview:
@@ -202,6 +221,7 @@ export const CASE_STUDIES: CaseStudy[] = [
     location: "United States",
     initials: "NC",
     color: "#A855F7",
+    glyph: "bars",
     shortDescription:
       "Full-stack investor portal with real-time dashboards and automated regulatory reporting — delivered in 10 weeks.",
     overview:
