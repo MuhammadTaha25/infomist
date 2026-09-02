@@ -35,6 +35,8 @@ export interface CaseStudy {
   color: string;
   /** geometric brand-mark glyph (see CaseStudyLogo) */
   glyph: GlyphKey;
+  /** short label for the kind of thing built (e.g. "Investor portal") */
+  projectType: string;
   /** one-line card / meta description */
   shortDescription: string;
   /** 1–2 sentence framing shown in the detail Overview */
@@ -45,6 +47,17 @@ export interface CaseStudy {
   solution: string;
   /** engagement scope — mirrors the service tags already on the site */
   services: string[];
+  /**
+   * Scope-of-work detail: each item names one of `services` and describes what
+   * it covered for THIS project. Explains the listed services in context — no
+   * invented capabilities.
+   */
+  scope: { title: string; detail: string }[];
+  /**
+   * Only for projects whose mechanism the site already describes
+   * (voice-AI / RAG). A faithful flow of the stated architecture.
+   */
+  workflow?: { label: string; note?: string }[];
   /** only present where the live site already states a figure */
   outcomes?: string[];
   /** only set for client-verified URLs; omit rather than guess */
@@ -64,6 +77,12 @@ export const CASE_STUDIES: CaseStudy[] = [
     initials: "M",
     color: "#0EA5E9",
     glyph: "pulse",
+    projectType: "Enterprise EHR platform",
+    scope: [
+      { title: "Website Designing", detail: "Interface and visual design for an enterprise EHR product and its marketing site." },
+      { title: "Website Development", detail: "Production build of the platform's web application and site, engineered for multi-facility use." },
+      { title: "Digital Marketing", detail: "Ongoing demand-generation and search programme across the North America and Middle East markets." },
+    ],
     shortDescription:
       "Enterprise EHR platform for behavioral-health facilities across North America and the Middle East.",
     overview:
@@ -87,6 +106,12 @@ export const CASE_STUDIES: CaseStudy[] = [
     initials: "B",
     color: "#F59E0B",
     glyph: "signal",
+    projectType: "Content & community platform",
+    scope: [
+      { title: "Website Designing", detail: "A design system for a high-volume editorial and freelancing-education platform." },
+      { title: "Website Development", detail: "A content platform built to stay fast as readership scales." },
+      { title: "Digital Marketing", detail: "SEO and campaign work to grow reach across the GCC." },
+    ],
     shortDescription:
       "Pakistan's tech-news, freelancing-education and community platform serving the GCC market.",
     overview:
@@ -110,6 +135,12 @@ export const CASE_STUDIES: CaseStudy[] = [
     initials: "W",
     color: "#8B5CF6",
     glyph: "grid",
+    projectType: "Two-sided marketplace",
+    scope: [
+      { title: "Website Designing", detail: "Marketplace UX for both sides of the market — freelancers and clients." },
+      { title: "Website Development", detail: "A two-sided marketplace platform built for onboarding and matching at scale." },
+      { title: "Digital Marketing", detail: "A growth programme to build supply and demand for the marketplace." },
+    ],
     shortDescription:
       "Freelance marketplace — 200,000+ registered freelancers and 3,000+ global projects.",
     overview:
@@ -134,6 +165,12 @@ export const CASE_STUDIES: CaseStudy[] = [
     initials: "GWC",
     color: "#94A3B8",
     glyph: "shield",
+    projectType: "Brand & marketing site",
+    scope: [
+      { title: "Website Designing", detail: "Brand-led design that establishes authority with institutional clients." },
+      { title: "Website Development", detail: "A website with a clear, searchable course catalogue." },
+      { title: "Digital Marketing", detail: "SEO and digital marketing to reach military, law-enforcement and security audiences." },
+    ],
     shortDescription:
       "Tactical firearms-training firm serving military, law enforcement and private security.",
     overview:
@@ -157,6 +194,12 @@ export const CASE_STUDIES: CaseStudy[] = [
     initials: "S",
     color: "#10B981",
     glyph: "layers",
+    projectType: "Brand & marketing site",
+    scope: [
+      { title: "Website Designing", detail: "Brand and site design aimed at a startup-founder audience." },
+      { title: "Website Development", detail: "A conversion-focused website build for an insurance and benefits agency." },
+      { title: "Digital Marketing", detail: "An ongoing digital-marketing programme to drive qualified conversations." },
+    ],
     shortDescription:
       "Full-service insurance and employee-benefits agency built for high-growth startups.",
     overview:
@@ -178,6 +221,18 @@ export const CASE_STUDIES: CaseStudy[] = [
     initials: "AP",
     color: "#14B8A6",
     glyph: "wave",
+    projectType: "Voice-AI agent",
+    scope: [
+      { title: "AI Agent Development", detail: "A 24/7 voice-AI agent that answers inbound calls and qualifies enquiries." },
+      { title: "Workflow Automation", detail: "Automated routing so captured enquiries reach the right person for follow-up." },
+      { title: "CRM Integration", detail: "Enquiries written straight into the firm's CRM in real time." },
+    ],
+    workflow: [
+      { label: "Inbound call", note: "Arrives at any hour, in or out of office time" },
+      { label: "Voice-AI agent", note: "Answers, understands the enquiry and asks qualifying questions" },
+      { label: "Automation routing", note: "Sends the qualified enquiry to the right person" },
+      { label: "CRM", note: "Recorded in real time, ready for follow-up" },
+    ],
     shortDescription:
       "24/7 voice-AI agent that eliminated after-hours lead drop-off for a UK property firm.",
     overview:
@@ -200,6 +255,19 @@ export const CASE_STUDIES: CaseStudy[] = [
     initials: "MHS",
     color: "#22C55E",
     glyph: "spark",
+    projectType: "RAG AI assistant",
+    scope: [
+      { title: "AI Agent Development", detail: "A patient-facing AI assistant that handles intake questions." },
+      { title: "RAG Systems", detail: "Retrieval-augmented answers grounded in the clinic's own information." },
+      { title: "EHR Integration", detail: "Structured intake data written into the existing EHR." },
+    ],
+    workflow: [
+      { label: "Patient", note: "Starts intake with the assistant" },
+      { label: "Assistant", note: "Interprets the request and gathers what's needed" },
+      { label: "Retrieval", note: "Pulls the relevant clinic information" },
+      { label: "LLM", note: "Produces a grounded, structured response" },
+      { label: "EHR", note: "Intake data written back to the record" },
+    ],
     shortDescription:
       "HIPAA-compliant RAG AI assistant that cut patient-intake admin time from 45 to 12 minutes.",
     overview:
@@ -222,6 +290,12 @@ export const CASE_STUDIES: CaseStudy[] = [
     initials: "NC",
     color: "#A855F7",
     glyph: "bars",
+    projectType: "Investor portal",
+    scope: [
+      { title: "Full-Stack Development", detail: "End-to-end build of the investor portal, front to back." },
+      { title: "Portal Architecture", detail: "Portal architecture designed for a regulated financial context." },
+      { title: "RegTech", detail: "An automated regulatory-reporting pipeline replacing manual assembly." },
+    ],
     shortDescription:
       "Full-stack investor portal with real-time dashboards and automated regulatory reporting — delivered in 10 weeks.",
     overview:
