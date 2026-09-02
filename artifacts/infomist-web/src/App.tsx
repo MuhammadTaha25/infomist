@@ -6,6 +6,7 @@ import { HomePage } from "@/pages/Home";
 import { SolutionsPage } from "@/pages/Solutions";
 import { CaseStudiesPage } from "@/pages/CaseStudies";
 import { CaseStudyDetailPage } from "@/pages/CaseStudyDetail";
+import { OneManCompanyPage } from "@/pages/OneManCompany";
 import { AboutPage } from "@/pages/About";
 import { LeadershipPage } from "@/pages/Leadership";
 import { CareersPage } from "@/pages/Careers";
@@ -101,6 +102,7 @@ function MarketingSite() {
               <Route path="/solutions" component={SolutionsPage} />
               <Route path="/case-studies" component={CaseStudiesPage} />
               <Route path="/case-studies/:slug" component={CaseStudyRouter} />
+              <Route path="/one-man-company" component={OneManCompanyPage} />
               <Route path="/about" component={AboutPage} />
               <Route path="/leadership" component={LeadershipPage} />
               <Route path="/careers" component={CareersPage} />
