@@ -1,4 +1,4 @@
-import { ArrowRight, MessagesSquare, Sparkles } from "lucide-react";
+import { ArrowRight, MessagesSquare } from "lucide-react";
 import { GradientText, Eyebrow, CTAButton } from "@/components/site/primitives";
 import { ParticleNetwork } from "@/components/ParticleNetwork";
 
@@ -21,7 +21,7 @@ export function Hero() {
 
       <div className="relative z-10 mx-auto max-w-6xl px-6 min-h-[calc(100vh-4rem)] flex flex-col justify-center py-20">
         <div className="flex flex-col items-center text-center gap-7 max-w-3xl mx-auto rise-in">
-          <Eyebrow icon={Sparkles}>25 Years of Engineering Excellence</Eyebrow>
+          <Eyebrow>25 Years of Engineering Excellence</Eyebrow>
 
           <h1
             className="font-black text-[#0F172A] leading-[1.02]"
