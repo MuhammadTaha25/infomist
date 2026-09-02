@@ -40,48 +40,6 @@ const LEGAL_LINKS = [
   { label: "Cookie Policy", href: "#" },
 ];
 
-const SOCIALS = [
-  {
-    label: "LinkedIn",
-    href: "https://www.linkedin.com/company/infomist",
-    icon: (
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-        <rect x="2" y="2" width="20" height="20" rx="4" />
-        <path d="M7 10v7M7 7v.01M12 10v7M12 13a3 3 0 0 1 6 0v4" />
-      </svg>
-    ),
-  },
-  {
-    label: "Twitter / X",
-    href: "https://twitter.com/infomist",
-    icon: (
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M4 4l16 16M4 20 20 4" />
-        <path d="M4 4h5l11 16h-5Z" />
-      </svg>
-    ),
-  },
-  {
-    label: "GitHub",
-    href: "https://github.com/infomist",
-    icon: (
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M9 19c-4.3 1.4-4.3-2.5-6-3m12 5v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6 0 0 0-1.3-3.2 4.2 4.2 0 0 0-.1-3.2s-1.1-.3-3.5 1.3a12.3 12.3 0 0 0-6.2 0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2 0 0 0-.1 3.2A4.6 4.6 0 0 0 4 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V21" />
-      </svg>
-    ),
-  },
-  {
-    label: "YouTube",
-    href: "https://youtube.com/@infomist",
-    icon: (
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-        <rect x="2" y="5" width="20" height="14" rx="4" />
-        <polygon points="10,9 16,12 10,15" fill="currentColor" stroke="none" />
-      </svg>
-    ),
-  },
-];
-
 export function Footer() {
   return (
     <div id="contact" className="w-full flex flex-col">
@@ -96,31 +54,6 @@ export function Footer() {
               <p className="text-sm text-slate-500 leading-relaxed max-w-xs">
                 25 years of engineering serious software for serious businesses — full-stack architecture, AI automation, and growth systems.
               </p>
-              <div className="flex items-center gap-2 mt-1">
-                {SOCIALS.map((s) => (
-                  <a
-                    key={s.label}
-                    href={s.href}
-                    aria-label={s.label}
-                    rel="noopener noreferrer"
-                    target="_blank"
-                    className="w-9 h-9 rounded-lg flex items-center justify-center transition-all duration-150"
-                    style={{ color: "#0EA5E9", border: "1px solid rgba(14,165,233,0.25)" }}
-                    onMouseEnter={(e) => {
-                      const el = e.currentTarget as HTMLAnchorElement;
-                      el.style.background = "rgba(14,165,233,0.12)";
-                      el.style.borderColor = "rgba(14,165,233,0.5)";
-                    }}
-                    onMouseLeave={(e) => {
-                      const el = e.currentTarget as HTMLAnchorElement;
-                      el.style.background = "transparent";
-                      el.style.borderColor = "rgba(14,165,233,0.25)";
-                    }}
-                  >
-                    {s.icon}
-                  </a>
-                ))}
-              </div>
             </div>
             {FOOTER_COLUMNS.map((col) => (
               <div key={col.title} className="flex flex-col gap-3.5">
