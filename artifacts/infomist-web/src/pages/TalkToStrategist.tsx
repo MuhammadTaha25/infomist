@@ -38,6 +38,7 @@ import {
   Search,
   Palette,
   Video as VideoIcon,
+  User,
   HelpCircle,
   MessageSquare,
   Phone as PhoneIcon,
@@ -59,6 +60,7 @@ const TOPICS = [
   { label: "SEO", icon: Search },
   { label: "Branding", icon: Palette },
   { label: "Video", icon: VideoIcon },
+  { label: "One Man Company", icon: User },
   { label: "Not Sure Yet", icon: HelpCircle },
 ];
 

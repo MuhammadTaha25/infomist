@@ -39,7 +39,19 @@ const SUBCATEGORIES: Record<string, string[]> = Object.fromEntries(
   CATEGORIES.map((cat) => [cat.name, [...cat.subs.map((sub) => sub.name), "Custom"]])
 );
 
-const MAIN_CATEGORIES = [...Object.keys(SUBCATEGORIES), "Other/Custom"];
+/* "One Man Company" — the AI-powered solo-founder model (/one-man-company).
+   Its sub-category is OPTIONAL; these mirror the model's departments. */
+const ONE_MAN_COMPANY = "One Man Company";
+const ONE_MAN_COMPANY_SUBS = [
+  "Lead Generation",
+  "Marketing",
+  "Finance",
+  "Project Execution",
+  "Jarvis / AI Orchestration",
+  "Custom",
+];
+
+const MAIN_CATEGORIES = [...Object.keys(SUBCATEGORIES), ONE_MAN_COMPANY, "Other/Custom"];
 
 const OTHER_CUSTOM = "Other/Custom";
 const CUSTOM_OPTION = "Custom";
@@ -71,8 +83,15 @@ function ContactForm() {
   const [submitting, setSubmitting] = useState(false);
 
   const isOtherMain = mainCategory === OTHER_CUSTOM;
-  const subOptions = !isOtherMain && mainCategory ? SUBCATEGORIES[mainCategory] : [];
+  const isOneManCompany = mainCategory === ONE_MAN_COMPANY;
+  const subOptions = isOneManCompany
+    ? ONE_MAN_COMPANY_SUBS
+    : !isOtherMain && mainCategory
+      ? SUBCATEGORIES[mainCategory]
+      : [];
   const showSubCustomInput = subCategory === CUSTOM_OPTION;
+  /** Sub-category is required for everything except the optional "One Man Company" path. */
+  const subRequired = !isOtherMain && !isOneManCompany;
 
   const handleMainChange = (value: string) => {
     setMainCategory(value);
@@ -210,7 +229,9 @@ function ContactForm() {
         </div>
 
         <div className="flex flex-col gap-2">
-          <FieldLabel required>Sub-Category</FieldLabel>
+          <FieldLabel required={subRequired}>
+            Sub-Category{isOneManCompany && <span className="ml-1 normal-case font-medium text-slate-400">(optional)</span>}
+          </FieldLabel>
           {isOtherMain ? (
             <input
               required
@@ -222,14 +243,18 @@ function ContactForm() {
             />
           ) : (
             <select
-              required
+              required={subRequired}
               disabled={!mainCategory}
               value={subCategory}
               onChange={(e) => setSubCategory(e.target.value)}
               className={fieldClass + " appearance-none cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"}
             >
-              <option value="" disabled>
-                {mainCategory ? "Select a sub-category" : "Choose a main category first"}
+              <option value="" disabled={subRequired}>
+                {!mainCategory
+                  ? "Choose a main category first"
+                  : isOneManCompany
+                    ? "Select a sub-category (optional)"
+                    : "Select a sub-category"}
               </option>
               {subOptions.map((sub) => (
                 <option key={sub} value={sub}>
