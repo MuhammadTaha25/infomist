@@ -8,14 +8,25 @@ import { createContext, useCallback, useContext, useEffect, useMemo, useState, t
  * verifying anything. It exists to keep the admin out of casual view and to
  * provide a real email/password flow for the frontend-only CMS.
  *
- * Model: first visit -> "setup" (admin picks their own email + password).
- * Thereafter -> "locked" until they sign in. Credentials + session live in
- * localStorage on that one browser; clearing site data resets everything.
+ * Model: a built-in admin credential (BUILTIN_ADMIN) works on any browser with
+ * no setup step. A browser may also register its own local account; either one
+ * can sign in. Sessions live in localStorage on that one browser.
  */
 
 const ACCOUNT_KEY = "infomist.blog.account";
 const SESSION_KEY = "infomist.blog.session";
 const SESSION_DAYS = 30;
+
+/**
+ * Built-in admin credential. Verified with the same salted SHA-256 scheme as a
+ * locally-registered account — the password itself is never stored, only the
+ * hash of `${salt}:${password}`.
+ */
+const BUILTIN_ADMIN = {
+  email: "mtahashahid230@gmail.com",
+  salt: "49bdd0475e32d372896b653d",
+  hash: "47a8e05f304dc7139905b92c32bdcebb32079070e1910a5677ea0f6a297e3282",
+} as const;
 
 interface Account {
   email: string;
@@ -80,7 +91,7 @@ export function BloggingAuthProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     const acc = readJSON<Account>(ACCOUNT_KEY);
     setAccount(acc);
-    setAuthed(!!acc && sessionValid());
+    setAuthed(sessionValid());
     setReady(true);
   }, []);
 
@@ -112,13 +123,20 @@ export function BloggingAuthProvider({ children }: { children: ReactNode }) {
 
   const login = useCallback(
     async (email: string, password: string) => {
+      const mail = email.trim().toLowerCase();
+      if (
+        mail === BUILTIN_ADMIN.email &&
+        (await hashPassword(password, BUILTIN_ADMIN.salt)) === BUILTIN_ADMIN.hash
+      ) {
+        startSession();
+        return;
+      }
       const acc = account ?? readJSON<Account>(ACCOUNT_KEY);
-      if (!acc) throw new Error("No admin account exists yet.");
-      const ok =
-        email.trim().toLowerCase() === acc.email &&
-        (await hashPassword(password, acc.salt)) === acc.hash;
-      if (!ok) throw new Error("Incorrect email or password.");
-      startSession();
+      if (acc && mail === acc.email && (await hashPassword(password, acc.salt)) === acc.hash) {
+        startSession();
+        return;
+      }
+      throw new Error("Incorrect email or password.");
     },
     [account, startSession],
   );
@@ -144,8 +162,9 @@ export function BloggingAuthProvider({ children }: { children: ReactNode }) {
   }, []);
 
   const value = useMemo<AuthCtx>(() => {
-    const status: Status = !ready ? "loading" : !account ? "setup" : authed ? "authed" : "locked";
-    return { status, email: account?.email ?? null, register, login, logout, resetAccount };
+    // A built-in admin always exists, so there is no first-run "setup" state.
+    const status: Status = !ready ? "loading" : authed ? "authed" : "locked";
+    return { status, email: account?.email ?? BUILTIN_ADMIN.email, register, login, logout, resetAccount };
   }, [ready, account, authed, register, login, logout, resetAccount]);
 
   return <Ctx.Provider value={value}>{children}</Ctx.Provider>;

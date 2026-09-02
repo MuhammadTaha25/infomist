@@ -3,6 +3,8 @@ import { Toaster } from "sonner";
 import { SidebarInset, SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { Separator } from "@/components/ui/separator";
 import { BloggingProvider } from "./store";
+import { BloggingAuthProvider } from "./auth";
+import { AuthGate } from "./AuthGate";
 import { BloggingSidebar } from "./components/BloggingSidebar";
 import { DashboardPage } from "./pages/DashboardPage";
 import { PostsPage } from "./pages/PostsPage";
@@ -62,17 +64,21 @@ function PostsListRoute() {
 
 export function BloggingApp() {
   return (
-    <BloggingProvider>
-      <div className="min-h-screen bg-background font-sans text-foreground">
-        <Switch>
-          {/* Editor & preview take the whole viewport — no sidebar chrome. */}
-          <Route path="/posts/new" component={PostEditorPage} />
-          <Route path="/posts/:id/edit" component={PostEditorPage} />
-          <Route path="/posts/:id/preview" component={PostPreviewPage} />
-          <Route component={Shell} />
-        </Switch>
-      </div>
-      <Toaster position="bottom-right" richColors closeButton />
-    </BloggingProvider>
+    <BloggingAuthProvider>
+      <AuthGate>
+        <BloggingProvider>
+          <div className="min-h-screen bg-background font-sans text-foreground">
+            <Switch>
+              {/* Editor & preview take the whole viewport — no sidebar chrome. */}
+              <Route path="/posts/new" component={PostEditorPage} />
+              <Route path="/posts/:id/edit" component={PostEditorPage} />
+              <Route path="/posts/:id/preview" component={PostPreviewPage} />
+              <Route component={Shell} />
+            </Switch>
+          </div>
+          <Toaster position="bottom-right" richColors closeButton />
+        </BloggingProvider>
+      </AuthGate>
+    </BloggingAuthProvider>
   );
 }
