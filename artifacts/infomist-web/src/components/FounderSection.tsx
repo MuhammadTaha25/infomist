@@ -1,4 +1,5 @@
 import { Reveal } from "@/components/Reveal";
+import { CEO } from "@/data/teamData";
 
 export function FounderSection() {
   return (
@@ -22,8 +23,8 @@ export function FounderSection() {
         <div className="absolute inset-0 flex items-stretch">
           <div className="w-full h-full aspect-[4/5] overflow-hidden">
             <img
-              src={`${import.meta.env.BASE_URL}hisham-sarwar.png`}
-              alt="Vardah Hisham, CEO of Infomist — a software development company"
+              src={CEO.image}
+              alt={`${CEO.name}, ${CEO.role} of Infomist — a software development company`}
               className="object-cover w-full h-full"
             />
           </div>
@@ -32,15 +33,15 @@ export function FounderSection() {
           className="absolute left-6 top-1/2 -translate-y-1/2 -rotate-90 select-none pointer-events-none"
           style={{ fontSize: "10px", letterSpacing: "0.35em", color: "rgba(255,255,255,0.1)", fontWeight: 700, textTransform: "uppercase", whiteSpace: "nowrap" }}
         >
-          INFOMIST · FOUNDER PORTRAIT ·
+          INFOMIST · CEO PORTRAIT ·
         </div>
         <div
           className="absolute bottom-0 left-0 right-0 px-8 py-5 flex items-center justify-between"
           style={{ background: "linear-gradient(to top, rgba(0,0,0,0.85) 0%, transparent 100%)" }}
         >
           <div>
-            <p className="text-white font-bold text-sm tracking-wide" style={{ letterSpacing: "0.05em" }}>Vardah Hisham</p>
-            <p className="text-xs" style={{ color: "rgba(255,255,255,0.45)", letterSpacing: "0.1em" }}>Founder & Chief Architect</p>
+            <p className="text-white font-bold text-sm tracking-wide" style={{ letterSpacing: "0.05em" }}>{CEO.name}</p>
+            <p className="text-xs" style={{ color: "rgba(255,255,255,0.45)", letterSpacing: "0.1em" }}>{CEO.role}</p>
           </div>
           <div className="w-px h-10 mx-4" style={{ background: "rgba(255,255,255,0.12)" }} />
           <p className="text-xs" style={{ color: "rgba(255,255,255,0.3)", letterSpacing: "0.08em" }}>EST. 2001</p>
@@ -68,7 +69,7 @@ export function FounderSection() {
         <Reveal className="relative z-10 px-10 md:px-16 lg:px-20 py-20 flex flex-col gap-8 max-w-2xl">
           <div className="flex items-center gap-3">
             <div className="w-6 h-[2px]" style={{ background: "#84CC16" }} />
-            <span className="text-xs font-bold uppercase" style={{ color: "#84CC16", letterSpacing: "0.28em" }}>The Architect</span>
+            <span className="text-xs font-bold uppercase" style={{ color: "#84CC16", letterSpacing: "0.28em" }}>Leadership</span>
           </div>
 
           <h2
@@ -77,7 +78,7 @@ export function FounderSection() {
           >
             Engineered by{" "}
             <span style={{ background: "linear-gradient(90deg, #FFFFFF 0%, #94A3B8 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>
-              Vardah Hisham.
+              {CEO.name}.
             </span>
           </h2>
 

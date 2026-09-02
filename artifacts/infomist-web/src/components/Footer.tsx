@@ -1,4 +1,5 @@
 
+import { Link } from "wouter";
 import { Phone, Mail, MapPin } from "lucide-react";
 
 const LOGO_URL = `${import.meta.env.BASE_URL}infomist-software-development-company-logo.png`;
@@ -17,7 +18,15 @@ const FOOTER_COLUMNS = [
   {
     title: "Company",
     links: [
-      { label: "About Us", href: "/company" },
+      { label: "About Us", href: "/about" },
+      { label: "Leadership", href: "/leadership" },
+      { label: "Who We Work With", href: "/who-we-work-with" },
+      { label: "Careers", href: "/careers" },
+    ],
+  },
+  {
+    title: "Resources",
+    links: [
       { label: "Case Studies", href: "/case-studies" },
       { label: "Insights", href: "/resources" },
       { label: "Contact", href: "/contact" },
@@ -78,7 +87,7 @@ export function Footer() {
     <div id="contact" className="w-full flex flex-col">
       <footer className="w-full px-6 pt-16 pb-8" style={{ background: "#0F172A" }}>
         <div className="max-w-6xl mx-auto flex flex-col gap-14">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 lg:gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-10 lg:gap-8">
             <div className="flex flex-col gap-4 lg:col-span-2">
               <div className="flex items-center gap-2.5">
                 <img src={LOGO_URL} alt="INFOMIST" width={32} height={32} className="w-8 h-8 object-contain opacity-90" loading="lazy" />
@@ -118,13 +127,13 @@ export function Footer() {
                 <p className="text-xs font-bold tracking-[0.16em] uppercase text-slate-300">{col.title}</p>
                 <nav aria-label={`${col.title} links`} className="flex flex-col gap-2.5">
                   {col.links.map((link) => (
-                    <a
+                    <Link
                       key={link.label}
                       href={link.href}
                       className="text-sm text-slate-500 hover:text-[#0EA5E9] transition-colors duration-150 w-fit"
                     >
                       {link.label}
-                    </a>
+                    </Link>
                   ))}
                 </nav>
               </div>

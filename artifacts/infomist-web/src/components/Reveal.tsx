@@ -1,97 +1,57 @@
-import { motion } from "framer-motion";
 import type { ReactNode, CSSProperties } from "react";
-import { fadeUp, staggerContainer } from "./reveal-variants";
 
 /**
- * Reveals children with a fade-up animation when they enter the viewport.
+ * Entrance reveal — CSS-driven (`.rise-in` in index.css). Kept as thin wrappers so the
+ * many existing call sites don't change. `.rise-in` animates transform only (never
+ * opacity), so content is always visible even if the animation is throttled or a
+ * reduced-motion preference disables it.
  *
- * viewport.amount:0 fires the observer as soon as even 1px of the element
- * enters the viewport (no negative inset). A negative margin like "-80px"
- * would shrink the observation zone — elements at the top of a freshly-
- * navigated page would fall inside the dead zone and, with once:true, stay
- * at opacity:0 forever.
+ * `delay` accepts either seconds (values < 5, the old framer-motion convention) or
+ * milliseconds — both are normalised to ms.
  */
+function toMs(delay?: number): string | undefined {
+  if (!delay) return undefined;
+  return `${delay < 5 ? Math.round(delay * 1000) : delay}ms`;
+}
+
 export function Reveal({
   children,
-  className,
+  className = "",
   style,
   delay = 0,
-  once = true,
 }: {
   children: ReactNode;
   className?: string;
   style?: CSSProperties;
   delay?: number;
+  /** accepted for backwards compat; the CSS reveal is always one-shot */
   once?: boolean;
 }) {
   return (
-    <motion.div
-      className={className}
-      style={style}
-      initial={{ opacity: 0, y: 28 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once, amount: 0 }}
-      transition={{ duration: 0.6, ease: "easeOut", delay }}
-    >
+    <div className={`rise-in ${className}`} style={{ animationDelay: toMs(delay), ...style }}>
       {children}
-    </motion.div>
+    </div>
   );
 }
 
 export function RevealGroup({
   children,
-  className,
+  className = "",
 }: {
   children: ReactNode;
   className?: string;
 }) {
-  return (
-    <motion.div
-      className={className}
-      initial="hidden"
-      whileInView="show"
-      viewport={{ once: true, amount: 0 }}
-      variants={staggerContainer}
-    >
-      {children}
-    </motion.div>
-  );
+  return <div className={className}>{children}</div>;
 }
 
 export function RevealItem({
   children,
-  className,
-}: {
-  children: ReactNode;
-  className?: string;
-}) {
-  return (
-    <motion.div className={className} variants={fadeUp}>
-      {children}
-    </motion.div>
-  );
-}
-
-export function Eyebrow({
-  icon: Icon,
-  children,
-  tone = "cyan",
   className = "",
 }: {
-  icon: any;
   children: ReactNode;
-  tone?: "cyan" | "lime" | "slate";
   className?: string;
 }) {
-  const badgeTone =
-    tone === "cyan" ? "text-[#0EA5E9] bg-cyan-50" : tone === "lime" ? "text-[#65A30D] bg-lime-50" : "text-slate-500 bg-slate-100";
-  const textTone = tone === "cyan" ? "text-[#0EA5E9]" : tone === "lime" ? "text-[#65A30D]" : "text-slate-500";
-  return (
-    <div className={`flex items-center gap-2.5 mb-4 ${className}`}>
-      <span className={`w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0 ${badgeTone}`}>
-        <Icon size={14} strokeWidth={2.4} />
-      </span>
-      <span className={`text-xs font-bold tracking-[0.22em] uppercase ${textTone}`}>{children}</span>
-    </div>
-  );
+  return <div className={`rise-in ${className}`}>{children}</div>;
 }
+
+export { Eyebrow } from "./site/primitives";

@@ -46,26 +46,9 @@ import {
   Clock,
 } from "lucide-react";
 import { Reveal } from "@/components/Reveal";
-
-/* ─── SEO helper ─── */
-function useMeta(title: string, description: string) {
-  useEffect(() => {
-    const prev = document.title;
-    document.title = title;
-    let metaEl = document.querySelector<HTMLMetaElement>('meta[name="description"]');
-    const prevDesc = metaEl?.content ?? "";
-    if (!metaEl) {
-      metaEl = document.createElement("meta");
-      metaEl.name = "description";
-      document.head.appendChild(metaEl);
-    }
-    metaEl.content = description;
-    return () => {
-      document.title = prev;
-      if (metaEl) metaEl.content = prevDesc;
-    };
-  }, [title, description]);
-}
+import { useMeta } from "@/components/site/useMeta";
+import { PageHero } from "@/components/site/primitives";
+import { HeroVisual } from "@/components/hero/HeroVisual";
 
 /* ─── Step data ─── */
 const TOPICS = [
@@ -841,23 +824,16 @@ export function TalkToStrategistPage() {
   );
 
   return (
-    <div className="w-full min-h-screen bg-white pt-20">
-      <div
-        className="pointer-events-none absolute inset-x-0 top-20 h-[420px] opacity-60"
-        style={{ background: "radial-gradient(60% 100% at 50% 0%, rgba(14,165,233,0.08) 0%, rgba(255,255,255,0) 70%)" }}
+    <div className="w-full min-h-screen bg-white pt-20 overflow-x-hidden">
+      <PageHero
+        eyebrow="Talk to a Strategist"
+        eyebrowIcon={CalendarDays}
+        title="Let's talk"
+        gradientWord="strategy."
+        sub="Share a few details and one of our strategists will call you back — usually within one business day. No obligation, no generic sales pitch."
+        visual={<HeroVisual variant="journey" />}
       />
-      <div className="relative max-w-3xl mx-auto px-6 py-20 flex flex-col gap-12">
-        <Reveal className="flex flex-col gap-4">
-          <span className="text-xs font-bold tracking-[0.22em] uppercase text-[#0EA5E9]">Talk to a Strategist</span>
-          <h1 className="text-5xl md:text-6xl font-black text-[#0F172A] leading-tight" style={{ letterSpacing: "-0.03em" }}>
-            Let's Talk Strategy.
-          </h1>
-          <p className="text-[#475569] text-lg leading-relaxed">
-            Share a few details and one of our strategists will call you back — usually within one
-            business day. No obligation, no generic sales pitch.
-          </p>
-        </Reveal>
-
+      <div className="relative max-w-3xl mx-auto px-6 py-16 md:py-20">
         <Reveal>
           <StrategistForm />
         </Reveal>

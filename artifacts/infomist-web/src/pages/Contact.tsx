@@ -1,7 +1,10 @@
-import { useEffect, useState } from "react";
-import { Phone, Mail, MapPin, Send, CheckCircle2 } from "lucide-react";
+import { useState } from "react";
+import { Phone, Mail, MapPin, Send, CheckCircle2, MessageSquare } from "lucide-react";
 import { Reveal } from "@/components/Reveal";
 import { PageFaq } from "@/components/PageFaq";
+import { useMeta } from "@/components/site/useMeta";
+import { PageHero } from "@/components/site/primitives";
+import { HeroVisual } from "@/components/hero/HeroVisual";
 import { CATEGORIES } from "@/data/solutionsData";
 
 const CONTACT_FAQS = [
@@ -27,27 +30,6 @@ const CONTACT_FAQS = [
   },
 ];
 
-/* ─── SEO helper (matches pattern used on SubcategoryPage) ─── */
-function useMeta(title: string, description: string) {
-  useEffect(() => {
-    const prev = document.title;
-    document.title = title;
-
-    let metaEl = document.querySelector<HTMLMetaElement>('meta[name="description"]');
-    const prevDesc = metaEl?.content ?? "";
-    if (!metaEl) {
-      metaEl = document.createElement("meta");
-      metaEl.name = "description";
-      document.head.appendChild(metaEl);
-    }
-    metaEl.content = description;
-
-    return () => {
-      document.title = prev;
-      if (metaEl) metaEl.content = prevDesc;
-    };
-  }, [title, description]);
-}
 
 /* ─── Category → sub-category data — derived directly from the Solutions Directory's
    own data source (solutionsData.ts) so the Contact form can never drift out of sync
@@ -290,13 +272,11 @@ function ContactForm() {
       <button
         type="submit"
         disabled={submitting}
-        className="inline-flex items-center justify-center gap-2 mt-2 px-6 py-3.5 rounded-xl text-sm font-bold text-white transition-all duration-200 self-start disabled:opacity-60 disabled:cursor-not-allowed"
-        style={{ background: "#0EA5E9", boxShadow: "0 4px 16px rgba(14,165,233,0.3)" }}
-        onMouseEnter={(e) => (e.currentTarget.style.boxShadow = "0 6px 22px rgba(132,204,22,0.4)")}
-        onMouseLeave={(e) => (e.currentTarget.style.boxShadow = "0 4px 16px rgba(14,165,233,0.3)")}
+        className="group inline-flex items-center justify-center gap-2 mt-2 px-7 py-4 rounded-xl text-sm font-bold text-white transition-all duration-300 self-start hover:-translate-y-0.5 hover:shadow-[0_14px_34px_-8px_rgba(14,165,233,0.5)] disabled:opacity-60 disabled:cursor-not-allowed"
+        style={{ background: "linear-gradient(120deg, #0EA5E9, #0284C7)", boxShadow: "0 10px 28px -8px rgba(14,165,233,0.4)" }}
       >
         {submitting ? "Sending…" : "Send Message"}
-        <Send size={15} />
+        <Send size={15} className="transition-transform duration-300 group-hover:translate-x-0.5" />
       </button>
     </form>
   );
@@ -321,10 +301,8 @@ function OfficeCard({
   email: string;
 }) {
   return (
-    <div
-      className="flex flex-col gap-5 rounded-3xl p-7"
-      style={{ border: "1px solid #E2E8F0", background: "#F8FAFC" }}
-    >
+    <div className="rounded-3xl p-[1.5px]" style={{ background: "linear-gradient(150deg, rgba(14,165,233,0.28), rgba(132,204,22,0.08))" }}>
+    <div className="flex flex-col gap-5 rounded-[22px] p-7 bg-white h-full">
       <div className="flex items-center gap-2.5">
         <span className="text-xl leading-none">{flag}</span>
         <div>
@@ -373,6 +351,7 @@ function OfficeCard({
         </div>
       </div>
     </div>
+    </div>
   );
 }
 
@@ -384,19 +363,17 @@ export function ContactPage() {
   );
 
   return (
-    <div className="w-full min-h-screen bg-white pt-20">
-      <div className="max-w-6xl mx-auto px-6 py-20 flex flex-col gap-16">
-        <Reveal className="flex flex-col gap-4 max-w-2xl">
-          <span className="text-xs font-bold tracking-[0.22em] uppercase text-[#0EA5E9]">Contact Us</span>
-          <h1 className="text-5xl md:text-6xl font-black text-[#0F172A] leading-tight" style={{ letterSpacing: "-0.03em" }}>
-            How Can We Help You?
-          </h1>
-          <p className="text-[#475569] text-lg leading-relaxed">
-            Tell us about your project and the right specialist on our team will get back to you —
-            usually within one business day.
-          </p>
-        </Reveal>
+    <div className="w-full min-h-screen bg-white pt-20 overflow-x-hidden">
+      <PageHero
+        eyebrow="Contact Us"
+        eyebrowIcon={MessageSquare}
+        title="How can we"
+        gradientWord="help you?"
+        sub="Tell us about your project and the right specialist on our team will get back to you — usually within one business day."
+        visual={<HeroVisual variant="connect" />}
+      />
 
+      <div className="max-w-6xl mx-auto px-6 py-20 md:py-24 flex flex-col gap-16">
         <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 items-start">
           <Reveal className="lg:col-span-3">
             <ContactForm />

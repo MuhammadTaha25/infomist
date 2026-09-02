@@ -154,6 +154,72 @@
   100% { transform: translate(0px, 0px)   scale(1); }
 }
 
+/* ── Reveal — a gentle one-shot lift on load. No opacity in the keyframes and
+   no fill-mode, so content is ALWAYS fully visible whether or not the animation
+   runs (never stuck hidden under throttling / reduced-motion / no-JS). */
+@keyframes rise-in {
+  from { transform: translateY(14px); }
+  to   { transform: translateY(0); }
+}
+.rise-in {
+  animation: rise-in 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+@media (prefers-reduced-motion: reduce) {
+  .rise-in { animation: none !important; }
+}
+
+/* ── Hero slider — cross-fade between slides ── */
+@keyframes hero-slide-in {
+  from { opacity: 0; transform: scale(1.015); }
+  to   { opacity: 1; transform: scale(1); }
+}
+.hero-slide-enter {
+  animation: hero-slide-in 0.65s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ── Hero SVG scene motion — all subtle, seamless, ~3s loops ── */
+@keyframes hero-drift {
+  0%, 100% { transform: translate3d(0, 0, 0); }
+  50%      { transform: translate3d(-10px, 6px, 0); }
+}
+@keyframes hero-pulse-dot {
+  0%, 100% { opacity: 0.25; r: 3; }
+  50%      { opacity: 1; r: 4.4; }
+}
+@keyframes hero-flow {
+  from { stroke-dashoffset: 44; }
+  to   { stroke-dashoffset: 0; }
+}
+@keyframes hero-breathe {
+  0%, 100% { opacity: 0.55; transform: scale(1); }
+  50%      { opacity: 1; transform: scale(1.06); }
+}
+@keyframes hero-sweep {
+  0%   { transform: translateX(-8%); opacity: 0; }
+  15%  { opacity: 1; }
+  85%  { opacity: 1; }
+  100% { transform: translateX(108%); opacity: 0; }
+}
+.hero-scene-drift { animation: hero-drift 9s ease-in-out infinite; transform-origin: center; }
+.hero-flow-line {
+  stroke-dasharray: 6 6;
+  animation: hero-flow 1.6s linear infinite;
+}
+.hero-pulse { animation: hero-pulse-dot 2.8s ease-in-out infinite; }
+.hero-breathe { animation: hero-breathe 3.4s ease-in-out infinite; transform-origin: center; transform-box: fill-box; }
+.hero-sweep { animation: hero-sweep 3.6s ease-in-out infinite; }
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-slide-enter,
+  .hero-scene-drift,
+  .hero-flow-line,
+  .hero-pulse,
+  .hero-breathe,
+  .hero-sweep {
+    animation: none !important;
+  }
+}
+
 [class*="replit-badge"],
 [id*="replit-badge"],
 a[href*="replit.com"],

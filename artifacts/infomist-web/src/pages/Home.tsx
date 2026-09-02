@@ -2,8 +2,7 @@ import { Hero } from "@/components/Hero";
 import { TrustBar } from "@/components/TrustBar";
 import { Services } from "@/components/Services";
 import { SocialProof } from "@/components/SocialProof";
-import { WhoWeWorkWith } from "@/components/WhoWeWorkWith";
-import { CeoHighlight } from "@/components/CeoHighlight";
+import { PersonaExplorer } from "@/components/who-we-work-with/PersonaExplorer";
 import { FounderSection } from "@/components/FounderSection";
 import { TestimonialTeaser } from "@/components/TestimonialTeaser";
 import { Insights } from "@/components/Insights";
@@ -16,11 +15,10 @@ export function HomePage() {
       <TrustBar />
       <SocialProof />
       <Services />
-      <WhoWeWorkWith />
-      <CeoHighlight />
+      <PersonaExplorer />
       <FounderSection />
       <TestimonialTeaser />
-      <Insights />
+      <Insights limit={3} />
       <HomeFaq />
     </>
   );

@@ -1,7 +1,11 @@
 import { useState, useEffect } from "react";
 import { useSearch, Link } from "wouter";
-import { Reveal, RevealGroup, RevealItem } from "@/components/Reveal";
+import { Boxes, ArrowRight } from "lucide-react";
+import { RevealGroup, RevealItem } from "@/components/Reveal";
 import { PageFaq } from "@/components/PageFaq";
+import { useMeta } from "@/components/site/useMeta";
+import { PageHero, CTAButton } from "@/components/site/primitives";
+import { HeroVisual } from "@/components/hero/HeroVisual";
 
 const SOLUTIONS_DIRECTORY_FAQS = [
   {
@@ -289,40 +293,24 @@ function ServiceCard({
   services: string[];
 }) {
   return (
-    <div className="bg-white rounded-2xl border border-slate-100 p-6 shadow-sm hover:shadow-md transition-all duration-300">
-      <h3 className="text-lg font-bold text-[#0F172A] mb-2">{title}</h3>
-      <p className="text-sm text-slate-500 leading-relaxed mb-6 pb-4 border-b border-slate-50">
-        {desc}
-      </p>
-      <ul className="flex flex-col">
-        {services.map((svc) => (
-          <li key={svc} className="text-sm text-slate-700 font-medium flex items-start gap-3 mb-3 last:mb-0">
-            <CheckIcon />
-            {svc}
-          </li>
-        ))}
-      </ul>
+    <div
+      className="group relative rounded-3xl p-[1.5px] h-full transition-transform duration-300 hover:-translate-y-1"
+      style={{ background: "linear-gradient(150deg, rgba(14,165,233,0.28), rgba(14,165,233,0.05))" }}
+    >
+      <div className="rounded-[22px] bg-white h-full p-6 md:p-7">
+        <h3 className="text-lg font-bold text-[#0F172A] mb-2">{title}</h3>
+        <p className="text-sm text-slate-500 leading-relaxed mb-6 pb-4 border-b border-slate-100">{desc}</p>
+        <ul className="flex flex-col">
+          {services.map((svc) => (
+            <li key={svc} className="text-sm text-slate-700 font-medium flex items-start gap-3 mb-3 last:mb-0">
+              <CheckIcon />
+              {svc}
+            </li>
+          ))}
+        </ul>
+      </div>
     </div>
   );
-}
-
-function useMeta(title: string, description: string) {
-  useEffect(() => {
-    const prev = document.title;
-    document.title = title;
-    let metaEl = document.querySelector<HTMLMetaElement>('meta[name="description"]');
-    const prevDesc = metaEl?.content ?? "";
-    if (!metaEl) {
-      metaEl = document.createElement("meta");
-      metaEl.name = "description";
-      document.head.appendChild(metaEl);
-    }
-    metaEl.content = description;
-    return () => {
-      document.title = prev;
-      if (metaEl) metaEl.content = prevDesc;
-    };
-  }, [title, description]);
 }
 
 export function SolutionsDirectoryPage() {
@@ -345,24 +333,18 @@ export function SolutionsDirectoryPage() {
   const active = CATEGORIES.find((c) => c.id === activeId)!;
 
   return (
-    <div className="w-full min-h-screen bg-[#F8FAFC] pt-20">
-      <div className="max-w-7xl mx-auto px-6 py-16">
+    <div className="w-full min-h-screen bg-white pt-20 overflow-x-hidden">
+      <PageHero
+        eyebrow="Solutions Directory"
+        eyebrowIcon={Boxes}
+        title="Enterprise solutions"
+        gradientWord="& architecture."
+        sub="Comprehensive engineering, AI, design, and growth infrastructure — 25 years in the making."
+        visual={<HeroVisual variant="network" />}
+      />
 
-        <Reveal className="mb-14 max-w-3xl">
-          <span className="text-xs font-bold tracking-[0.22em] uppercase text-[#0EA5E9] block mb-4">
-            Solutions Directory
-          </span>
-          <h1
-            className="text-5xl md:text-6xl font-black text-[#0F172A] leading-tight mb-5"
-            style={{ letterSpacing: "-0.03em" }}
-          >
-            Enterprise Solutions<br />& Architecture
-          </h1>
-          <p className="text-[#64748B] text-xl leading-relaxed">
-            Comprehensive engineering, AI, design, and growth infrastructure — 25 years in the making.
-          </p>
-        </Reveal>
-
+      <div className="w-full" style={{ background: "#F8FAFC" }}>
+        <div className="max-w-7xl mx-auto px-6 py-20">
         <div className="flex flex-col lg:flex-row gap-8 items-start">
 
           {/* Sidebar */}
@@ -388,39 +370,37 @@ export function SolutionsDirectoryPage() {
             </nav>
 
             <div
-              className="mt-6 rounded-2xl p-6 flex flex-col gap-4"
-              style={{ background: "linear-gradient(135deg, #0F172A 0%, #1E293B 100%)" }}
+              className="mt-6 rounded-2xl p-6 flex flex-col gap-4 relative overflow-hidden"
+              style={{ background: "linear-gradient(150deg, #0B1220 0%, #0F172A 45%, #101B2E 100%)", border: "1px solid rgba(255,255,255,0.08)" }}
             >
-              <span className="text-xs font-bold tracking-widest uppercase text-[#84CC16]">Ready to build?</span>
-              <p className="text-slate-300 text-sm leading-relaxed">
+              <span className="text-xs font-bold tracking-[0.2em] uppercase text-[#84CC16]">Ready to build?</span>
+              <p className="text-slate-400 text-sm leading-relaxed">
                 Tell us your challenge. We'll architect the solution.
               </p>
               <Link
                 href="/talk-to-strategist"
-                className="inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-sm font-bold text-white transition-all duration-150"
-                style={{ background: "#0EA5E9", boxShadow: "0 0 16px rgba(14,165,233,0.35)" }}
+                className="group inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-sm font-bold text-white transition-all duration-200 hover:-translate-y-0.5"
+                style={{ background: "linear-gradient(120deg,#0EA5E9,#0284C7)" }}
               >
                 Talk to a Strategist
-                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.2}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M5 12h14m-7-7 7 7-7 7" />
-                </svg>
+                <ArrowRight size={15} strokeWidth={2.6} className="transition-transform duration-200 group-hover:translate-x-1" />
               </Link>
             </div>
           </aside>
 
           {/* Main content */}
           <div className="flex-1 min-w-0">
-            <div className="flex items-center gap-3 mb-8">
+            <div className="flex items-center gap-3.5 mb-8">
               <div
-                className="w-11 h-11 rounded-xl flex items-center justify-center flex-shrink-0"
-                style={{ background: "rgba(14,165,233,0.08)" }}
+                className="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0"
+                style={{ background: "rgba(14,165,233,0.1)", border: "1px solid rgba(14,165,233,0.2)" }}
               >
                 {active.icon}
               </div>
               <div>
                 <h2
-                  className="text-2xl font-black text-[#0F172A]"
-                  style={{ letterSpacing: "-0.02em" }}
+                  className="text-2xl md:text-[1.7rem] font-black text-[#0F172A]"
+                  style={{ letterSpacing: "-0.03em" }}
                 >
                   {active.label}
                 </h2>
@@ -442,22 +422,18 @@ export function SolutionsDirectoryPage() {
               ))}
             </RevealGroup>
 
-            <div className="mt-10 rounded-2xl bg-white border border-slate-100 shadow-sm px-8 py-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div className="mt-10 rounded-2xl px-8 py-7 flex flex-col sm:flex-row items-center justify-between gap-4" style={{ background: "#F8FAFC", border: "1px solid #E2E8F0" }}>
               <div>
-                <p className="text-[#0F172A] font-bold text-base">Don't see what you need?</p>
+                <p className="text-[#0F172A] font-black text-lg" style={{ letterSpacing: "-0.02em" }}>Don't see what you need?</p>
                 <p className="text-[#64748B] text-sm mt-0.5">
                   We build bespoke — describe your requirement and we'll scope it.
                 </p>
               </div>
-              <Link
-                href="/talk-to-strategist"
-                className="flex-shrink-0 inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-bold text-[#0EA5E9] border-2 border-[#0EA5E9] hover:bg-[#0EA5E9] hover:text-white transition-all duration-150"
-              >
-                Talk to a Strategist
-              </Link>
+              <CTAButton href="/talk-to-strategist" variant="outline" className="!px-6 !py-3 !text-sm">Talk to a Strategist</CTAButton>
             </div>
           </div>
 
+        </div>
         </div>
       </div>
 

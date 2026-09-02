@@ -20,10 +20,32 @@ const IconChevron = ({ open }: { open: boolean }) => (
     <path d="M2.5 5l4.5 4 4.5-4" />
   </svg>
 );
+const IconAbout = () => (
+  <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="#0EA5E9" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+    <circle cx="10" cy="10" r="8" />
+    <path d="M10 13.5V9.5M10 6.5h.01" />
+  </svg>
+);
+const IconCareers = () => (
+  <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="#0EA5E9" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+    <rect x="2.5" y="5.5" width="15" height="11" rx="2" />
+    <path d="M7 5.5V4a1.5 1.5 0 0 1 1.5-1.5h3A1.5 1.5 0 0 1 13 4v1.5" />
+  </svg>
+);
+const IconAudience = () => (
+  <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="#0EA5E9" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+    <circle cx="7" cy="7" r="2.6" />
+    <path d="M2 16.5c0-2.8 2.2-5 5-5s5 2.2 5 5" />
+    <path d="M13 4.2a2.6 2.6 0 0 1 0 5.1M14.5 16.5c0-2.5-1.4-4.4-3.3-5" />
+  </svg>
+);
 
 /* ─── Company data ─── */
 const COMPANY_NAV = [
-  { icon: <IconLeader />, label: "Leadership", desc: "CEO Vardah Hisham — leadership & vision", href: "/company" },
+  { icon: <IconAbout />, label: "About Us", desc: "25 years of engineering — our story and values", href: "/about" },
+  { icon: <IconLeader />, label: "Leadership", desc: "The founder and team behind Infomist", href: "/leadership" },
+  { icon: <IconAudience />, label: "Who We Work With", desc: "The roles and problems we're built for", href: "/who-we-work-with" },
+  { icon: <IconCareers />, label: "Careers", desc: "Open roles and life at Infomist", href: "/careers" },
 ];
 
 /* ─── Solutions dropdown — 3 + 3 + 1 grid layout ─── */
@@ -246,8 +268,10 @@ function MobileMenu({ open, onClose }: { open: boolean; onClose: () => void }) {
     {
       heading: "Company",
       items: [
-        { label: "Leadership — Vardah Hisham", href: "/company" },
-        { label: "Wall of Love", href: "/company" },
+        { label: "About Us", href: "/about" },
+        { label: "Leadership", href: "/leadership" },
+        { label: "Who We Work With", href: "/who-we-work-with" },
+        { label: "Careers", href: "/careers" },
       ],
     },
     {
@@ -427,7 +451,7 @@ export function NavBar() {
             <NavItem
               label="Company"
               dropdownKey="company"
-              isActive={location === "/company"}
+              isActive={["/about", "/leadership", "/careers", "/who-we-work-with"].some((p) => location === p || location.startsWith(p + "/"))}
               activeDropdown={activeDropdown}
               setActiveDropdown={setActiveDropdown}
             >

@@ -1,9 +1,10 @@
 import { useEffect } from "react";
+import { Users } from "lucide-react";
 import { Reveal, RevealGroup, RevealItem } from "@/components/Reveal";
+import { SectionHead, accentFor } from "@/components/site/primitives";
 import { CEO, LEADERSHIP_TEAM, type TeamMember } from "@/data/teamData";
 
-/** Person + Organization JSON-LD for leadership team — improves how search engines and
- * AI answer engines understand and cite Infomist's team. */
+/** Person + Organization JSON-LD for the leadership team. */
 function useLeadershipSchema() {
   useEffect(() => {
     const people = [CEO, ...LEADERSHIP_TEAM];
@@ -11,7 +12,7 @@ function useLeadershipSchema() {
       "@context": "https://schema.org",
       "@graph": people.map((p) => ({
         "@type": "Person",
-        "@id": `https://www.infomist.com/company#${p.slug}`,
+        "@id": `https://www.infomist.com/leadership#${p.slug}`,
         name: p.name,
         jobTitle: p.role,
         description: p.bio,
@@ -30,24 +31,25 @@ function useLeadershipSchema() {
   }, []);
 }
 
-function MemberCard({ member }: { member: TeamMember }) {
+function MemberCard({ member, accent = "#0EA5E9", featured = false }: { member: TeamMember; accent?: string; featured?: boolean }) {
   return (
     <div
       id={member.slug}
-      className="flex flex-col items-center gap-4 rounded-2xl p-6 bg-white transition-all duration-200 hover:-translate-y-1"
-      style={{ border: "1px solid #E2E8F0", boxShadow: "0 1px 4px 0 rgba(15,23,42,0.04)" }}
+      className="group relative rounded-3xl p-[1.5px] h-full transition-transform duration-300 hover:-translate-y-1.5"
+      style={{ background: `linear-gradient(150deg, ${accent}3a, ${accent}0a)` }}
     >
-      <div className="w-32 h-32 rounded-full overflow-hidden flex-shrink-0" style={{ border: "3px solid rgba(14,165,233,0.15)" }}>
-        <img
-          src={member.image}
-          alt={`${member.name}, ${member.role} at Infomist`}
-          loading="lazy"
-          className="w-full h-full object-cover"
-        />
-      </div>
-      <div className="flex flex-col items-center gap-0.5 text-center">
-        <h3 className="text-base font-bold text-[#0F172A]">{member.name}</h3>
-        <p className="text-sm font-semibold text-[#0EA5E9]">{member.role}</p>
+      <div className={`rounded-[22px] bg-white h-full flex flex-col items-center gap-4 text-center ${featured ? "p-8" : "p-6"}`}>
+        <div
+          className={`${featured ? "w-36 h-36" : "w-28 h-28"} rounded-full overflow-hidden flex-shrink-0`}
+          style={{ border: `3px solid ${accent}26` }}
+        >
+          <img src={member.image} alt={`${member.name}, ${member.role} at Infomist`} loading="lazy" className="w-full h-full object-cover" />
+        </div>
+        <div className="flex flex-col items-center gap-0.5">
+          <h3 className={`${featured ? "text-xl" : "text-base"} font-bold text-[#0F172A]`}>{member.name}</h3>
+          <p className="text-sm font-semibold" style={{ color: accent }}>{member.role}</p>
+        </div>
+        {featured && <p className="text-sm text-[#475569] leading-relaxed max-w-sm">{member.bio}</p>}
       </div>
     </div>
   );
@@ -56,37 +58,25 @@ function MemberCard({ member }: { member: TeamMember }) {
 export function OurLeadership() {
   useLeadershipSchema();
 
-  const row1 = LEADERSHIP_TEAM.slice(0, 3);
-  const row2 = LEADERSHIP_TEAM.slice(3, 6);
-  const row3 = LEADERSHIP_TEAM.slice(6, 7); // last member, centered alone
-
   return (
-    <section id="our-leadership" className="w-full bg-[#F9FAFB] py-24 px-6">
-      <div className="max-w-5xl mx-auto flex flex-col gap-14">
-        <Reveal className="flex flex-col gap-4 text-center items-center">
-          <span className="text-xs font-bold tracking-[0.2em] uppercase text-[#0EA5E9]">Our Leadership</span>
-          <h2 className="text-4xl md:text-5xl font-black text-[#0F172A] leading-tight" style={{ letterSpacing: "-0.025em" }}>
-            The team behind Infomist.
-          </h2>
+    <section id="our-leadership" className="w-full" style={{ background: "#F9FAFB" }}>
+      <div className="max-w-5xl mx-auto px-6 py-24 md:py-28 flex flex-col gap-14">
+        <Reveal>
+          <SectionHead
+            icon={Users}
+            eyebrow="Our Leadership"
+            title="The team behind"
+            gradientWord="Infomist."
+            center
+          />
         </Reveal>
 
-        {/* CEO — featured on top */}
-        <Reveal className="flex justify-center">
-          <div className="w-full max-w-xs">
-            <MemberCard member={CEO} />
-          </div>
-        </Reveal>
-
-        {/* Leadership grid: 3 + 3 + 1 (centered) */}
-        <RevealGroup className="grid grid-cols-1 sm:grid-cols-3 gap-6">
-          {row1.map((m) => <RevealItem key={m.slug}><MemberCard member={m} /></RevealItem>)}
-        </RevealGroup>
-        <RevealGroup className="grid grid-cols-1 sm:grid-cols-3 gap-6">
-          {row2.map((m) => <RevealItem key={m.slug}><MemberCard member={m} /></RevealItem>)}
-        </RevealGroup>
-        <RevealGroup className="grid grid-cols-1 sm:grid-cols-3 gap-6">
-          <div className="hidden sm:block" aria-hidden="true" />
-          {row3.map((m) => <RevealItem key={m.slug}><MemberCard member={m} /></RevealItem>)}
+        <RevealGroup className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {[CEO, ...LEADERSHIP_TEAM].map((m, i) => (
+            <RevealItem key={m.slug}>
+              <MemberCard member={m} accent={accentFor(i)} />
+            </RevealItem>
+          ))}
         </RevealGroup>
       </div>
     </section>
