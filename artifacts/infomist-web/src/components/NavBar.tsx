@@ -39,12 +39,20 @@ const IconAudience = () => (
     <path d="M13 4.2a2.6 2.6 0 0 1 0 5.1M14.5 16.5c0-2.5-1.4-4.4-3.3-5" />
   </svg>
 );
+const IconPowerhouse = () => (
+  <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="#0EA5E9" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+    <circle cx="10" cy="10" r="2.4" />
+    <circle cx="10" cy="10" r="7.2" />
+    <path d="M10 2.8v2M10 15.2v2M2.8 10h2M15.2 10h2" />
+  </svg>
+);
 
 /* ─── Company data ─── */
 const COMPANY_NAV = [
   { icon: <IconAbout />, label: "About Us", desc: "25 years of engineering — our story and values", href: "/about" },
   { icon: <IconLeader />, label: "Leadership", desc: "The founder and team behind Infomist", href: "/leadership" },
   { icon: <IconAudience />, label: "Who We Work With", desc: "The roles and problems we're built for", href: "/who-we-work-with" },
+  { icon: <IconPowerhouse />, label: "Engineering Powerhouse", desc: "How one CEO runs an AI-powered company", href: "/one-man-company" },
   { icon: <IconCareers />, label: "Careers", desc: "Open roles and life at Infomist", href: "/careers" },
 ];
 
@@ -271,6 +279,7 @@ function MobileMenu({ open, onClose }: { open: boolean; onClose: () => void }) {
         { label: "About Us", href: "/about" },
         { label: "Leadership", href: "/leadership" },
         { label: "Who We Work With", href: "/who-we-work-with" },
+        { label: "Engineering Powerhouse", href: "/one-man-company" },
         { label: "Careers", href: "/careers" },
       ],
     },
@@ -451,7 +460,7 @@ export function NavBar() {
             <NavItem
               label="Company"
               dropdownKey="company"
-              isActive={["/about", "/leadership", "/careers", "/who-we-work-with"].some((p) => location === p || location.startsWith(p + "/"))}
+              isActive={["/about", "/leadership", "/careers", "/who-we-work-with", "/one-man-company"].some((p) => location === p || location.startsWith(p + "/"))}
               activeDropdown={activeDropdown}
               setActiveDropdown={setActiveDropdown}
             >
