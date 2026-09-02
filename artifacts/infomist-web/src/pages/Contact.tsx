@@ -14,7 +14,7 @@ const CONTACT_FAQS = [
   },
   {
     q: "Does Infomist have an office in Europe, or only Pakistan?",
-    a: "Both — Infomist has an Islamabad, Pakistan office (St#12, DHA Phase 1) and a Dublin, Ireland office (7 Lower Hatch Street, Dublin 2).",
+    a: "Both — Infomist is headquartered in Islamabad, Pakistan (St#12, DHA Phase 1) and has a Dublin, Ireland office (17B Main Street, Blanchardstown, Dublin 15).",
   },
   {
     q: "How soon will Infomist respond after I submit the contact form?",
@@ -383,12 +383,12 @@ export function ContactPage() {
             <Reveal delay={80}>
               <OfficeCard
                 flag="🇵🇰"
-                label="Local Office"
+                label="Headquarters"
                 heading="Pakistan"
-                address="St#12, DHA Phase 1, Islamabad"
+                address="St#12, DHA Phase 1, Islamabad, Pakistan"
                 note="Serving clients across the twin cities region (Islamabad & Rawalpindi)."
-                phone="+92 322 5098796"
-                email="fahadm@infomist.com"
+                phone="+1 (331) 296-3732"
+                email="info@infomist.com"
               />
             </Reveal>
             <Reveal delay={140}>
@@ -396,7 +396,7 @@ export function ContactPage() {
                 flag="🇮🇪"
                 label="Global Office"
                 heading="Ireland"
-                address="7 Lower Hatch Street, Dublin 2, Ireland"
+                address="1st Floor, 17B Main Street, Blanchardstown, Dublin 15, D15 EF2H, Ireland"
                 email="info@infomist.com"
               />
             </Reveal>
