@@ -18,59 +18,74 @@ export const CEO: TeamMember = {
 };
 
 /**
- * Leadership grid order (excludes CEO, shown separately above the grid):
- * Row 1: Operations Manager, CTO, AI Lead
- * Row 2: UI/UX Lead, Web Development Lead, Design Lead
- * Row 3 (4th row overall incl. CEO): Video Editing Lead, centered
+ * Leadership grid order (excludes CEO, shown separately above the grid).
+ * Ordered by organisational seniority — executives, then division leads, then craft leads:
+ * Row 1: CTO, Operations Manager, Software Development Lead
+ * Row 2: UI/UX Lead, AI Lead, Creative Lead
+ * Row 3: Content & SEO Lead, Video Editor Lead, Animation Lead
  */
 export const LEADERSHIP_TEAM: TeamMember[] = [
-  {
-    slug: "sajid-shoaib",
-    name: "Sajid Shoaib",
-    role: "Operations Manager",
-    image: IMG("sajid-shoaib-operations-manager.jpg"),
-    bio: "Sajid Shoaib leads operations at Infomist, overseeing delivery, process, and client operations across every engagement.",
-  },
   {
     slug: "fahad-mubeen",
     name: "Fahad Mubeen",
     role: "Chief Technology Officer",
-    image: IMG("fahad-mubeen-cto.jpg"),
-    bio: "Fahad Mubeen is the CTO of Infomist, leading software architecture and engineering strategy across web, mobile, and AI systems.",
+    image: IMG("fahad-mubeen-cto.webp"),
+    bio: "Fahad Mubeen is the Chief Technology Officer at Infomist, leading software architecture and engineering strategy across web, mobile, and AI systems.",
+  },
+  {
+    slug: "sajid-shoaib",
+    name: "Sajid Shoaib",
+    role: "Operations Manager",
+    image: IMG("sajid-shoaib-operations-manager.webp"),
+    bio: "Sajid Shoaib is the Operations Manager at Infomist, overseeing project delivery, process, and client operations across every engagement.",
   },
   {
     slug: "muhammad-taha",
     name: "Muhammad Taha",
-    role: "AI Lead",
-    image: IMG("muhammad-taha-ai-lead.jpg"),
-    bio: "Muhammad Taha leads AI and machine learning engineering at Infomist, building production-grade AI agents and automation systems.",
+    role: "Software Development Lead",
+    image: IMG("muhammad-taha-software-development-lead.webp"),
+    bio: "Muhammad Taha is the Software Development Lead at Infomist, building fast, scalable web and mobile applications for clients in the US, UK, and Canada.",
   },
   {
-    slug: "hajra-naz",
-    name: "Hajra Naz",
+    slug: "uzair-ahmad",
+    name: "Uzair Ahmad",
     role: "UI/UX Lead",
-    image: IMG("hajra-naz-uiux-lead.jpg"),
-    bio: "Hajra Naz leads UI/UX design at Infomist, designing usable, conversion-focused interfaces grounded in research.",
+    image: IMG("uzair-ahmad-uiux-lead.webp"),
+    bio: "Uzair Ahmad is the UI/UX Lead at Infomist, designing research-driven, conversion-focused interfaces for web and mobile products.",
   },
   {
-    slug: "hassan-khan",
-    name: "Hassan Khan",
-    role: "Web Development Lead",
-    image: IMG("hassan-khan-web-development-lead.jpg"),
-    bio: "Hassan Khan leads web development at Infomist, building fast, scalable websites and web applications.",
+    slug: "murtaza-majid",
+    name: "Murtaza Majid",
+    role: "AI Lead",
+    image: IMG("murtaza-majid-ai-lead.webp"),
+    bio: "Murtaza Majid is the AI Lead at Infomist, building production-grade AI agents, automation, and machine learning systems.",
   },
   {
     slug: "hadi-khan",
     name: "Hadi Khan",
-    role: "Design Lead",
-    image: IMG("hadi-khan-design-lead.jpg"),
-    bio: "Hadi Khan leads brand and graphic design at Infomist, shaping visual identity across client projects.",
+    role: "Creative Lead",
+    image: IMG("hadi-khan-creative-lead.webp"),
+    bio: "Hadi Khan is the Creative Lead at Infomist, shaping brand identity and visual design across client projects.",
+  },
+  {
+    slug: "hajra-naz",
+    name: "Hajra Naz",
+    role: "Content & SEO Lead",
+    image: IMG("hajra-naz-content-seo-lead.webp"),
+    bio: "Hajra Naz is the Content & SEO Lead at Infomist, driving content strategy and search engine optimization for client campaigns.",
+  },
+  {
+    slug: "zahid-hussain",
+    name: "Zahid Hussain",
+    role: "Video Editor Lead",
+    image: IMG("zahid-hussain-video-editor-lead.webp"),
+    bio: "Zahid Hussain is the Video Editor Lead at Infomist, producing on-brand video content for clients across industries.",
   },
   {
     slug: "sarfaraz-abbas",
     name: "Sarfaraz Abbas",
-    role: "Video Editing Lead",
-    image: IMG("sarfaraz-abbas-video-editing-lead.jpg"),
-    bio: "Sarfaraz Abbas leads video editing at Infomist, producing on-brand video content for clients across industries.",
+    role: "Animation Lead",
+    image: IMG("sarfaraz-abbas-animation-lead.webp"),
+    bio: "Sarfaraz Abbas is the Animation Lead at Infomist, creating motion graphics and animated content for brands and campaigns.",
   },
 ];
