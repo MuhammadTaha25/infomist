@@ -21,11 +21,9 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { toast } from "sonner";
 import type { Author } from "../types";
 import { useBlogging, uid } from "../store";
-import { avatarDataUri } from "../utils/placeholder";
 
 const EMPTY = (): Author => ({
   id: "",
@@ -54,7 +52,6 @@ export function AuthorFormDialog({
 }) {
   const { dispatch } = useBlogging();
   const [form, setForm] = React.useState<Author>(EMPTY());
-  const fileRef = React.useRef<HTMLInputElement>(null);
 
   React.useEffect(() => {
     if (open) setForm(author ? { ...author } : EMPTY());
@@ -63,24 +60,17 @@ export function AuthorFormDialog({
   const set = (patch: Partial<Author>) => setForm((f) => ({ ...f, ...patch }));
   const setSocial = (patch: Partial<Author["social"]>) => setForm((f) => ({ ...f, social: { ...f.social, ...patch } }));
 
-  function pickAvatar(files: FileList | null) {
-    const file = files?.[0];
-    if (!file) return;
-    const reader = new FileReader();
-    reader.onload = () => set({ avatar: typeof reader.result === "string" ? reader.result : "" });
-    reader.readAsDataURL(file);
-  }
-
   function save() {
     if (!form.name.trim()) {
       toast.error("Name is required");
       return;
     }
+    // Authors are represented by name only — no avatar is stored or generated.
     const finalAuthor: Author = {
       ...form,
       id: form.id || uid("au"),
       displayName: form.displayName || form.name,
-      avatar: form.avatar || avatarDataUri(form.name),
+      avatar: "",
     };
     if (author) dispatch({ type: "author/update", id: finalAuthor.id, patch: finalAuthor });
     else dispatch({ type: "author/create", author: finalAuthor });
@@ -102,18 +92,6 @@ export function AuthorFormDialog({
         <ScrollArea className="max-h-[60vh] pr-3">
           <div className="space-y-4">
             <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Basic information</p>
-            <div className="flex items-center gap-3">
-              <Avatar className="h-14 w-14">
-                <AvatarImage src={form.avatar || avatarDataUri(form.name || "A")} alt="" />
-                <AvatarFallback>{(form.name || "A").slice(0, 2)}</AvatarFallback>
-              </Avatar>
-              <div>
-                <Button size="sm" variant="outline" onClick={() => fileRef.current?.click()}>
-                  Profile image
-                </Button>
-                <input ref={fileRef} type="file" accept="image/*" hidden onChange={(e) => pickAvatar(e.target.files)} />
-              </div>
-            </div>
             <div className="grid gap-3 sm:grid-cols-2">
               <Field label="Full name">
                 <Input value={form.name} onChange={(e) => set({ name: e.target.value })} />

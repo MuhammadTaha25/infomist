@@ -1,4 +1,5 @@
-import { Link } from "wouter";
+import type { MouseEvent } from "react";
+import { Link, useLocation } from "wouter";
 import { ArrowRight, Info, Lightbulb, AlertTriangle, CheckCircle2, XCircle } from "lucide-react";
 import type { Block, CalloutKind } from "@/blogging/types";
 
@@ -22,8 +23,25 @@ export function ArticleBody({
   blocks: Block[];
   resolveMedia: MediaResolver;
 }) {
+  const [, navigate] = useLocation();
+
+  // Inline links inside rich-text run through dangerouslySetInnerHTML, so they
+  // render as plain <a>. Intercept clicks on internal ones (same-origin path,
+  // not target=_blank) and route them through wouter for real SPA navigation.
+  function handleClick(e: MouseEvent<HTMLDivElement>) {
+    if (e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey) return;
+    const anchor = (e.target as HTMLElement).closest("a");
+    if (!anchor) return;
+    const href = anchor.getAttribute("href") ?? "";
+    const external = anchor.getAttribute("target") === "_blank" || /^https?:\/\//i.test(href);
+    if (!external && href.startsWith("/")) {
+      e.preventDefault();
+      navigate(href);
+    }
+  }
+
   return (
-    <div className="flex flex-col gap-6">
+    <div className="flex flex-col gap-6" onClick={handleClick}>
       {blocks.map((b) => (
         <BlockView key={b.id} block={b} resolveMedia={resolveMedia} />
       ))}
@@ -60,12 +78,18 @@ const PROSE_A =
 function BlockView({ block: b, resolveMedia }: { block: Block; resolveMedia: MediaResolver }) {
   switch (b.type) {
     case "heading": {
+      // Preserve the semantic level authored in /blogging (h2 / h3 / h4).
+      // The article's single <h1> is the post title, rendered by InsightDetail.
+      const level = b.level === 4 ? 4 : b.level === 3 ? 3 : 2;
+      const Tag = `h${level}` as "h2" | "h3" | "h4";
       const cls =
-        b.level === 2
+        level === 2
           ? "text-2xl md:text-3xl font-black text-[#0F172A] leading-tight mt-4"
-          : "text-xl md:text-2xl font-bold text-[#0F172A] leading-snug mt-2";
+          : level === 3
+            ? "text-xl md:text-2xl font-bold text-[#0F172A] leading-snug mt-2"
+            : "text-lg md:text-xl font-bold text-[#0F172A] leading-snug mt-1";
       return (
-        <h2
+        <Tag
           className={cls}
           style={{ letterSpacing: "-0.02em" }}
           dangerouslySetInnerHTML={{ __html: normaliseHtml(b.html ?? "") }}

@@ -146,6 +146,19 @@ export const featureMedia: Media[] = [
   feat("md_ins_dm", "ai-automation-digital-marketing", "AI automation in the marketing stack"),
   feat("md_ins_seo", "ai-automation-seo", "How AI automation reshapes SEO work"),
   feat("md_ins_saas", "ai-automation-saas", "Building AI automation into SaaS products"),
+  {
+    id: "md_ins_workflows",
+    filename: "ai-automation-modern-business-workflows.svg",
+    url: `${BASE}insights/ai-automation-modern-business-workflows.svg`,
+    type: "image",
+    alt: "AI automation transforming modern business workflows",
+    caption: "AI automation transforming modern business workflows",
+    width: 1200,
+    height: 675,
+    mime: "image/svg+xml",
+    size: 4_200,
+    createdAt: iso(-1),
+  },
 ];
 
 /* ── Demo post blocks ──────────────────────────────────────────────────── */
@@ -585,7 +598,146 @@ const libraryPosts: Post[] = [
   }),
 ];
 
+/* Verified end-to-end test article — authored in /blogging, published through the
+ * approval flow, and consumed by the public Insights section via insightsBridge.
+ * Author (Hassan Khan) and category (AI Automation) are stored on the post; there
+ * is no author→category restriction anywhere. */
+const workflowsTestPost: Post = p({
+  id: "post_workflows_e2e",
+  title: "How AI Automation Is Transforming Modern Business Workflows",
+  slug: "how-ai-automation-is-transforming-modern-business-workflows",
+  authorId: "au_hassan",
+  categoryId: "cat_ai",
+  status: "published",
+  publishedAt: iso(-0.01),
+  createdAt: iso(-0.05),
+  updatedAt: iso(-0.01),
+  tagIds: ["tag_ai", "tag_auto", "tag_bizauto", "tag_prod"],
+  featuredImageId: "md_ins_workflows",
+  excerpt:
+    "AI automation is changing how modern businesses handle repetitive tasks, customer interactions, and internal operations. A practical look at where it creates the most value, how AI agents fit into existing workflows, and how to build a strategy that starts with a real business problem.",
+  internalLinks: [
+    { id: "wil1", label: "Explore our services", href: "/solutions" },
+    { id: "wil2", label: "Case studies", href: "/case-studies" },
+    { id: "wil3", label: "AI Automation Services", href: "/solutions/ai-automation-services" },
+  ],
+  externalLinks: [
+    { id: "wel1", label: "OpenAI platform documentation", href: "https://platform.openai.com/docs" },
+  ],
+  blocks: [
+    {
+      id: "w_intro",
+      type: "paragraph",
+      html:
+        "AI automation is changing the way modern businesses handle repetitive tasks, customer interactions, internal operations, and decision-making. Instead of replacing every existing workflow, intelligent automation can connect the tools teams already use and make routine processes faster, more consistent, and easier to manage.",
+    },
+    { id: "w_h2_why", type: "heading", level: 2, html: "Why Businesses Are Adopting AI Automation" },
+    {
+      id: "w_why_1",
+      type: "paragraph",
+      html:
+        "Most teams don't adopt automation because it is fashionable — they adopt it because the same work keeps landing on the same desks. Inbound requests get triaged by hand, data is copied between systems, approvals are chased over email, and reports are rebuilt every week from scratch. <strong>AI automation absorbs that load</strong> so people spend their time on judgement instead of repetition.",
+    },
+    {
+      id: "w_why_2",
+      type: "paragraph",
+      html:
+        "The shift is also about consistency. A well-designed automated step follows the same rules every time, which makes outcomes easier to predict and audit. <em>The goal is not fewer people — it is less friction between a request and a resolved outcome.</em>",
+    },
+    { id: "w_h2_where", type: "heading", level: 2, html: "Where AI Automation Creates the Most Value" },
+    {
+      id: "w_where_lead",
+      type: "paragraph",
+      html:
+        "Automation pays off fastest where the work is high-volume, rules-based, and low-risk. Three areas consistently deliver the clearest return.",
+    },
+    { id: "w_h3_support", type: "heading", level: 3, html: "Customer Support Automation" },
+    {
+      id: "w_support_p",
+      type: "paragraph",
+      html:
+        "Automated assistants can answer common questions instantly, gather the details a case needs before it reaches a person, and route each conversation to the right team. Human agents stay focused on complex, high-emotion, or high-value cases where their judgement matters most.",
+    },
+    { id: "w_h3_internal", type: "heading", level: 3, html: "Internal Workflow Automation" },
+    {
+      id: "w_internal_p",
+      type: "paragraph",
+      html:
+        "Repetitive internal processes — onboarding steps, procurement requests, status updates, and data entry between tools — can be connected into a single flow. Each step runs the moment the previous one finishes, with a person approving anything sensitive before it is committed.",
+    },
+    { id: "w_h3_data", type: "heading", level: 3, html: "Data Processing and Reporting" },
+    {
+      id: "w_data_p",
+      type: "paragraph",
+      html:
+        "Automation can collect information from the systems that already hold it, organise it into a consistent shape, and surface the numbers a team needs on a schedule. That removes the weekly scramble to assemble a report and reduces copy-paste errors.",
+    },
+    {
+      id: "w_bullets",
+      type: "list",
+      ordered: false,
+      html:
+        "<li>Reduce repetitive manual work</li><li>Improve workflow consistency</li><li>Connect business systems</li><li>Accelerate routine processes</li><li>Make information easier to access</li>",
+    },
+    { id: "w_h2_agents", type: "heading", level: 2, html: "How AI Agents Fit Into Business Workflows" },
+    {
+      id: "w_agents_p",
+      type: "paragraph",
+      html:
+        "An AI agent is the reasoning layer that decides what to do next. It reads a request, chooses an action, calls the relevant tool or API, checks the result, and either continues or hands off to a person. The agent does not replace your systems of record — it operates them through the same interfaces a member of staff would use, which keeps every action traceable and reversible.",
+    },
+    {
+      id: "w_agents_lead",
+      type: "paragraph",
+      html: "A practical automation strategy can begin with a short, repeatable sequence:",
+    },
+    {
+      id: "w_steps",
+      type: "list",
+      ordered: true,
+      html:
+        "<li>Identify repetitive workflows</li><li>Define the desired outcome</li><li>Select the right tools</li><li>Connect the workflow</li><li>Monitor and improve the process</li>",
+    },
+    { id: "w_h2_strategy", type: "heading", level: 2, html: "Building an Effective AI Automation Strategy" },
+    {
+      id: "w_strategy_p",
+      type: "paragraph",
+      html:
+        "Effective automation starts with a clear business problem, not with a decision to add AI. Pick one workflow where the cost of the manual version is measurable, agree what a good outcome looks like, and automate the smallest useful slice first. Keep a human approval gate until the error rate is measured against the manual baseline, then widen the scope. <a data-internal=\"true\" href=\"/solutions\">Explore our services</a> to see how this maps to specific engagements, and review real <a data-internal=\"true\" href=\"/case-studies\">case studies</a> for examples of automation in production.",
+    },
+    {
+      id: "w_strategy_ext",
+      type: "paragraph",
+      html:
+        "For a vendor-neutral primer on model capabilities, rate limits, and safe usage patterns, <a data-external=\"true\" href=\"https://platform.openai.com/docs\" target=\"_blank\" rel=\"noopener noreferrer\">OpenAI's platform documentation</a> is a useful reference.",
+    },
+    {
+      id: "w_quote",
+      type: "quote",
+      html:
+        "The teams that succeed with AI automation treat it as an operations discipline — they measure hours recovered and error rate, not novelty.",
+      citation: "The Infomist Automation Library",
+    },
+    { id: "w_h2_final", type: "heading", level: 2, html: "Final Thoughts" },
+    {
+      id: "w_final_p",
+      type: "paragraph",
+      html:
+        "AI automation is most valuable when it solves a clear operational problem and fits naturally into the way an organisation already works. Start narrow, keep a person in the loop, measure the result against the manual baseline, and expand only the workflows that hold their quality. Done that way, automation compounds — each connected process makes the next one easier to build, and the team spends more of its time on the work that actually needs judgement.",
+    },
+  ],
+  seo: {
+    title: "How AI Automation Is Transforming Modern Business Workflows",
+    description:
+      "How AI automation streamlines customer support, internal workflows, and reporting — where it creates value and how to build a practical strategy.",
+    focusKeyword: "AI automation",
+    canonical:
+      "https://www.infomist.com/insights/how-ai-automation-is-transforming-modern-business-workflows",
+  },
+});
+
 export const seedPosts: Post[] = [
+  workflowsTestPost,
   ...libraryPosts,
   p({
     id: "post_demo",

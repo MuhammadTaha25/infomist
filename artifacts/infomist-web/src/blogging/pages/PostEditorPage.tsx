@@ -133,18 +133,21 @@ export function PostEditorPage() {
 
   return (
     <div className="flex min-h-screen flex-col bg-background">
-      {/* top bar */}
-      <header className="sticky top-0 z-20 flex h-14 items-center gap-2 border-b border-border bg-background px-3 sm:px-4">
-        <Button variant="ghost" size="sm" onClick={() => navigate("/posts")}>
+      {/* top bar — scrolls horizontally on very narrow screens instead of
+          widening the page (keeps every action reachable on mobile) */}
+      <header className="sticky top-0 z-20 flex h-14 items-center gap-2 overflow-x-auto border-b border-border bg-background px-3 sm:px-4">
+        <Button variant="ghost" size="sm" className="flex-shrink-0" onClick={() => navigate("/posts")}>
           <ArrowLeft className="h-4 w-4" /> <span className="hidden sm:inline">Back to Posts</span>
         </Button>
-        <Separator orientation="vertical" className="mx-1 h-5" />
-        <StatusBadge status={post.status} publishedAt={post.publishedAt} />
+        <Separator orientation="vertical" className="mx-1 h-5 flex-shrink-0" />
+        <div className="flex-shrink-0">
+          <StatusBadge status={post.status} publishedAt={post.publishedAt} />
+        </div>
         <span className="hidden text-xs text-muted-foreground md:inline">
           {words} words · {readingTime(post.blocks)} min read
         </span>
 
-        <div className="ml-auto flex items-center gap-1.5">
+        <div className="ml-auto flex flex-shrink-0 items-center gap-1.5">
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="outline" size="sm">

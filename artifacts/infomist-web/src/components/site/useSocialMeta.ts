@@ -9,6 +9,8 @@ interface SocialMeta {
   path: string;
   /** path under /public (e.g. "/og/persona-ceos-founders.jpg") or absolute URL */
   image?: string;
+  /** og:type — "website" (default) or "article" for blog posts */
+  type?: "website" | "article";
 }
 
 function abs(v: string) {
@@ -41,7 +43,7 @@ function setMeta(attr: "property" | "name", key: string, value: string) {
  * static tags from index.html. Fine for Google; for full coverage the routes
  * would need prerendering / SSR.
  */
-export function useSocialMeta({ title, description, path, image }: SocialMeta) {
+export function useSocialMeta({ title, description, path, image, type = "website" }: SocialMeta) {
   useEffect(() => {
     const url = abs(path);
     const img = abs(image ?? "/opengraph.jpg");
@@ -51,7 +53,7 @@ export function useSocialMeta({ title, description, path, image }: SocialMeta) {
       setMeta("property", "og:description", description),
       setMeta("property", "og:url", url),
       setMeta("property", "og:image", img),
-      setMeta("property", "og:type", "website"),
+      setMeta("property", "og:type", type),
       setMeta("name", "twitter:title", title),
       setMeta("name", "twitter:description", description),
       setMeta("name", "twitter:image", img),
@@ -73,5 +75,5 @@ export function useSocialMeta({ title, description, path, image }: SocialMeta) {
       if (createdCanonical) canonical?.remove();
       else if (prevCanonical) canonical?.setAttribute("href", prevCanonical);
     };
-  }, [title, description, path, image]);
+  }, [title, description, path, image, type]);
 }

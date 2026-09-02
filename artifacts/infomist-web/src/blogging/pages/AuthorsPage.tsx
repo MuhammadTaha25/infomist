@@ -4,7 +4,6 @@ import { Plus, Pencil, Trash2, MoreHorizontal, Globe, Linkedin, Twitter } from "
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -47,10 +46,6 @@ export function AuthorsPage() {
           <Card key={a.id} className="flex flex-col">
             <CardContent className="flex flex-1 flex-col gap-3 p-5">
               <div className="flex items-start gap-3">
-                <Avatar className="h-12 w-12">
-                  <AvatarImage src={a.avatar} alt={a.name} />
-                  <AvatarFallback>{a.name.slice(0, 2)}</AvatarFallback>
-                </Avatar>
                 <div className="min-w-0 flex-1">
                   <Link href={`/authors/${a.id}`} className="font-semibold text-foreground hover:text-primary hover:underline">
                     {a.displayName}

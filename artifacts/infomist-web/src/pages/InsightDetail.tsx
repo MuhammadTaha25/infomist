@@ -43,6 +43,7 @@ export function InsightDetailPage() {
     description: article?.seo.description ?? "",
     path: `/insights/${slug}`,
     image: article?.featureImage?.url,
+    type: "article",
   });
 
   if (!article) {

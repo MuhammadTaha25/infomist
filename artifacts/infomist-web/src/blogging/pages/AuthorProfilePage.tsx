@@ -2,7 +2,6 @@ import { useParams, useLocation, Link } from "wouter";
 import { ArrowLeft, Globe, Linkedin, Twitter, Pencil } from "lucide-react";
 import * as React from "react";
 import { Button } from "@/components/ui/button";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import {
@@ -45,10 +44,6 @@ export function AuthorProfilePage() {
 
       <Card>
         <CardContent className="flex flex-col gap-4 p-6 sm:flex-row sm:items-start">
-          <Avatar className="h-20 w-20">
-            <AvatarImage src={author.avatar} alt={author.name} />
-            <AvatarFallback className="text-lg">{author.name.slice(0, 2)}</AvatarFallback>
-          </Avatar>
           <div className="flex-1 space-y-2">
             <div className="flex flex-wrap items-center gap-2">
               <h1 className="text-xl font-semibold text-foreground">{author.displayName}</h1>

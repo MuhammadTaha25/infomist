@@ -2,7 +2,6 @@ import * as React from "react";
 import { cn } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import type { PostStatus } from "../types";
 import { STATUS_META, effectiveStatus } from "../utils/format";
 import { useAuthor, useMediaItem } from "../store";
@@ -110,17 +109,8 @@ export function EmptyState({
 export function AuthorCell({ authorId }: { authorId: string }) {
   const author = useAuthor(authorId);
   if (!author) return <span className="text-muted-foreground">Unknown</span>;
-  return (
-    <div className="flex items-center gap-2">
-      <Avatar className="h-6 w-6">
-        <AvatarImage src={author.avatar} alt={author.name} />
-        <AvatarFallback className="text-[10px]">
-          {author.name.split(" ").map((n) => n[0]).join("")}
-        </AvatarFallback>
-      </Avatar>
-      <span className="truncate text-sm">{author.displayName}</span>
-    </div>
-  );
+  // Authors are represented by name only — no avatars / profile photos.
+  return <span className="truncate text-sm">{author.displayName}</span>;
 }
 
 export function Thumb({ mediaId, className }: { mediaId: string | null; className?: string }) {

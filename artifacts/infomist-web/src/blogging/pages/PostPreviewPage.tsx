@@ -4,7 +4,6 @@ import { ArrowLeft, Monitor, Tablet, Smartphone, Clock, Pencil } from "lucide-re
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Separator } from "@/components/ui/separator";
 import { usePost, useAuthor, useCategory, useMediaItem, usePosts, useTags } from "../store";
 import { BlocksView } from "../components/blocks/BlockView";
@@ -79,19 +78,14 @@ export function PostPreviewPage() {
 
           {post.excerpt ? <p className="mt-3 text-lg text-muted-foreground">{post.excerpt}</p> : null}
 
-          <div className="mt-5 flex items-center gap-3">
-            <Avatar className="h-9 w-9">
-              <AvatarImage src={author?.avatar} alt={author?.name} />
-              <AvatarFallback>{author?.name.slice(0, 2) ?? "?"}</AvatarFallback>
-            </Avatar>
-            <div className="text-sm">
-              <p className="font-medium text-foreground">By {author?.displayName ?? "Unknown"}</p>
-              <p className="flex items-center gap-1.5 text-xs text-muted-foreground">
-                {formatDate(post.publishedAt ?? post.updatedAt, { month: "long", day: "numeric", year: "numeric" })}
-                <span>·</span>
-                <Clock className="h-3 w-3" /> {readingTime(post.blocks)} min read
-              </p>
-            </div>
+          {/* Authors are represented by name only — no avatars / profile photos. */}
+          <div className="mt-5 text-sm">
+            <p className="font-medium text-foreground">By {author?.displayName ?? "Unknown"}</p>
+            <p className="mt-0.5 flex items-center gap-1.5 text-xs text-muted-foreground">
+              {formatDate(post.publishedAt ?? post.updatedAt, { month: "long", day: "numeric", year: "numeric" })}
+              <span>·</span>
+              <Clock className="h-3 w-3" /> {readingTime(post.blocks)} min read
+            </p>
           </div>
 
           {featured?.url ? (
