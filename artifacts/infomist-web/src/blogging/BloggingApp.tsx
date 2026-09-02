@@ -1,8 +1,12 @@
 import { Switch, Route, Redirect } from "wouter";
 import { Toaster } from "sonner";
+import { LogOut } from "lucide-react";
 import { SidebarInset, SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { Separator } from "@/components/ui/separator";
+import { Button } from "@/components/ui/button";
 import { BloggingProvider } from "./store";
+import { BloggingAuthProvider, useBloggingAuth } from "./auth";
+import { AuthGate } from "./AuthGate";
 import { BloggingSidebar } from "./components/BloggingSidebar";
 import { DashboardPage } from "./pages/DashboardPage";
 import { PostsPage } from "./pages/PostsPage";
@@ -27,6 +31,7 @@ function Shell() {
           <SidebarTrigger className="-ml-1" />
           <Separator orientation="vertical" className="mr-1 h-5" />
           <span className="text-sm font-medium text-muted-foreground">Blogging</span>
+          <HeaderAccount />
         </header>
         <div className="min-w-0 flex-1 p-4 sm:p-6 lg:p-8">
           <div className="mx-auto w-full max-w-6xl space-y-6">
@@ -60,19 +65,36 @@ function PostsListRoute() {
   return <PostsPage scope="all" />;
 }
 
+function HeaderAccount() {
+  const { email, logout } = useBloggingAuth();
+  return (
+    <div className="ml-auto flex items-center gap-2">
+      {email && <span className="hidden text-xs text-muted-foreground sm:inline">{email}</span>}
+      <Button variant="ghost" size="sm" onClick={logout} className="gap-1.5 text-muted-foreground">
+        <LogOut className="h-4 w-4" />
+        <span className="hidden sm:inline">Sign out</span>
+      </Button>
+    </div>
+  );
+}
+
 export function BloggingApp() {
   return (
-    <BloggingProvider>
-      <div className="min-h-screen bg-background font-sans text-foreground">
-        <Switch>
-          {/* Editor & preview take the whole viewport — no sidebar chrome. */}
-          <Route path="/posts/new" component={PostEditorPage} />
-          <Route path="/posts/:id/edit" component={PostEditorPage} />
-          <Route path="/posts/:id/preview" component={PostPreviewPage} />
-          <Route component={Shell} />
-        </Switch>
-      </div>
+    <BloggingAuthProvider>
+      <AuthGate>
+        <BloggingProvider>
+          <div className="min-h-screen bg-background font-sans text-foreground">
+            <Switch>
+              {/* Editor & preview take the whole viewport — no sidebar chrome. */}
+              <Route path="/posts/new" component={PostEditorPage} />
+              <Route path="/posts/:id/edit" component={PostEditorPage} />
+              <Route path="/posts/:id/preview" component={PostPreviewPage} />
+              <Route component={Shell} />
+            </Switch>
+          </div>
+        </BloggingProvider>
+      </AuthGate>
       <Toaster position="bottom-right" richColors closeButton />
-    </BloggingProvider>
+    </BloggingAuthProvider>
   );
 }
