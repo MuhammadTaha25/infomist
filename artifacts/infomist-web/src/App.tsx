@@ -17,6 +17,7 @@ import { SubcategoryPage } from "@/pages/SubcategoryPage";
 import { CategoryPage } from "@/pages/CategoryPage";
 import { WhoWeWorkWithPage } from "@/pages/WhoWeWorkWithPage";
 import { PersonaPage } from "@/pages/PersonaPage";
+import { InsightDetailPage } from "@/pages/InsightDetail";
 import { CATEGORIES } from "@/data/solutionsData";
 import { ScrollToTop } from "@/components/ScrollToTop";
 import { BloggingApp } from "@/blogging/BloggingApp";
@@ -43,6 +44,12 @@ function SolutionsRouter() {
 function JobDetailRouter() {
   const { slug } = useParams<{ slug: string }>();
   return <JobDetailPage key={slug} />;
+}
+
+/** Keyed remount so per-article state (meta, content) resets between insights. */
+function InsightRouter() {
+  const { slug } = useParams<{ slug: string }>();
+  return <InsightDetailPage key={slug} />;
 }
 
 function NotFound() {
@@ -97,6 +104,8 @@ function MarketingSite() {
               <Route path="/contact" component={ContactPage} />
               <Route path="/talk-to-strategist" component={TalkToStrategistPage} />
               <Route path="/resources" component={ResourcesPage} />
+              <Route path="/insights" >{() => <Redirect to="/resources" />}</Route>
+              <Route path="/insights/:slug" component={InsightRouter} />
               <Route path="/solutions-directory" component={SolutionsDirectoryPage} />
               {/* /solutions/:slug routes to CategoryPage or SubcategoryPage via SolutionsRouter */}
               <Route path="/solutions/:slug" component={SolutionsRouter} />

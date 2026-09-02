@@ -200,6 +200,16 @@ export interface Seo {
   canonical: string;
 }
 
+/* ── Links ──────────────────────────────────────────────────────────────── */
+
+/** A link recorded on the post (in addition to any links inside block content). */
+export interface LinkRef {
+  id: string;
+  label: string;
+  /** internal: a site path ("/solutions/…"); external: an absolute URL */
+  href: string;
+}
+
 /* ── Post ───────────────────────────────────────────────────────────────── */
 
 export interface Post {
@@ -213,6 +223,10 @@ export interface Post {
   featuredImageId: string | null;
   excerpt: string;
   blocks: Block[];
+  /** curated internal links for this post (site pages) */
+  internalLinks: LinkRef[];
+  /** curated outbound links for this post (external sites) */
+  externalLinks: LinkRef[];
   seo: Seo;
   status: PostStatus;
   visibility: Visibility;

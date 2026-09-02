@@ -16,16 +16,32 @@ import { effectiveStatus, slugify, uid } from "./utils/format";
 
 const STORAGE_KEY = "infomist.blogging.v1";
 
+/**
+ * Keep every stored entity (user edits win) and add any seed entity whose id
+ * isn't present yet, so new starter content — authors, categories, posts —
+ * shows up for people who already have saved state. A seed item the user
+ * deleted will reappear on reload; that's the intended "starter content" model.
+ */
+function mergeById<T extends { id: string }>(seed: T[], stored?: T[]): T[] {
+  if (!stored || !Array.isArray(stored)) return seed;
+  const have = new Set(stored.map((x) => x.id));
+  return [...stored, ...seed.filter((s) => !have.has(s.id))];
+}
+
 function load(): BloggingState {
   if (typeof window === "undefined") return seedState;
   try {
     const raw = window.localStorage.getItem(STORAGE_KEY);
     if (!raw) return seedState;
     const parsed = JSON.parse(raw) as Partial<BloggingState>;
-    // shallow merge so new seed keys survive older saved state
     return {
       ...seedState,
       ...parsed,
+      authors: mergeById(seedState.authors, parsed.authors),
+      categories: mergeById(seedState.categories, parsed.categories),
+      tags: mergeById(seedState.tags, parsed.tags),
+      media: mergeById(seedState.media, parsed.media),
+      posts: mergeById(seedState.posts, parsed.posts),
       settings: { ...seedState.settings, ...(parsed.settings ?? {}) },
     };
   } catch {
@@ -269,6 +285,8 @@ export function newPost(settings: Settings): Post {
     featuredImageId: null,
     excerpt: "",
     blocks: [{ id: uid("b"), type: "paragraph", html: "" }],
+    internalLinks: [],
+    externalLinks: [],
     seo: { title: "", description: "", focusKeyword: "", canonical: "" },
     status: "draft",
     visibility: "public",

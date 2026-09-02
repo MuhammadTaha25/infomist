@@ -87,8 +87,13 @@ export function PostEditorPage() {
     toast.success("Submitted for review");
   };
   const approve = () => {
-    dispatch({ type: "post/status", id: doc.id, status: "draft" });
-    toast.success("Approved — ready to schedule or publish");
+    dispatch({
+      type: "post/status",
+      id: doc.id,
+      status: "published",
+      publishedAt: new Date().toISOString(),
+    });
+    toast.success("Approved & published", { description: doc.title || "Untitled" });
   };
   const requestChanges = () => {
     dispatch({ type: "post/status", id: doc.id, status: "draft" });
