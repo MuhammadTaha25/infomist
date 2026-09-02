@@ -1,7 +1,6 @@
 import { Link } from "wouter";
 import { ArrowUpRight, Users } from "lucide-react";
 import { useMeta } from "@/components/site/useMeta";
-import { FounderSection } from "@/components/FounderSection";
 import { OurLeadership } from "@/components/OurLeadership";
 import { HeroVisual } from "@/components/hero/HeroVisual";
 
@@ -29,7 +28,7 @@ export function LeadershipPage() {
         <div aria-hidden="true" className="pointer-events-none absolute top-4 right-0 w-[360px] h-[360px] rounded-full" style={{ background: "radial-gradient(circle, rgba(132,204,22,0.12) 0%, transparent 70%)", filter: "blur(38px)" }} />
 
         <HeroVisual variant="squad" />
-        <div className="relative z-10 max-w-6xl mx-auto px-6 pt-14 pb-14 md:pt-20 md:pb-16">
+        <div className="relative z-10 max-w-6xl mx-auto px-6 pt-14 pb-16 md:pt-20 md:pb-24">
           <div className="flex flex-col gap-5 max-w-xl">
             <div className="flex items-center gap-2.5">
               <span className="w-8 h-8 rounded-xl flex items-center justify-center text-[#0EA5E9]" style={{ background: "rgba(14,165,233,0.08)", border: "1px solid rgba(14,165,233,0.16)" }}>
@@ -55,7 +54,6 @@ export function LeadershipPage() {
         </div>
       </section>
 
-      <FounderSection />
       <OurLeadership />
     </div>
   );
