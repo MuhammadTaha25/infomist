@@ -3,7 +3,8 @@ import { Router, type IRouter } from "express";
 const router: IRouter = Router();
 
 const N8N_WEBHOOK =
-  "https://n8n-vmc7.srv1664783.hstgr.cloud/webhook/f0e0b23d-c1f0-46d7-8d1c-63dfc4c47b98";
+  process.env["N8N_BOOKING_WEBHOOK"] ??
+  "https://n8n-vmc7.srv1664783.hstgr.cloud/webhook/infomist-strategist";
 
 router.post("/booking-request", async (req, res) => {
   try {

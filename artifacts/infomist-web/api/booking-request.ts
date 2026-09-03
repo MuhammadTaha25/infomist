@@ -9,7 +9,7 @@
 
 const N8N_BOOKING_WEBHOOK =
   process.env.N8N_BOOKING_WEBHOOK ??
-  "https://n8n-vmc7.srv1664783.hstgr.cloud/webhook/f0e0b23d-c1f0-46d7-8d1c-63dfc4c47b98";
+  "https://n8n-vmc7.srv1664783.hstgr.cloud/webhook/infomist-strategist";
 
 export default async function handler(req: any, res: any) {
   if (req.method !== "POST") {
