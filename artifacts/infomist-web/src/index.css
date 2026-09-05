@@ -108,7 +108,7 @@
   --chart-4: 262 80% 60%;
   --chart-5: 25 95% 53%;
 
-  --app-font-sans: 'Inter', sans-serif;
+  --app-font-sans: 'Manrope', Inter, system-ui, sans-serif;
   --app-font-serif: Georgia, serif;
   --app-font-mono: Menlo, monospace;
   --radius: .5rem;
@@ -126,8 +126,29 @@
   * {
     @apply border-border;
   }
+  html {
+    /* Hard stop for horizontal scroll on every viewport. `clip` (unlike
+       `hidden`) creates no scroll container, so position: sticky/fixed keep
+       working. */
+    overflow-x: clip;
+  }
   body {
     @apply font-sans antialiased bg-background text-foreground;
+    overflow-x: clip;
+    max-width: 100%;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    letter-spacing: -0.005em;
+  }
+  /* Manrope is optically wide at large sizes — pull display type tight for the
+     premium editorial feel the design language calls for. */
+  h1 { letter-spacing: -0.045em; }
+  h2 { letter-spacing: -0.035em; }
+  h3 { letter-spacing: -0.02em; }
+  /* Media never overflows its container on any screen. */
+  img, svg, video, canvas, iframe {
+    max-width: 100%;
   }
 }
 
@@ -259,3 +280,9 @@ a[href*="replit.com"],
 @media (prefers-reduced-motion: reduce) {
   .team-card { animation: none; }
 }
+
+/* ── Type weight ceiling ──────────────────────────────────────────────────
+   The design system tops out at 800 (Hero H1). Manrope 900 is never used —
+   remap Tailwind's `font-black` so existing markup follows the rule without
+   touching every component. Unlayered, so it wins over the utility layer. */
+.font-black { font-weight: 800; }
