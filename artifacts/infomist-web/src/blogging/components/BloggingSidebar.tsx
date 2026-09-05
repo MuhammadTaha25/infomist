@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { Link, useLocation } from "wouter";
 import {
   LayoutDashboard,
@@ -9,6 +10,7 @@ import {
   CalendarDays,
   Settings,
   MessageSquare,
+  Inbox,
   PenSquare,
   ArrowLeft,
   FilePlus2,
@@ -16,6 +18,7 @@ import {
   Clock,
   CheckCircle2,
   Trash2,
+  LogOut,
 } from "lucide-react";
 import {
   Sidebar,
@@ -34,8 +37,27 @@ import {
   SidebarMenuSubItem,
 } from "@/components/ui/sidebar";
 import { usePostCounts } from "../store";
+import { useBloggingAuth } from "../auth";
+import { listApplications } from "@/lib/jobApplications";
 
 const base = import.meta.env.BASE_URL.replace(/\/$/, "");
+
+/** One-shot count of applications still marked "new", for the sidebar badge. */
+function useNewApplicationsCount() {
+  const [count, setCount] = useState(0);
+  useEffect(() => {
+    let alive = true;
+    listApplications()
+      .then(({ applications }) => {
+        if (alive) setCount(applications.filter((a) => a.status === "new").length);
+      })
+      .catch(() => {});
+    return () => {
+      alive = false;
+    };
+  }, []);
+  return count;
+}
 
 function useActive() {
   const [loc] = useLocation();
@@ -46,6 +68,8 @@ function useActive() {
 export function BloggingSidebar() {
   const isActive = useActive();
   const counts = usePostCounts();
+  const newApplications = useNewApplicationsCount();
+  const { logout } = useBloggingAuth();
 
   return (
     <Sidebar collapsible="icon">
@@ -208,6 +232,16 @@ export function BloggingSidebar() {
               </SidebarMenuItem>
 
               <SidebarMenuItem>
+                <SidebarMenuButton asChild isActive={isActive("/applications")} tooltip="Applications">
+                  <Link href="/applications">
+                    <Inbox />
+                    <span>Applications</span>
+                  </Link>
+                </SidebarMenuButton>
+                {newApplications > 0 ? <SidebarMenuBadge>{newApplications}</SidebarMenuBadge> : null}
+              </SidebarMenuItem>
+
+              <SidebarMenuItem>
                 <SidebarMenuButton asChild isActive={isActive("/settings")} tooltip="Settings">
                   <Link href="/settings">
                     <Settings />
@@ -228,6 +262,12 @@ export function BloggingSidebar() {
                 <ArrowLeft />
                 <span>Back to website</span>
               </a>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+          <SidebarMenuItem>
+            <SidebarMenuButton tooltip="Sign out" onClick={() => logout()}>
+              <LogOut />
+              <span>Sign out</span>
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>

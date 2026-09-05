@@ -151,7 +151,7 @@ export function JobDetailPage() {
             <p className="text-[#475569] text-lg leading-relaxed max-w-2xl">{job.about}</p>
             <div className="pt-1">
               <Link
-                href="/contact"
+                href={`/careers/${job.slug}/apply`}
                 className="group inline-flex items-center gap-2.5 px-8 py-4 rounded-xl text-base font-bold text-white transition-all duration-300 hover:-translate-y-1"
                 style={{ background: `linear-gradient(120deg, ${accent}, ${accent}cc)`, boxShadow: `0 12px 32px -8px ${accent}80` }}
               >
@@ -184,7 +184,7 @@ export function JobDetailPage() {
             Tell us a bit about yourself and share your CV — we read every application.
           </p>
           <Link
-            href="/contact"
+            href={`/careers/${job.slug}/apply`}
             className="group relative z-10 mt-2 inline-flex items-center gap-2.5 px-8 py-4 rounded-xl text-base font-bold text-[#0F172A] transition-all duration-300 hover:-translate-y-1"
             style={{ background: "#84CC16", boxShadow: "0 8px 32px 0 rgba(132,204,22,0.35)" }}
           >

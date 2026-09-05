@@ -7,13 +7,13 @@ import { SolutionsPage } from "@/pages/Solutions";
 import { CaseStudiesPage } from "@/pages/CaseStudies";
 import { CaseStudyDetailPage } from "@/pages/CaseStudyDetail";
 import { OneManCompanyPage } from "@/pages/OneManCompany";
-import { AboutPage } from "@/pages/About";
-import { LeadershipPage } from "@/pages/Leadership";
+import { OurStoryPage } from "@/pages/OurStory";
 import { CareersPage } from "@/pages/Careers";
 import { JobDetailPage } from "@/pages/JobDetail";
+import { ApplyPage } from "@/pages/ApplyPage";
 import { ContactPage } from "@/pages/Contact";
 import { TalkToStrategistPage } from "@/pages/TalkToStrategist";
-import { ResourcesPage } from "@/pages/Resources";
+import { InsightsPage } from "@/pages/InsightsPage";
 import { SolutionsDirectoryPage } from "@/pages/SolutionsDirectory";
 import { SubcategoryPage } from "@/pages/SubcategoryPage";
 import { CategoryPage } from "@/pages/CategoryPage";
@@ -46,6 +46,11 @@ function SolutionsRouter() {
 function JobDetailRouter() {
   const { slug } = useParams<{ slug: string }>();
   return <JobDetailPage key={slug} />;
+}
+
+function ApplyRouter() {
+  const { slug } = useParams<{ slug: string }>();
+  return <ApplyPage key={slug} />;
 }
 
 /** Keyed remount so per-project meta/content resets between case studies. */
@@ -103,18 +108,20 @@ function MarketingSite() {
               <Route path="/case-studies" component={CaseStudiesPage} />
               <Route path="/case-studies/:slug" component={CaseStudyRouter} />
               <Route path="/one-man-company" component={OneManCompanyPage} />
-              <Route path="/about" component={AboutPage} />
-              <Route path="/leadership" component={LeadershipPage} />
+              <Route path="/our-story" component={OurStoryPage} />
               <Route path="/careers" component={CareersPage} />
+              <Route path="/careers/:slug/apply" component={ApplyRouter} />
               <Route path="/careers/:slug" component={JobDetailRouter} />
-              {/* Legacy route — kept so old links / bookmarks resolve. */}
-              <Route path="/company">{() => <Redirect to="/about" />}</Route>
+              {/* Legacy routes — kept so old links / bookmarks resolve. */}
+              <Route path="/about">{() => <Redirect to="/our-story" />}</Route>
+              <Route path="/leadership">{() => <Redirect to="/our-story" />}</Route>
+              <Route path="/company">{() => <Redirect to="/our-story" />}</Route>
               <Route path="/who-we-work-with" component={WhoWeWorkWithPage} />
               <Route path="/who-we-work-with/:slug" component={PersonaPage} />
               <Route path="/contact" component={ContactPage} />
               <Route path="/talk-to-strategist" component={TalkToStrategistPage} />
-              <Route path="/resources" component={ResourcesPage} />
-              <Route path="/insights" >{() => <Redirect to="/resources" />}</Route>
+              <Route path="/insights" component={InsightsPage} />
+              <Route path="/blog">{() => <Redirect to="/blogging" />}</Route>
               <Route path="/insights/:slug" component={InsightRouter} />
               <Route path="/solutions-directory" component={SolutionsDirectoryPage} />
               {/* /solutions/:slug routes to CategoryPage or SubcategoryPage via SolutionsRouter */}

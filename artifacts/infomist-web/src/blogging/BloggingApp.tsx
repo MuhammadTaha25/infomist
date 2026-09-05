@@ -1,8 +1,9 @@
 import { Switch, Route, Redirect } from "wouter";
 import { Toaster } from "sonner";
+import { Loader2 } from "lucide-react";
 import { SidebarInset, SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { Separator } from "@/components/ui/separator";
-import { BloggingProvider } from "./store";
+import { BloggingProvider, useBloggingReady } from "./store";
 import { BloggingAuthProvider } from "./auth";
 import { AuthGate } from "./AuthGate";
 import { BloggingSidebar } from "./components/BloggingSidebar";
@@ -17,6 +18,7 @@ import { CategoriesPage } from "./pages/CategoriesPage";
 import { TagsPage } from "./pages/TagsPage";
 import { CalendarPage } from "./pages/CalendarPage";
 import { CommentsPage } from "./pages/CommentsPage";
+import { ApplicationsPage } from "./pages/ApplicationsPage";
 import { SettingsPage } from "./pages/SettingsPage";
 
 /** Full-bleed editor / preview routes render without the standard chrome. */
@@ -47,6 +49,7 @@ function Shell() {
               <Route path="/tags" component={TagsPage} />
               <Route path="/calendar" component={CalendarPage} />
               <Route path="/comments" component={CommentsPage} />
+              <Route path="/applications" component={ApplicationsPage} />
               <Route path="/settings" component={SettingsPage} />
               <Route path="/settings/:section" component={SettingsPage} />
               <Route>{() => <Redirect to="/" />}</Route>
@@ -62,20 +65,34 @@ function PostsListRoute() {
   return <PostsPage scope="all" />;
 }
 
+function BloggingRoutes() {
+  const ready = useBloggingReady();
+  if (!ready) {
+    return (
+      <div className="flex min-h-screen items-center justify-center">
+        <Loader2 className="h-5 w-5 animate-spin text-muted-foreground" />
+      </div>
+    );
+  }
+  return (
+    <div className="min-h-screen bg-background font-sans text-foreground">
+      <Switch>
+        {/* Editor & preview take the whole viewport — no sidebar chrome. */}
+        <Route path="/posts/new" component={PostEditorPage} />
+        <Route path="/posts/:id/edit" component={PostEditorPage} />
+        <Route path="/posts/:id/preview" component={PostPreviewPage} />
+        <Route component={Shell} />
+      </Switch>
+    </div>
+  );
+}
+
 export function BloggingApp() {
   return (
     <BloggingAuthProvider>
       <AuthGate>
         <BloggingProvider>
-          <div className="min-h-screen bg-background font-sans text-foreground">
-            <Switch>
-              {/* Editor & preview take the whole viewport — no sidebar chrome. */}
-              <Route path="/posts/new" component={PostEditorPage} />
-              <Route path="/posts/:id/edit" component={PostEditorPage} />
-              <Route path="/posts/:id/preview" component={PostPreviewPage} />
-              <Route component={Shell} />
-            </Switch>
-          </div>
+          <BloggingRoutes />
           <Toaster position="bottom-right" richColors closeButton />
         </BloggingProvider>
       </AuthGate>

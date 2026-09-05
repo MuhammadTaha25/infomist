@@ -354,7 +354,7 @@ export function CareersPage() {
                     We don't have any open positions at the moment, but we're always
                     interested in meeting talented people.
                   </p>
-                  <Link href="/contact" className="mt-2 inline-flex items-center gap-2 px-7 py-3.5 rounded-xl text-base font-bold text-white transition-all duration-200 hover:-translate-y-0.5" style={{ background: "linear-gradient(120deg,#0EA5E9,#0284C7)", boxShadow: "0 10px 30px -6px rgba(14,165,233,0.4)" }}>
+                  <Link href="/careers/general/apply" className="mt-2 inline-flex items-center gap-2 px-7 py-3.5 rounded-xl text-base font-bold text-white transition-all duration-200 hover:-translate-y-0.5" style={{ background: "linear-gradient(120deg,#0EA5E9,#0284C7)", boxShadow: "0 10px 30px -6px rgba(14,165,233,0.4)" }}>
                     Send Your CV
                   </Link>
                   <p className="text-sm text-[#64748B] max-w-sm">
@@ -376,7 +376,7 @@ export function CareersPage() {
                     opportunities.
                   </p>
                 </div>
-                <Link href="/contact" className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl text-sm font-bold text-[#0F172A] flex-shrink-0 transition-all duration-200 hover:bg-white hover:-translate-y-0.5" style={{ border: "1.5px solid rgba(14,165,233,0.4)", background: "transparent" }}>
+                <Link href="/careers/general/apply" className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl text-sm font-bold text-[#0F172A] flex-shrink-0 transition-all duration-200 hover:bg-white hover:-translate-y-0.5" style={{ border: "1.5px solid rgba(14,165,233,0.4)", background: "transparent" }}>
                   <FileText size={16} strokeWidth={2.2} className="text-[#0EA5E9]" />
                   Send Your CV
                 </Link>
