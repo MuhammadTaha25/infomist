@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 const BASE = import.meta.env.BASE_URL;
 
@@ -12,6 +12,10 @@ function prefersReducedMotion() {
  * mounted when `active` AND motion is allowed AND we're not on a small screen.
  * That keeps the network to a single clip at a time and gives reduced-motion
  * / mobile users a clean static frame.
+ *
+ * The clip plays through ONCE on load (no loop) and rests on its last frame.
+ * In the slider it replays from the start whenever its slide becomes active
+ * again.
  */
 export function HeroVideo({
   media,
@@ -39,17 +43,25 @@ export function HeroVideo({
 
   const showVideo = active && !reduced && !posterOnly;
 
+  /** Play the clip once from the top. */
+  const playOnce = useCallback(() => {
+    const v = videoRef.current;
+    if (!v) return;
+    try {
+      v.currentTime = 0;
+    } catch {
+      /* not seekable yet — fine */
+    }
+    const p = v.play();
+    if (p && typeof p.catch === "function") p.catch(() => {});
+  }, []);
+
   useEffect(() => {
     const v = videoRef.current;
     if (!v) return;
-    if (active) {
-      v.currentTime = 0;
-      const p = v.play();
-      if (p && typeof p.catch === "function") p.catch(() => {});
-    } else {
-      v.pause();
-    }
-  }, [active, showVideo]);
+    if (active) playOnce();
+    else v.pause();
+  }, [active, showVideo, playOnce]);
 
   return (
     <div className={`absolute inset-0 overflow-hidden ${className}`}>
@@ -66,11 +78,11 @@ export function HeroVideo({
           src={src}
           poster={poster}
           muted
-          loop
           playsInline
           autoPlay
           preload="auto"
           aria-hidden="true"
+          onLoadedData={playOnce}
         />
       )}
     </div>
