@@ -6,7 +6,7 @@ import { Reveal, RevealGroup, RevealItem } from "@/components/Reveal";
 import { GridOverlay, Blob, GradientText, Eyebrow, DarkCTA, CTAButton } from "@/components/site/primitives";
 import { ClientImpactSlider } from "@/components/ClientImpactSlider";
 import { CaseStudyCard } from "@/components/case-studies/CaseStudyCard";
-import { CaseStudyMarkWall } from "@/components/case-studies/CaseStudyLogo";
+import { HeroVideo } from "@/components/hero/HeroVideo";
 import { getCaseStudies, CASE_STUDY_CATEGORIES } from "@/data/caseStudies";
 
 const STATS = [
@@ -46,26 +46,31 @@ export function CaseStudiesPage() {
           <div className="relative max-w-6xl mx-auto px-6 pt-16 pb-20 md:pt-20 md:pb-24">
             <div className="grid gap-12 lg:grid-cols-[1fr_auto] lg:items-center">
               <Reveal className="flex flex-col gap-5 max-w-2xl">
-                <Eyebrow icon={FolderGit2} dark>Selected Work</Eyebrow>
+                <Eyebrow icon={FolderGit2} dark>Proof</Eyebrow>
                 <h1
                   className="font-black text-white leading-[1.02]"
                   style={{ fontSize: "clamp(2.6rem, 6.2vw, 4.25rem)", letterSpacing: "-0.045em" }}
                 >
-                  Real products. Real systems. <GradientText>Real results.</GradientText>
+                  Proof that intelligent systems work in the <GradientText>real world.</GradientText>
                 </h1>
                 <p className="text-slate-400 text-xl leading-relaxed">
-                  A closer look at the digital products, AI systems, automation workflows, and platforms
-                  we've designed and engineered for ambitious businesses.
+                  A closer look at the AI systems, automation workflows, platforms and products
+                  Infomist has designed, engineered and put into production.
                 </p>
                 <div className="mt-2">
-                  <CTAButton href="/contact" variant="lime" icon={ArrowRight}>
-                    Start a Project
+                  <CTAButton href="/talk-to-strategist" variant="lime" icon={ArrowRight}>
+                    Book an AI Transformation Review
                   </CTAButton>
                 </div>
               </Reveal>
 
-              <Reveal className="hidden lg:block">
-                <CaseStudyMarkWall studies={studies} />
+              <Reveal className="hidden lg:block w-[420px]">
+                <div
+                  className="relative aspect-[16/11] w-full overflow-hidden rounded-2xl"
+                  style={{ border: "1px solid rgba(255,255,255,0.10)" }}
+                >
+                  <HeroVideo media="hero-case-studies" active />
+                </div>
               </Reveal>
             </div>
 

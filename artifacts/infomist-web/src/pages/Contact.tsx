@@ -1,11 +1,20 @@
 import { useState } from "react";
-import { Phone, Mail, MapPin, Send, CheckCircle2, MessageSquare } from "lucide-react";
+import { Phone, Mail, MapPin, Send, CheckCircle2 } from "lucide-react";
 import { Reveal } from "@/components/Reveal";
 import { PageFaq } from "@/components/PageFaq";
 import { useMeta } from "@/components/site/useMeta";
-import { PageHero } from "@/components/site/primitives";
-import { HeroVisual } from "@/components/hero/HeroVisual";
+import { PageHeroVideo } from "@/components/hero/PageHeroVideo";
 import { CATEGORIES } from "@/data/solutionsData";
+
+/**
+ * The "Deploy a Project" / Contact form POSTs straight to the Infomist n8n
+ * webhook — no server-side proxy. Override at build time with
+ * VITE_N8N_CONTACT_WEBHOOK. The n8n Webhook node must allow CORS (Options →
+ * "Allowed Origins (CORS)" → * or the site domain).
+ */
+const CONTACT_WEBHOOK =
+  import.meta.env.VITE_N8N_CONTACT_WEBHOOK ||
+  "https://n8n-vmc7.srv1664783.hstgr.cloud/webhook/infomist-lead";
 
 const CONTACT_FAQS = [
   {
@@ -112,7 +121,7 @@ function ContactForm() {
 
     setSubmitting(true);
     try {
-      await fetch("/api/contact-request", {
+      await fetch(CONTACT_WEBHOOK, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -388,14 +397,16 @@ export function ContactPage() {
   );
 
   return (
-    <div className="w-full min-h-screen bg-white pt-20 overflow-x-hidden">
-      <PageHero
+    <div className="w-full min-h-screen bg-white overflow-x-hidden">
+      <PageHeroVideo
         eyebrow="Contact Us"
-        eyebrowIcon={MessageSquare}
-        title="How can we"
-        gradientWord="help you?"
-        sub="Tell us about your project and the right specialist on our team will get back to you — usually within one business day."
-        visual={<HeroVisual variant="connect" />}
+        title="Start with the business problem — not a shopping list of"
+        accent="services."
+        sub="Tell us what's slowing the business down. The right specialist on our team maps it to automate, integrate or build — usually within one business day."
+        primary={{ label: "Talk to a Strategist", href: "/talk-to-strategist" }}
+        secondary={{ label: "See Our Work", href: "/case-studies" }}
+        media="hero-contact"
+        evidence={["Automate", "Integrate", "Build", "One recommended next step"]}
       />
 
       <div className="max-w-6xl mx-auto px-6 py-20 md:py-24 flex flex-col gap-16">

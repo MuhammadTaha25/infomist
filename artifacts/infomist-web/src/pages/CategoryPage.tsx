@@ -2,6 +2,8 @@ import { useParams, Link } from "wouter";
 import { ArrowRight, HelpCircle } from "lucide-react";
 import { findCategory } from "@/data/solutionsData";
 import { HeroVisual, heroVariantForRoute } from "@/components/hero/HeroVisual";
+import { PageHeroVideo } from "@/components/hero/PageHeroVideo";
+import { FLAGSHIP_HEROES } from "@/data/flagshipHeroes";
 import { useMeta } from "@/components/site/useMeta";
 import { JsonLd, faqSchema, FaqAccordion } from "@/components/site/Faq";
 import { NotFoundBlock } from "@/components/site/NotFoundBlock";
@@ -41,55 +43,82 @@ export function CategoryPage() {
   }
 
   const Icon = category.icon;
+  const flagship = FLAGSHIP_HEROES[category.slug];
+
+  const breadcrumb = (
+    <nav aria-label="Breadcrumb" className="flex items-center gap-2">
+      <Link href="/solutions" className="hover:text-[#27C7E8] transition-colors duration-150 font-medium">
+        Solutions
+      </Link>
+      <span aria-hidden="true">/</span>
+      <span className="text-[#F4F8FC] font-semibold">{category.name}</span>
+    </nav>
+  );
 
   return (
-    <div className="w-full min-h-screen bg-white pt-20 overflow-x-hidden">
+    <div className="w-full min-h-screen bg-white overflow-x-hidden">
       <JsonLd data={faqSchema(category.categoryFaqs)} />
 
-      {/* Breadcrumb */}
-      <div className="border-b border-slate-100 relative z-10">
-        <nav aria-label="Breadcrumb" className="max-w-6xl mx-auto px-6 py-5 flex items-center gap-2 text-sm">
-          <Link href="/solutions" className="text-[#64748B] hover:text-[#0EA5E9] transition-colors duration-150 font-medium">
-            Solutions
-          </Link>
-          <span className="text-slate-300" aria-hidden="true">/</span>
-          <span className="text-[#0F172A] font-semibold">
-            <span className="font-mono text-xs text-[#0EA5E9] mr-1.5">{category.tag}</span>
-            {category.name}
-          </span>
-        </nav>
-      </div>
-
-      {/* Hero */}
-      <section className="relative overflow-hidden" style={{ background: "#FAFAFA" }}>
-        <GridOverlay />
-        <HeroBlobs />
-        <HeroVisual variant={heroVariantForRoute(category.slug)} />
-        <div className="relative z-10 max-w-6xl mx-auto px-6 pt-14 pb-14 md:pt-20 md:pb-16">
-          <div className="flex flex-col gap-6 max-w-2xl rise-in">
-            <div className="flex items-center gap-4">
-              <span
-                className="w-14 h-14 rounded-2xl flex items-center justify-center flex-shrink-0"
-                style={{
-                  background: "linear-gradient(145deg, rgba(14,165,233,0.12), rgba(14,165,233,0.04))",
-                  border: "1px solid rgba(14,165,233,0.18)",
-                  boxShadow: "0 0 0 6px rgba(14,165,233,0.05), 0 8px 24px rgba(14,165,233,0.12)",
-                }}
-              >
-                <Icon size={26} strokeWidth={1.7} className="text-[#0EA5E9]" />
+      {flagship ? (
+        <PageHeroVideo
+          breadcrumb={breadcrumb}
+          eyebrow={flagship.eyebrow}
+          title={flagship.title}
+          accent={flagship.accent}
+          sub={flagship.sub}
+          primary={flagship.primary}
+          secondary={flagship.secondary}
+          media={flagship.media}
+          evidence={flagship.evidence}
+        />
+      ) : (
+        <>
+          {/* Breadcrumb */}
+          <div className="border-b border-slate-100 relative z-10 pt-20">
+            <nav aria-label="Breadcrumb" className="max-w-6xl mx-auto px-6 py-5 flex items-center gap-2 text-sm">
+              <Link href="/solutions" className="text-[#64748B] hover:text-[#0EA5E9] transition-colors duration-150 font-medium">
+                Solutions
+              </Link>
+              <span className="text-slate-300" aria-hidden="true">/</span>
+              <span className="text-[#0F172A] font-semibold">
+                <span className="font-mono text-xs text-[#0EA5E9] mr-1.5">{category.tag}</span>
+                {category.name}
               </span>
-              <Eyebrow>{category.tag} · Solutions</Eyebrow>
-            </div>
-            <h1 className="font-black text-[#0F172A] leading-[1.02]" style={{ fontSize: "clamp(2.6rem, 6.4vw, 4.5rem)", letterSpacing: "-0.045em" }}>
-              {category.name}
-            </h1>
-            <p className="text-[#0EA5E9] text-xl font-semibold max-w-2xl">{category.blurb}</p>
-            {category.keywordLine && (
-              <p className="text-[#64748B] text-base leading-relaxed max-w-2xl">{category.keywordLine}</p>
-            )}
+            </nav>
           </div>
-        </div>
-      </section>
+
+          {/* Hero */}
+          <section className="relative overflow-hidden" style={{ background: "#FAFAFA" }}>
+            <GridOverlay />
+            <HeroBlobs />
+            <HeroVisual variant={heroVariantForRoute(category.slug)} />
+            <div className="relative z-10 max-w-6xl mx-auto px-6 pt-14 pb-14 md:pt-20 md:pb-16">
+              <div className="flex flex-col gap-6 max-w-2xl rise-in">
+                <div className="flex items-center gap-4">
+                  <span
+                    className="w-14 h-14 rounded-2xl flex items-center justify-center flex-shrink-0"
+                    style={{
+                      background: "linear-gradient(145deg, rgba(14,165,233,0.12), rgba(14,165,233,0.04))",
+                      border: "1px solid rgba(14,165,233,0.18)",
+                      boxShadow: "0 0 0 6px rgba(14,165,233,0.05), 0 8px 24px rgba(14,165,233,0.12)",
+                    }}
+                  >
+                    <Icon size={26} strokeWidth={1.7} className="text-[#0EA5E9]" />
+                  </span>
+                  <Eyebrow>{category.tag} · Solutions</Eyebrow>
+                </div>
+                <h1 className="font-black text-[#0F172A] leading-[1.02]" style={{ fontSize: "clamp(2.6rem, 6.4vw, 4.5rem)", letterSpacing: "-0.045em" }}>
+                  {category.name}
+                </h1>
+                <p className="text-[#0EA5E9] text-xl font-semibold max-w-2xl">{category.blurb}</p>
+                {category.keywordLine && (
+                  <p className="text-[#64748B] text-base leading-relaxed max-w-2xl">{category.keywordLine}</p>
+                )}
+              </div>
+            </div>
+          </section>
+        </>
+      )}
 
       {/* Sub-services grid */}
       <section className="w-full" style={{ background: "#FFFFFF" }}>

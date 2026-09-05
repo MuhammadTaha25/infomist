@@ -17,6 +17,7 @@ import {
   Rocket,
 } from "lucide-react";
 import { JOBS } from "@/data/careersData";
+import { PageHeroVideo } from "@/components/hero/PageHeroVideo";
 
 /* ─── In-page smooth scroll (no URL-hash routing in this app) ─────────── */
 function scrollToId(id: string) {
@@ -170,90 +171,18 @@ export function CareersPage() {
   const hasJobs = JOBS.length > 0;
 
   return (
-    <div className="w-full min-h-screen bg-white pt-20 overflow-x-hidden">
+    <div className="w-full min-h-screen bg-white overflow-x-hidden">
       {/* ══ HERO ══════════════════════════════════════════════════════ */}
-      <section className="relative overflow-hidden" style={{ background: "#FAFAFA" }}>
-        <GridOverlay />
-        <Blob color="rgba(14,165,233,0.18)" className="-top-32 -left-24" size={520} />
-        <Blob color="rgba(132,204,22,0.14)" className="top-8 right-0" size={420} />
-        <Blob color="rgba(139,92,246,0.10)" className="bottom-0 left-1/3" size={360} />
-
-        <div className="relative max-w-6xl mx-auto px-6 pt-14 pb-16 md:pt-20 md:pb-20 grid lg:grid-cols-[1.05fr_0.95fr] gap-14 items-center">
-          <div className="flex flex-col gap-6 rise-in">
-            <Eyebrow icon={Rocket}>Careers at Infomist</Eyebrow>
-            <h1 className="text-5xl md:text-[4.5rem] font-black text-[#0F172A] leading-[1.0]" style={{ letterSpacing: "-0.045em" }}>
-              Build the{" "}
-              <span style={{ background: "linear-gradient(100deg, #0EA5E9 0%, #84CC16 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>
-                Future
-              </span>{" "}
-              With Us
-            </h1>
-            <p className="text-[#475569] text-xl leading-relaxed max-w-xl">
-              Join a team building intelligent digital solutions, modern software, and
-              technology that helps businesses move forward.
-            </p>
-            <div className="flex flex-col sm:flex-row flex-wrap gap-3 pt-1">
-              <a
-                href="#open-positions"
-                onClick={scrollToId("open-positions")}
-                className="group inline-flex items-center justify-center gap-2 px-7 py-4 rounded-xl text-base font-bold text-white transition-all duration-300 hover:-translate-y-1"
-                style={{ background: "linear-gradient(120deg, #0EA5E9, #0284C7)", boxShadow: "0 10px 30px -6px rgba(14,165,233,0.45)" }}
-              >
-                View Open Positions
-                <ArrowRight size={17} strokeWidth={2.6} className="transition-transform duration-300 group-hover:translate-x-1" />
-              </a>
-              <a
-                href="#why-infomist"
-                onClick={scrollToId("why-infomist")}
-                className="inline-flex items-center justify-center gap-2 px-7 py-4 rounded-xl text-base font-bold text-[#0F172A] transition-all duration-200 hover:-translate-y-0.5"
-                style={{ border: "1.5px solid rgba(14,165,233,0.4)", background: "rgba(255,255,255,0.6)" }}
-              >
-                Why Infomist?
-              </a>
-            </div>
-            <p className="text-sm font-semibold text-[#64748B] pt-1">Get Found. Get Clients. Scale Smarter.</p>
-          </div>
-
-          {/* Hero visual — live roles panel */}
-          <div className="relative rise-in" style={{ animationDelay: "120ms" }}>
-            <div className="hidden md:block absolute -left-6 top-8 z-20 rounded-xl px-3 py-1.5 text-[11px] font-mono font-semibold text-[#0EA5E9] bg-white" style={{ border: "1px solid rgba(14,165,233,0.25)", boxShadow: "0 8px 24px rgba(15,23,42,0.08)" }}>
-              Python · AI
-            </div>
-            <div className="hidden md:block absolute -right-4 bottom-10 z-20 rounded-xl px-3 py-1.5 text-[11px] font-mono font-semibold text-[#65A30D] bg-white" style={{ border: "1px solid rgba(132,204,22,0.3)", boxShadow: "0 8px 24px rgba(15,23,42,0.08)" }}>
-              React · n8n
-            </div>
-
-            <div
-              className="relative rounded-[28px] p-6 md:p-7 overflow-hidden"
-              style={{ background: "linear-gradient(160deg, #101826 0%, #0B1220 100%)", border: "1px solid rgba(255,255,255,0.08)", boxShadow: "0 30px 80px -20px rgba(11,18,32,0.55)" }}
-            >
-              <div aria-hidden="true" className="absolute -top-16 -right-10 w-56 h-56 rounded-full pointer-events-none" style={{ background: "radial-gradient(circle, rgba(14,165,233,0.28) 0%, transparent 70%)", filter: "blur(20px)" }} />
-              <div className="relative flex items-center justify-between">
-                <span className="text-xs font-bold tracking-[0.24em] uppercase text-[#84CC16]">Now Hiring</span>
-                <span className="text-[11px] font-semibold px-2.5 py-1 rounded-full text-cyan-300" style={{ background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.08)" }}>
-                  {hasJobs ? `${JOBS.length} open roles` : "always open"}
-                </span>
-              </div>
-
-              <div className="relative mt-5 flex flex-col gap-2.5">
-                {(hasJobs ? JOBS : [{ slug: "x", title: "We're always meeting great people", type: "Open", location: "Send your CV" } as (typeof JOBS)[number]]).map((j) => (
-                  <div key={j.slug} className="flex items-center gap-3 rounded-xl px-3.5 py-3.5" style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.06)" }}>
-                    <span className="relative flex h-2.5 w-2.5 flex-shrink-0">
-                      <span className="absolute inline-flex h-full w-full rounded-full bg-[#84CC16] opacity-60 animate-ping" />
-                      <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-[#84CC16]" />
-                    </span>
-                    <div className="flex-1 min-w-0">
-                      <div className="text-sm font-semibold text-white truncate">{j.title}</div>
-                      <div className="text-[11px] text-slate-400">{j.type} · {j.location}</div>
-                    </div>
-                    <ArrowUpRight size={14} strokeWidth={2.6} className="text-cyan-400 flex-shrink-0" />
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+      <PageHeroVideo
+        eyebrow="Careers at Infomist"
+        title="Build serious software with a senior"
+        accent="team."
+        sub="Join the engineers building AI systems, modern software and automation that businesses actually run on — from Islamabad and Dublin."
+        primary={{ label: "View Open Positions", href: "#open-positions" }}
+        secondary={{ label: "Why Infomist?", href: "#why-infomist" }}
+        media="hero-team"
+        evidence={hasJobs ? [`${JOBS.length} open roles`, "Islamabad · Dublin", "Engineering-first", "Real ownership"] : ["Always hiring", "Islamabad · Dublin", "Engineering-first", "Real ownership"]}
+      />
 
       {/* ══ INTRODUCTION ═════════════════════════════════════════════ */}
       <section className="w-full" style={{ background: "#F9FAFB" }}>
@@ -456,7 +385,7 @@ export function CareersPage() {
           )}
 
           <Rise className="mt-6">
-            <Link href="/leadership" className="group flex flex-col sm:flex-row sm:items-center gap-3 rounded-2xl px-6 py-5 transition-all duration-200 hover:-translate-y-0.5" style={{ background: "#F8FAFC", border: "1px solid #E2E8F0" }}>
+            <Link href="/our-story#our-leadership" className="group flex flex-col sm:flex-row sm:items-center gap-3 rounded-2xl px-6 py-5 transition-all duration-200 hover:-translate-y-0.5" style={{ background: "#F8FAFC", border: "1px solid #E2E8F0" }}>
               <Users size={18} strokeWidth={2} className="text-[#0EA5E9] flex-shrink-0" />
               <span className="text-sm text-[#475569]">Want to know more about the people behind Infomist?</span>
               <span className="sm:ml-auto inline-flex items-center gap-1.5 text-sm font-bold text-[#0EA5E9] flex-shrink-0">

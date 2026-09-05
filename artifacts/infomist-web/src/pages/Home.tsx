@@ -1,4 +1,4 @@
-import { Hero } from "@/components/Hero";
+import { HeroSlider } from "@/components/hero/HeroSlider";
 import { TrustBar } from "@/components/TrustBar";
 import { Services } from "@/components/Services";
 import { SocialProof } from "@/components/SocialProof";
@@ -11,7 +11,7 @@ import { HomeFaq } from "@/components/HomeFaq";
 export function HomePage() {
   return (
     <>
-      <Hero />
+      <HeroSlider />
       <TrustBar />
       <SocialProof />
       <Services />
