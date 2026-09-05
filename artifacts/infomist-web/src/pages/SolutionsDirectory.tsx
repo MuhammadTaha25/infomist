@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
 import { useSearch, Link } from "wouter";
-import { Boxes, ArrowRight } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { RevealGroup, RevealItem } from "@/components/Reveal";
 import { PageFaq } from "@/components/PageFaq";
 import { useMeta } from "@/components/site/useMeta";
-import { PageHero, CTAButton } from "@/components/site/primitives";
-import { HeroVisual } from "@/components/hero/HeroVisual";
+import { CTAButton } from "@/components/site/primitives";
+import { PageHeroVideo } from "@/components/hero/PageHeroVideo";
 
 const SOLUTIONS_DIRECTORY_FAQS = [
   {
@@ -333,14 +333,15 @@ export function SolutionsDirectoryPage() {
   const active = CATEGORIES.find((c) => c.id === activeId)!;
 
   return (
-    <div className="w-full min-h-screen bg-white pt-20 overflow-x-hidden">
-      <PageHero
+    <div className="w-full min-h-screen bg-white overflow-x-hidden">
+      <PageHeroVideo
         eyebrow="Solutions Directory"
-        eyebrowIcon={Boxes}
-        title="Enterprise solutions"
-        gradientWord="& architecture."
-        sub="Comprehensive engineering, AI, design, and growth infrastructure — 25 years in the making."
-        visual={<HeroVisual variant="network" />}
+        title="One intelligent partner across the systems that"
+        accent="matter."
+        sub="Explore the AI, engineering, cloud, experience and growth capabilities that work together to move complex businesses forward."
+        primary={{ label: "Book an AI Transformation Review", href: "/talk-to-strategist" }}
+        media="hub-directory"
+        evidence={["AI systems", "Software platforms", "Enterprise cloud", "Experience", "Growth"]}
       />
 
       <div className="w-full" style={{ background: "#F8FAFC" }}>

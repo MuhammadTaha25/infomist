@@ -15,6 +15,7 @@ import {
   accentFor,
 } from "@/components/site/primitives";
 import { PersonaExplorer } from "@/components/who-we-work-with/PersonaExplorer";
+import { PageHeroVideo } from "@/components/hero/PageHeroVideo";
 import { PROCESS, WWW_SEO } from "@/data/whoWeWorkWithData";
 
 const RELATED_LINKS = [
@@ -22,7 +23,7 @@ const RELATED_LINKS = [
   { label: "Software & Web Architecture", href: "/solutions/software-web-architecture" },
   { label: "Experience Design & Media", href: "/solutions/experience-design-media" },
   { label: "Case studies", href: "/case-studies" },
-  { label: "The team behind Infomist", href: "/leadership" },
+  { label: "The team behind Infomist", href: "/our-story#our-leadership" },
   { label: "Talk to a Strategist", href: "/talk-to-strategist" },
 ];
 
@@ -54,33 +55,18 @@ export function WhoWeWorkWithPage() {
   });
 
   return (
-    <div className="w-full min-h-screen bg-white pt-20 overflow-x-hidden">
+    <div className="w-full min-h-screen bg-white overflow-x-hidden">
       {/* Hero */}
-      <section className="relative overflow-hidden" style={{ background: "#FAFAFA" }}>
-        <GridOverlay />
-        <HeroBlobs />
-        <div className="relative z-10 max-w-6xl mx-auto px-6 pt-16 pb-20 md:pt-20 md:pb-24">
-          <div className="flex flex-col gap-6 max-w-2xl rise-in">
-            <Eyebrow icon={Users}>Who We Work With</Eyebrow>
-            <h1
-              className="font-black text-[#0F172A] leading-[1.02]"
-              style={{ fontSize: "clamp(2.6rem, 6.2vw, 4.25rem)", letterSpacing: "-0.045em" }}
-            >
-              Built for the people who <GradientText>own the outcome.</GradientText>
-            </h1>
-            <p className="text-[#475569] text-xl leading-relaxed">
-              Whether you're leading the business, technology, operations, product, or growth,
-              we bring the right strategic, technical, and creative capability to move the work
-              forward.
-            </p>
-            <div className="pt-1">
-              <CTAButton href="#who-we-work-with" variant="primary" icon={ArrowRight}>
-                Find your role
-              </CTAButton>
-            </div>
-          </div>
-        </div>
-      </section>
+      <PageHeroVideo
+        eyebrow="Who We Work With"
+        title="Built for the people who own the"
+        accent="outcome."
+        sub="Whether you lead the business, technology, operations, product or growth, we bring the right strategic, technical and creative capability to move the work forward."
+        primary={{ label: "Find your role", href: "#who-we-work-with" }}
+        secondary={{ label: "Talk to a Strategist", href: "/talk-to-strategist" }}
+        media="hub-audience"
+        evidence={["CEO", "CTO", "COO", "CMO", "Product"]}
+      />
 
       {/* Interactive persona selector */}
       <PersonaExplorer />
@@ -132,7 +118,7 @@ export function WhoWeWorkWithPage() {
             ))}
           </ol>
           <Reveal className="mt-12">
-            <Link href="/leadership" className="group inline-flex items-center gap-2 text-sm font-bold text-[#0EA5E9]">
+            <Link href="/our-story#our-leadership" className="group inline-flex items-center gap-2 text-sm font-bold text-[#0EA5E9]">
               Meet the team behind the work
               <ArrowRight size={15} strokeWidth={2.6} className="transition-transform duration-200 group-hover:translate-x-0.5" />
             </Link>
