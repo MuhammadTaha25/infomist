@@ -4,6 +4,27 @@ import { findSubcategory } from "@/data/solutionsData";
 import { HeroVisual, heroVariantForRoute } from "@/components/hero/HeroVisual";
 import { PageHeroVideo } from "@/components/hero/PageHeroVideo";
 import { SUBCATEGORY_VIDEOS } from "@/data/subcategoryVideos";
+import {
+  getSubNarrative,
+  APPROACH_STAGES,
+  BUILD_STEPS,
+  DEFAULT_IMPACT,
+  WHY_INFOMIST,
+  DEFAULT_APPROACH,
+} from "@/data/subcategoryNarrative";
+import {
+  ChallengeSection,
+  ApproachSection,
+  TransformationSection,
+  BuildSection,
+  CapabilitiesSection,
+  ArchitectureSection,
+  UseCasesSection,
+  ImpactSection,
+  WhySection,
+  NarrativeFaq,
+  NarrativeCta,
+} from "@/components/subcategory/NarrativeSections";
 import { useMeta } from "@/components/site/useMeta";
 import { JsonLd, faqSchema, FaqAccordion } from "@/components/site/Faq";
 import { NotFoundBlock } from "@/components/site/NotFoundBlock";
@@ -39,6 +60,7 @@ export function SubcategoryPage() {
   const { category, sub } = match;
   const Icon = category.icon;
   const heroVideo = SUBCATEGORY_VIDEOS[sub.slug];
+  const narrative = getSubNarrative(sub.slug);
 
   const breadcrumb = (
     <nav aria-label="Breadcrumb" className="flex flex-wrap items-center gap-2">
@@ -52,72 +74,96 @@ export function SubcategoryPage() {
     </nav>
   );
 
+  const hero = heroVideo ? (
+    <PageHeroVideo
+      breadcrumb={breadcrumb}
+      eyebrow={`${category.tag} · ${category.name}`}
+      title={sub.displayName}
+      sub={sub.tagline ?? `A focused engagement built around ${sub.displayName.toLowerCase()} — scoped, staffed and shipped by senior engineers.`}
+      primary={{ label: narrative ? "Discuss Your Use Case" : "Talk to a Strategist", href: "/talk-to-strategist" }}
+      secondary={{ label: `Explore ${category.name}`, href: `/solutions/${category.slug}` }}
+      media={heroVideo}
+      evidence={narrative ? ["AI", sub.displayName, "Automation", "Software"] : undefined}
+    />
+  ) : (
+    <>
+      {/* Breadcrumb */}
+      <div className="border-b border-slate-100 relative z-10 pt-20">
+        <nav aria-label="Breadcrumb" className="max-w-6xl mx-auto px-6 py-5 flex items-center gap-2 text-sm">
+          <Link href="/solutions" className="text-[#64748B] hover:text-[#0EA5E9] transition-colors duration-150 font-medium">Solutions</Link>
+          <span className="text-slate-300" aria-hidden="true">/</span>
+          <Link href={`/solutions/${category.slug}`} className="text-[#64748B] hover:text-[#0EA5E9] transition-colors duration-150 font-medium">
+            <span className="font-mono text-xs text-[#0EA5E9] mr-1.5">{category.tag}</span>
+            {category.name}
+          </Link>
+          <span className="text-slate-300" aria-hidden="true">/</span>
+          <span className="text-[#0F172A] font-semibold">{sub.displayName}</span>
+        </nav>
+      </div>
+
+      {/* Hero */}
+      <section className="relative overflow-hidden" style={{ background: "#FAFAFA" }}>
+        <GridOverlay />
+        <HeroBlobs />
+        <HeroVisual variant={heroVariantForRoute(category.slug, sub.slug)} />
+        <div className="relative z-10 max-w-6xl mx-auto px-6 pt-14 pb-14 md:pt-20 md:pb-16">
+          <div className="flex flex-col gap-6 max-w-2xl rise-in">
+            <div className="flex items-center gap-4">
+              <span
+                className="w-14 h-14 rounded-2xl flex items-center justify-center flex-shrink-0"
+                style={{
+                  background: "linear-gradient(145deg, rgba(14,165,233,0.12), rgba(14,165,233,0.04))",
+                  border: "1px solid rgba(14,165,233,0.18)",
+                  boxShadow: "0 0 0 6px rgba(14,165,233,0.05), 0 8px 24px rgba(14,165,233,0.12)",
+                }}
+              >
+                <Icon size={26} strokeWidth={1.7} className="text-[#0EA5E9]" />
+              </span>
+              <Eyebrow>{category.tag} · {category.name}</Eyebrow>
+            </div>
+            <h1 className="font-black text-[#0F172A] leading-[1.02]" style={{ fontSize: "clamp(2.5rem, 6.2vw, 4.4rem)", letterSpacing: "-0.045em" }}>
+              {sub.displayName}
+            </h1>
+            <p className="text-[#0EA5E9] text-lg md:text-xl font-semibold max-w-2xl">{category.blurb}</p>
+            <p className="text-[#475569] text-base md:text-lg max-w-2xl leading-relaxed">
+              A focused engagement built specifically around {sub.displayName.toLowerCase()} — scoped, staffed, and
+              shipped by senior engineers, not a generic playbook.
+            </p>
+            <div className="pt-1">
+              <CTAButton href="/talk-to-strategist" variant="lime" icon={ArrowRight}>Talk to a Strategist</CTAButton>
+            </div>
+          </div>
+        </div>
+      </section>
+    </>
+  );
+
+  /* ── AI-native narrative layout ─────────────────────────────────────── */
+  if (narrative) {
+    return (
+      <div className="w-full overflow-x-hidden" style={{ background: "#050B14" }}>
+        <JsonLd data={faqSchema(sub.faqs)} />
+        {hero}
+        <ChallengeSection statement={narrative.challenge} frictions={narrative.frictions} />
+        <ApproachSection statement={narrative.approachStatement ?? DEFAULT_APPROACH} stages={APPROACH_STAGES} />
+        <TransformationSection before={narrative.before} layer={narrative.layer} after={narrative.after} />
+        <BuildSection steps={BUILD_STEPS} />
+        <CapabilitiesSection items={narrative.capabilities} />
+        <ArchitectureSection nodes={narrative.architecture} />
+        <UseCasesSection items={narrative.useCases} />
+        <ImpactSection items={narrative.businessImpact ?? DEFAULT_IMPACT} />
+        <WhySection items={WHY_INFOMIST} />
+        <NarrativeFaq faqs={sub.faqs} title={`Common questions about ${sub.displayName}`} />
+        <NarrativeCta categorySlug={category.slug} />
+      </div>
+    );
+  }
+
+  /* ── classic layout (subcategories without a narrative yet) ─────────── */
   return (
     <div className="w-full min-h-screen bg-white overflow-x-hidden">
       <JsonLd data={faqSchema(sub.faqs)} />
-
-      {heroVideo ? (
-        <PageHeroVideo
-          breadcrumb={breadcrumb}
-          eyebrow={`${category.tag} · ${category.name}`}
-          title={sub.displayName}
-          sub={sub.tagline ?? `A focused engagement built around ${sub.displayName.toLowerCase()} — scoped, staffed and shipped by senior engineers.`}
-          primary={{ label: "Talk to a Strategist", href: "/talk-to-strategist" }}
-          secondary={{ label: `Explore ${category.name}`, href: `/solutions/${category.slug}` }}
-          media={heroVideo}
-        />
-      ) : (
-        <>
-          {/* Breadcrumb */}
-          <div className="border-b border-slate-100 relative z-10 pt-20">
-            <nav aria-label="Breadcrumb" className="max-w-6xl mx-auto px-6 py-5 flex items-center gap-2 text-sm">
-              <Link href="/solutions" className="text-[#64748B] hover:text-[#0EA5E9] transition-colors duration-150 font-medium">Solutions</Link>
-              <span className="text-slate-300" aria-hidden="true">/</span>
-              <Link href={`/solutions/${category.slug}`} className="text-[#64748B] hover:text-[#0EA5E9] transition-colors duration-150 font-medium">
-                <span className="font-mono text-xs text-[#0EA5E9] mr-1.5">{category.tag}</span>
-                {category.name}
-              </Link>
-              <span className="text-slate-300" aria-hidden="true">/</span>
-              <span className="text-[#0F172A] font-semibold">{sub.displayName}</span>
-            </nav>
-          </div>
-
-          {/* Hero */}
-          <section className="relative overflow-hidden" style={{ background: "#FAFAFA" }}>
-            <GridOverlay />
-            <HeroBlobs />
-            <HeroVisual variant={heroVariantForRoute(category.slug, sub.slug)} />
-            <div className="relative z-10 max-w-6xl mx-auto px-6 pt-14 pb-14 md:pt-20 md:pb-16">
-              <div className="flex flex-col gap-6 max-w-2xl rise-in">
-                <div className="flex items-center gap-4">
-                  <span
-                    className="w-14 h-14 rounded-2xl flex items-center justify-center flex-shrink-0"
-                    style={{
-                      background: "linear-gradient(145deg, rgba(14,165,233,0.12), rgba(14,165,233,0.04))",
-                      border: "1px solid rgba(14,165,233,0.18)",
-                      boxShadow: "0 0 0 6px rgba(14,165,233,0.05), 0 8px 24px rgba(14,165,233,0.12)",
-                    }}
-                  >
-                    <Icon size={26} strokeWidth={1.7} className="text-[#0EA5E9]" />
-                  </span>
-                  <Eyebrow>{category.tag} · {category.name}</Eyebrow>
-                </div>
-                <h1 className="font-black text-[#0F172A] leading-[1.02]" style={{ fontSize: "clamp(2.5rem, 6.2vw, 4.4rem)", letterSpacing: "-0.045em" }}>
-                  {sub.displayName}
-                </h1>
-                <p className="text-[#0EA5E9] text-lg md:text-xl font-semibold max-w-2xl">{category.blurb}</p>
-                <p className="text-[#475569] text-base md:text-lg max-w-2xl leading-relaxed">
-                  A focused engagement built specifically around {sub.displayName.toLowerCase()} — scoped, staffed, and
-                  shipped by senior engineers, not a generic playbook.
-                </p>
-                <div className="pt-1">
-                  <CTAButton href="/talk-to-strategist" variant="lime" icon={ArrowRight}>Talk to a Strategist</CTAButton>
-                </div>
-              </div>
-            </div>
-          </section>
-        </>
-      )}
+      {hero}
 
       {/* Problem → Outcome */}
       <section className="w-full" style={{ background: "#FFFFFF" }}>
@@ -133,7 +179,6 @@ export function SubcategoryPage() {
           </div>
 
           <div className="mt-14 grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-7">
-            {/* Pain points */}
             <div
               className="rise-in relative rounded-3xl p-[1.5px]"
               style={{ background: "linear-gradient(160deg, rgba(245,158,11,0.30), rgba(245,158,11,0.04))" }}
@@ -164,7 +209,6 @@ export function SubcategoryPage() {
               </div>
             </div>
 
-            {/* Outcomes */}
             <div
               className="rise-in relative rounded-3xl p-[1.5px]"
               style={{ background: "linear-gradient(160deg, rgba(14,165,233,0.32), rgba(132,204,22,0.12))" }}
