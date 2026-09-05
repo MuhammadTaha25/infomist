@@ -2,6 +2,16 @@ import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { PageFaq } from "@/components/PageFaq";
 
+/**
+ * The "Talk to a Strategist" form POSTs straight to the Infomist n8n booking
+ * webhook — no server-side proxy. Override at build time with
+ * VITE_N8N_BOOKING_WEBHOOK. The n8n Webhook node must allow CORS (Options →
+ * "Allowed Origins (CORS)" → * or the site domain).
+ */
+const BOOKING_WEBHOOK =
+  import.meta.env.VITE_N8N_BOOKING_WEBHOOK ||
+  "https://n8n-vmc7.srv1664783.hstgr.cloud/webhook/infomist-strategist";
+
 const STRATEGIST_FAQS = [
   {
     q: "What happens after I book a call with an Infomist strategist?",
@@ -48,8 +58,7 @@ import {
 } from "lucide-react";
 import { Reveal } from "@/components/Reveal";
 import { useMeta } from "@/components/site/useMeta";
-import { PageHero } from "@/components/site/primitives";
-import { HeroVisual } from "@/components/hero/HeroVisual";
+import { PageHeroVideo } from "@/components/hero/PageHeroVideo";
 
 /* ─── Step data ─── */
 const TOPICS = [
@@ -443,7 +452,7 @@ function StrategistForm() {
     setStep4Errors({});
     setSubmitting(true);
     try {
-      await fetch("/api/booking-request", {
+      await fetch(BOOKING_WEBHOOK, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -826,16 +835,18 @@ export function TalkToStrategistPage() {
   );
 
   return (
-    <div className="w-full min-h-screen bg-white pt-20 overflow-x-hidden">
-      <PageHero
+    <div className="w-full min-h-screen bg-white overflow-x-hidden">
+      <PageHeroVideo
+        compact
         eyebrow="Talk to a Strategist"
-        eyebrowIcon={CalendarDays}
-        title="Let's talk"
-        gradientWord="strategy."
-        sub="Share a few details and one of our strategists will call you back — usually within one business day. No obligation, no generic sales pitch."
-        visual={<HeroVisual variant="journey" />}
+        title="Find your highest-leverage AI"
+        accent="opportunity."
+        sub="Share a few details and a strategist calls you back — usually within one business day. No obligation, no generic sales pitch."
+        primary={{ label: "Start the booking", href: "#strategist-form" }}
+        secondary={{ label: "See Our Work", href: "/case-studies" }}
+        media="hero-strategist"
       />
-      <div className="relative max-w-3xl mx-auto px-6 py-16 md:py-20">
+      <div id="strategist-form" className="relative max-w-3xl mx-auto px-6 py-16 md:py-20 scroll-mt-24">
         <Reveal>
           <StrategistForm />
         </Reveal>

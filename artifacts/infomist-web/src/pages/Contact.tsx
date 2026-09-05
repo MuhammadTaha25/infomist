@@ -1,10 +1,9 @@
 import { useState } from "react";
-import { Phone, Mail, MapPin, Send, CheckCircle2, MessageSquare } from "lucide-react";
+import { Phone, Mail, MapPin, Send, CheckCircle2 } from "lucide-react";
 import { Reveal } from "@/components/Reveal";
 import { PageFaq } from "@/components/PageFaq";
 import { useMeta } from "@/components/site/useMeta";
-import { PageHero } from "@/components/site/primitives";
-import { HeroVisual } from "@/components/hero/HeroVisual";
+import { PageHeroVideo } from "@/components/hero/PageHeroVideo";
 import { CATEGORIES } from "@/data/solutionsData";
 
 /**
@@ -398,14 +397,16 @@ export function ContactPage() {
   );
 
   return (
-    <div className="w-full min-h-screen bg-white pt-20 overflow-x-hidden">
-      <PageHero
+    <div className="w-full min-h-screen bg-white overflow-x-hidden">
+      <PageHeroVideo
+        compact
         eyebrow="Contact Us"
-        eyebrowIcon={MessageSquare}
         title="Start with the business problem —"
-        gradientWord="not a service list."
+        accent="not a service list."
         sub="Tell us what's slowing the business down. The right specialist maps it to automate, integrate or build — usually within one business day."
-        visual={<HeroVisual variant="connect" />}
+        primary={{ label: "Talk to a Strategist", href: "/talk-to-strategist" }}
+        secondary={{ label: "See Our Work", href: "/case-studies" }}
+        media="hero-contact"
       />
 
       <div className="max-w-6xl mx-auto px-6 py-20 md:py-24 flex flex-col gap-16">

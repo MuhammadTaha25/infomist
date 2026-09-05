@@ -34,6 +34,7 @@ export function PageHeroVideo({
   secondary,
   media,
   evidence,
+  compact = false,
 }: {
   breadcrumb?: ReactNode;
   eyebrow: string;
@@ -44,6 +45,9 @@ export function PageHeroVideo({
   secondary?: HeroCta;
   media: string;
   evidence?: string[];
+  /** shorter vertical rhythm — for conversion pages where the form/content
+   *  below the hero should stay close to the fold */
+  compact?: boolean;
 }) {
   return (
     <section className="relative w-full overflow-hidden" style={{ background: NAVY }}>
@@ -62,17 +66,26 @@ export function PageHeroVideo({
         />
       </div>
 
-      <div className="relative z-10 mx-auto max-w-6xl px-6 pt-28 pb-14 md:pt-32 md:pb-20">
+      <div
+        className={
+          compact
+            ? "relative z-10 mx-auto max-w-6xl px-6 pt-24 pb-10 md:pt-28 md:pb-12"
+            : "relative z-10 mx-auto max-w-6xl px-6 pt-28 pb-14 md:pt-32 md:pb-20"
+        }
+      >
         {breadcrumb && <div className="mb-8 text-sm text-[#8FA3BC]">{breadcrumb}</div>}
 
-        <div className="flex flex-col gap-6 max-w-xl">
+        <div className={`flex flex-col max-w-xl ${compact ? "gap-4" : "gap-6"}`}>
           <span className="text-xs font-bold uppercase" style={{ letterSpacing: "0.24em", color: CYAN }}>
             {eyebrow}
           </span>
 
           <h1
             className="font-black text-[#F4F8FC] leading-[1.04]"
-            style={{ fontSize: "clamp(2.1rem, 5vw, 3.4rem)", letterSpacing: "-0.04em" }}
+            style={{
+              fontSize: compact ? "clamp(1.9rem, 4vw, 2.7rem)" : "clamp(2.1rem, 5vw, 3.4rem)",
+              letterSpacing: "-0.04em",
+            }}
           >
             {title}{" "}
             {accent && (
