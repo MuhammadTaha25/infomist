@@ -49,19 +49,27 @@ const IconPowerhouse = () => (
 
 /* ─── Company data ─── */
 const COMPANY_NAV = [
-  { icon: <IconAbout />, label: "About Us", desc: "25 years of engineering — our story and values", href: "/about" },
-  { icon: <IconLeader />, label: "Leadership", desc: "The founder and team behind Infomist", href: "/leadership" },
-  { icon: <IconAudience />, label: "Who We Work With", desc: "The roles and problems we're built for", href: "/who-we-work-with" },
-  { icon: <IconPowerhouse />, label: "Engineering Powerhouse", desc: "How one CEO runs an AI-powered company", href: "/one-man-company" },
+  { icon: <IconAbout />, label: "Our Story", desc: "25 years of engineering, our values, and the team behind the work", href: "/our-story" },
   { icon: <IconCareers />, label: "Careers", desc: "Open roles and life at Infomist", href: "/careers" },
 ];
 
-/* ─── Solutions dropdown — 3 + 3 + 1 grid layout ─── */
+/* ─── Solutions dropdown — 2-column grid, grouped by technical vs. marketing/design ─── */
+
+/** Short display labels for the dropdown only — full names (used for page titles,
+ * meta, etc.) live untouched in solutionsData.ts. */
+const SOLUTIONS_DROPDOWN_LABELS: Record<string, string> = {
+  "ai-machine-learning-engineering": "AI & Machine Learning",
+  "software-web-architecture": "Software Architecture",
+  "experience-design-media": "UI/UX & Media",
+};
+
+const TECHNICAL_SLUGS = ["ai-machine-learning-engineering", "software-web-architecture", "salesforce-enterprise-cloud"];
+const GROWTH_SLUGS = ["seo-services", "digital-marketing", "experience-design-media", "dedicated-squads-staffing"];
+
 function SolutionsDropdown({ onNav }: { onNav: () => void }) {
-  // Split into rows: first 3, next 3, last 1
-  const row1 = CATEGORIES.slice(0, 3);
-  const row2 = CATEGORIES.slice(3, 6);
-  const row3 = CATEGORIES.slice(6);
+  const bySlug = (slug: string) => CATEGORIES.find((c) => c.slug === slug);
+  const leftColumn = TECHNICAL_SLUGS.map(bySlug).filter((c): c is (typeof CATEGORIES)[number] => !!c);
+  const rightColumn = GROWTH_SLUGS.map(bySlug).filter((c): c is (typeof CATEGORIES)[number] => !!c);
 
   const GridCell = ({ cat }: { cat: (typeof CATEGORIES)[number] }) => {
     const Icon = cat.icon;
@@ -75,7 +83,7 @@ function SolutionsDropdown({ onNav }: { onNav: () => void }) {
           <Icon size={16} color="#0EA5E9" strokeWidth={1.8} />
         </span>
         <span className="text-sm font-semibold leading-snug transition-colors duration-150">
-          {cat.name}
+          {SOLUTIONS_DROPDOWN_LABELS[cat.slug] ?? cat.name}
         </span>
       </Link>
     );
@@ -85,35 +93,43 @@ function SolutionsDropdown({ onNav }: { onNav: () => void }) {
     <div
       className="absolute top-[calc(100%+12px)] left-0 bg-white rounded-2xl overflow-hidden"
       style={{
-        width: "660px",
+        width: "560px",
         border: "1px solid rgba(203,213,225,0.7)",
         boxShadow: "0 24px 60px -12px rgba(15,23,42,0.2), 0 8px 20px -6px rgba(14,165,233,0.08)",
       }}
     >
-      <div className="p-3">
-        <p className="text-[10px] font-black uppercase tracking-[0.2em] text-[#94A3B8] px-3 pb-2 pt-1">
+      <div className="p-3 grid grid-cols-1 md:grid-cols-2 gap-1">
+        <p className="col-span-full text-[10px] font-black uppercase tracking-[0.2em] text-[#94A3B8] px-3 pb-2 pt-1">
           Solutions
         </p>
-        {/* Row 1 — 3 columns */}
-        <div className="grid grid-cols-3 gap-1">
-          {row1.map((cat) => <GridCell key={cat.slug} cat={cat} />)}
+
+        {/* Left column — technical services */}
+        <div className="flex flex-col gap-1">
+          {leftColumn.map((cat) => <GridCell key={cat.slug} cat={cat} />)}
         </div>
+
+        {/* Right column — marketing / design services */}
+        <div className="flex flex-col gap-1">
+          {rightColumn.map((cat) => <GridCell key={cat.slug} cat={cat} />)}
+        </div>
+
         {/* Divider */}
-        <div className="mx-3 my-1 border-t border-slate-100" />
-        {/* Row 2 — 3 columns */}
-        <div className="grid grid-cols-3 gap-1">
-          {row2.map((cat) => <GridCell key={cat.slug} cat={cat} />)}
-        </div>
-        {/* Divider */}
-        <div className="mx-3 my-1 border-t border-slate-100" />
-        {/* Row 3 — single item centred */}
-        <div className="flex justify-center">
-          {row3.map((cat) => (
-            <div key={cat.slug} style={{ width: "calc(33.333% - 4px)" }}>
-              <GridCell cat={cat} />
-            </div>
-          ))}
-        </div>
+        <div className="col-span-full mx-3 my-1 border-t border-slate-100" />
+
+        {/* Who We Serve — full width */}
+        <Link
+          href="/who-we-work-with"
+          onClick={onNav}
+          className="col-span-full group flex items-center gap-3 p-3.5 rounded-xl transition-all duration-150 hover:bg-sky-50"
+        >
+          <span className="w-8 h-8 rounded-lg flex items-center justify-center bg-sky-50 group-hover:bg-sky-100 flex-shrink-0 transition-colors duration-150">
+            <IconAudience />
+          </span>
+          <span className="flex flex-col">
+            <span className="text-sm font-semibold leading-snug">Who We Serve</span>
+            <span className="text-xs text-[#94A3B8] leading-snug">The roles and problems we're built for</span>
+          </span>
+        </Link>
       </div>
     </div>
   );
@@ -248,12 +264,29 @@ function NavItem({
 /* ─── Mobile full-screen overlay ─── */
 function MobileMenu({ open, onClose }: { open: boolean; onClose: () => void }) {
   const [, navigate] = useLocation();
+  // Keep the panel mounted briefly after close so the slide-out transition can
+  // play, then fully unmount it — an unmounted panel can't create horizontal
+  // scroll or trap keyboard focus off-screen.
+  const [mounted, setMounted] = useState(open);
+  const [entered, setEntered] = useState(false);
+  useEffect(() => {
+    if (open) {
+      setMounted(true);
+      const r = requestAnimationFrame(() => setEntered(true));
+      return () => cancelAnimationFrame(r);
+    }
+    setEntered(false);
+    const t = setTimeout(() => setMounted(false), 340);
+    return () => clearTimeout(t);
+  }, [open]);
 
   useEffect(() => {
     if (open) document.body.style.overflow = "hidden";
     else document.body.style.overflow = "";
     return () => { document.body.style.overflow = ""; };
   }, [open]);
+
+  if (!mounted) return null;
 
   const go = (href: string) => {
     onClose();
@@ -267,17 +300,18 @@ function MobileMenu({ open, onClose }: { open: boolean; onClose: () => void }) {
     },
     {
       heading: "Insights",
-      items: [{ label: "Insights", href: "/resources" }],
+      items: [{ label: "Insights", href: "/insights" }],
     },
     {
       heading: "Company",
       items: [
-        { label: "About Us", href: "/about" },
-        { label: "Leadership", href: "/leadership" },
-        { label: "Who We Work With", href: "/who-we-work-with" },
-        { label: "Engineering Powerhouse", href: "/one-man-company" },
+        { label: "Our Story", href: "/our-story" },
         { label: "Careers", href: "/careers" },
       ],
+    },
+    {
+      heading: "Solo Powerhouse",
+      items: [{ label: "How one CEO runs an AI-powered company", href: "/one-man-company" }],
     },
     {
       heading: "Contact Us",
@@ -293,8 +327,8 @@ function MobileMenu({ open, onClose }: { open: boolean; onClose: () => void }) {
         style={{
           background: "rgba(15,23,42,0.55)",
           backdropFilter: "blur(4px)",
-          opacity: open ? 1 : 0,
-          pointerEvents: open ? "auto" : "none",
+          opacity: entered ? 1 : 0,
+          pointerEvents: entered ? "auto" : "none",
         }}
         onClick={onClose}
         aria-hidden="true"
@@ -305,17 +339,17 @@ function MobileMenu({ open, onClose }: { open: boolean; onClose: () => void }) {
         style={{
           background: "rgba(255,255,255,0.97)",
           backdropFilter: "blur(20px)",
-          transform: open ? "translateX(0)" : "translateX(100%)",
+          transform: entered ? "translateX(0)" : "translateX(100%)",
           transition: "transform 0.32s cubic-bezier(0.4,0,0.2,1)",
           boxShadow: "-8px 0 40px rgba(15,23,42,0.12)",
         }}
       >
         {/* header */}
         <div className="flex items-center justify-between px-6 py-5 border-b border-slate-100">
-          <div className="flex items-center gap-2.5">
+          <Link href="/" onClick={onClose} className="flex items-center gap-2.5" aria-label="INFOMIST home">
             <img src={LOGO_URL} alt="INFOMIST" width={28} height={28} className="w-7 h-7 object-contain" />
             <span className="font-black text-[#0F172A] tracking-tight">INFOMIST</span>
-          </div>
+          </Link>
           <button
             onClick={onClose}
             className="w-9 h-9 rounded-xl flex items-center justify-center bg-slate-100 hover:bg-slate-200 transition-colors duration-150"
@@ -343,6 +377,12 @@ function MobileMenu({ open, onClose }: { open: boolean; onClose: () => void }) {
                 {cat.name}
               </button>
             ))}
+            <button
+              onClick={() => go("/who-we-work-with")}
+              className="w-full text-left px-3 py-2.5 rounded-xl text-sm font-medium text-[#0F172A] hover:bg-sky-50 hover:text-[#0EA5E9] transition-all duration-150"
+            >
+              Who We Serve
+            </button>
           </div>
 
           {/* Other sections */}
@@ -430,7 +470,7 @@ export function NavBar() {
             <NavItem
               label="Solutions"
               dropdownKey="solutions"
-              isActive={location.startsWith("/solutions")}
+              isActive={location.startsWith("/solutions") || location.startsWith("/who-we-work-with")}
               activeDropdown={activeDropdown}
               setActiveDropdown={setActiveDropdown}
             >
@@ -447,8 +487,8 @@ export function NavBar() {
 
             <NavItem
               label="Insights"
-              href="/resources"
-              isActive={location === "/resources"}
+              href="/insights"
+              isActive={location === "/insights"}
               activeDropdown={activeDropdown}
               setActiveDropdown={setActiveDropdown}
             />
@@ -456,12 +496,20 @@ export function NavBar() {
             <NavItem
               label="Company"
               dropdownKey="company"
-              isActive={["/about", "/leadership", "/careers", "/who-we-work-with", "/one-man-company"].some((p) => location === p || location.startsWith(p + "/"))}
+              isActive={["/our-story", "/careers"].some((p) => location === p || location.startsWith(p + "/"))}
               activeDropdown={activeDropdown}
               setActiveDropdown={setActiveDropdown}
             >
               <MegaCompany onNav={() => setActiveDropdown(null)} />
             </NavItem>
+
+            <NavItem
+              label="Solo Powerhouse"
+              href="/one-man-company"
+              isActive={location === "/one-man-company" || location.startsWith("/one-man-company/")}
+              activeDropdown={activeDropdown}
+              setActiveDropdown={setActiveDropdown}
+            />
 
             <NavItem
               label="Contact Us"
