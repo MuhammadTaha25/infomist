@@ -22,12 +22,16 @@ export function HeroVideo({
   active,
   className = "",
   posterOnly = false,
+  objectPosition = "center",
 }: {
   media: string;
   active: boolean;
   className?: string;
   /** force the still frame (mobile / data saver) */
   posterOnly?: boolean;
+  /** CSS object-position for the clip — shift the framing so the subject
+   *  clears the left-hand text column (e.g. "78% 50%"). */
+  objectPosition?: string;
 }) {
   const poster = `${BASE}hero/${media}.webp`;
   const src = `${BASE}hero/${media}.mp4`;
@@ -70,11 +74,13 @@ export function HeroVideo({
         alt=""
         aria-hidden="true"
         className="absolute inset-0 h-full w-full object-cover"
+        style={{ objectPosition }}
       />
       {showVideo && (
         <video
           ref={videoRef}
           className="absolute inset-0 h-full w-full object-cover"
+          style={{ objectPosition }}
           src={src}
           poster={poster}
           muted

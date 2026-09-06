@@ -68,14 +68,26 @@ export function HeroSlider() {
             className="absolute inset-0 transition-opacity duration-700"
             style={{ opacity: i === index ? 1 : 0 }}
           >
-            <HeroVideo media={s.media} active={i === index} posterOnly={isMobile} />
+            <HeroVideo media={s.media} active={i === index} posterOnly={isMobile} objectPosition="72% 50%" />
           </div>
         ))}
-        {/* navy scrim so the left column stays readable over the clip */}
+        {/* navy scrim so the left column stays readable — kept translucent
+            enough that the clip still reads as texture behind the copy */}
         <div
           className="absolute inset-0"
           style={{
-            background: `linear-gradient(90deg, ${NAVY} 0%, ${NAVY} 34%, rgba(7,20,38,0.72) 52%, rgba(7,20,38,0.30) 74%, rgba(7,20,38,0.15) 100%)`,
+            background: `linear-gradient(90deg, rgba(7,20,38,0.93) 0%, rgba(7,20,38,0.88) 24%, rgba(7,20,38,0.66) 46%, rgba(7,20,38,0.28) 70%, rgba(7,20,38,0.10) 100%)`,
+          }}
+        />
+        {/* faint left-edge grid so the copy column never looks empty */}
+        <div
+          className="absolute inset-y-0 left-0 w-1/2"
+          style={{
+            backgroundImage:
+              "linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px)",
+            backgroundSize: "48px 48px",
+            maskImage: "linear-gradient(90deg, #000 0%, transparent 90%)",
+            WebkitMaskImage: "linear-gradient(90deg, #000 0%, transparent 90%)",
           }}
         />
         <div
@@ -146,7 +158,7 @@ export function HeroSlider() {
         <div className="md:hidden mt-8 relative aspect-[16/10] w-full overflow-hidden rounded-2xl" style={{ border: "1px solid rgba(255,255,255,0.08)" }}>
           {HERO_SLIDES.map((s, i) => (
             <div key={s.id} className="absolute inset-0 transition-opacity duration-700" style={{ opacity: i === index ? 1 : 0 }}>
-              <HeroVideo media={s.media} active={i === index} posterOnly />
+              <HeroVideo media={s.media} active={i === index} posterOnly objectPosition="72% 50%" />
             </div>
           ))}
         </div>

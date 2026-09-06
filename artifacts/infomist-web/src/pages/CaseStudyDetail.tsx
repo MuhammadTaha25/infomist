@@ -2,8 +2,6 @@ import { useEffect, useMemo, useState } from "react";
 import { useParams, Link } from "wouter";
 import {
   ArrowRight,
-  ArrowUpRight,
-  ArrowLeft,
   Target,
   Wrench,
   CheckCircle2,
@@ -14,12 +12,13 @@ import {
 } from "lucide-react";
 import { useMeta } from "@/components/site/useMeta";
 import { useSocialMeta } from "@/components/site/useSocialMeta";
+import { PageHeroVideo } from "@/components/hero/PageHeroVideo";
+import { caseStudyVideo } from "@/data/caseStudyVideos";
 import { JsonLd } from "@/components/site/Faq";
 import { NotFoundBlock } from "@/components/site/NotFoundBlock";
 import { Reveal, RevealGroup, RevealItem } from "@/components/Reveal";
 import {
   GridOverlay,
-  HeroBlobs,
   Blob,
   Section,
   SectionHead,
@@ -29,7 +28,6 @@ import {
   IconTile,
 } from "@/components/site/primitives";
 import { CaseStudyCard } from "@/components/case-studies/CaseStudyCard";
-import { CaseStudyGlyphPaths } from "@/components/case-studies/CaseStudyLogo";
 import { getCaseStudy, getRelatedCaseStudies } from "@/data/caseStudies";
 
 const SITE = "https://www.infomist.com";
@@ -87,7 +85,7 @@ export function CaseStudyDetailPage() {
   const c = study.color;
 
   return (
-    <div className="w-full min-h-screen bg-white pt-20 overflow-x-hidden [scroll-behavior:smooth]">
+    <div className="w-full min-h-screen bg-white overflow-x-hidden [scroll-behavior:smooth]">
       <JsonLd
         data={{
           "@context": "https://schema.org",
@@ -101,74 +99,29 @@ export function CaseStudyDetailPage() {
         }}
       />
 
-      {/* Breadcrumb */}
-      <div className="border-b border-slate-100 relative z-10">
-        <nav aria-label="Breadcrumb" className="max-w-6xl mx-auto px-6 py-5 flex items-center gap-2 text-sm">
-          <Link href="/case-studies" className="text-[#64748B] hover:text-[#0EA5E9] transition-colors duration-150 font-medium">
-            Case Studies
-          </Link>
-          <span className="text-slate-300" aria-hidden="true">/</span>
-          <span className="text-[#0F172A] font-semibold">{study.name}</span>
-        </nav>
-      </div>
-
       {/* ── Hero ─────────────────────────────────────────────────────── */}
-      <section className="relative overflow-hidden" style={{ background: "#FAFAFA" }}>
-        <GridOverlay />
-        <HeroBlobs />
-        <div className="relative z-10 max-w-6xl mx-auto px-6 pt-14 pb-16 md:pt-16 md:pb-20">
-          <div className="grid gap-12 lg:grid-cols-[1fr_auto] lg:items-center">
-            <div className="flex flex-col gap-6 max-w-2xl rise-in">
-              <span
-                className="self-start text-[11px] font-bold uppercase tracking-widest px-3 py-1 rounded-full"
-                style={{ background: `${c}14`, color: c, border: `1px solid ${c}2e` }}
-              >
-                {study.category}
-              </span>
-              <h1
-                className="font-black text-[#0F172A] leading-[1.03]"
-                style={{ fontSize: "clamp(2.6rem, 6vw, 4rem)", letterSpacing: "-0.045em" }}
-              >
-                {study.name}
-              </h1>
-              <p className="text-[#475569] text-xl leading-relaxed">{study.shortDescription}</p>
-
-              <dl className="grid grid-cols-2 sm:grid-cols-3 gap-x-6 gap-y-3 pt-1">
-                <HeroMeta label="Industry" value={study.industry} />
-                <HeroMeta label="Location" value={study.location} />
-                <HeroMeta label="Project type" value={study.projectType} />
-              </dl>
-
-              <div className="flex flex-wrap items-center gap-3 pt-1">
-                {study.websiteUrl ? (
-                  <CTAButton href={study.websiteUrl} external variant="primary" icon={ArrowUpRight}>
-                    {study.websiteLabel ?? "Visit Website"}
-                  </CTAButton>
-                ) : null}
-                <Link
-                  href="/case-studies"
-                  className="group inline-flex items-center gap-1.5 text-sm font-bold text-[#475569] hover:text-[#0F172A] px-2 py-1 rounded outline-none focus-visible:ring-2 focus-visible:ring-[#0EA5E9]"
-                >
-                  <ArrowLeft size={15} strokeWidth={2.6} className="transition-transform duration-300 group-hover:-translate-x-1" />
-                  Back to Case Studies
-                </Link>
-              </div>
-            </div>
-
-            {/* Project mark — the site's line-geometry language, scaled up. */}
-            <div
-              className="hidden md:flex w-60 h-60 rounded-[28px] items-center justify-center flex-shrink-0 relative overflow-hidden"
-              style={{ background: `linear-gradient(150deg, ${c}1f, ${c}06)`, color: c, border: `1px solid ${c}33` }}
-              aria-hidden="true"
-            >
-              <div className="absolute inset-0 opacity-40" style={{ backgroundImage: `radial-gradient(circle at 30% 20%, ${c}44, transparent 60%)` }} />
-              <svg width="96" height="96" viewBox="0 0 32 32" className="relative">
-                <CaseStudyGlyphPaths study={study} />
-              </svg>
-            </div>
-          </div>
-        </div>
-      </section>
+      <PageHeroVideo
+        breadcrumb={
+          <nav aria-label="Breadcrumb" className="flex flex-wrap items-center gap-2">
+            <Link href="/case-studies" className="hover:text-[#27C7E8] transition-colors duration-150 font-medium">
+              Case Studies
+            </Link>
+            <span aria-hidden="true">/</span>
+            <span className="text-[#F4F8FC] font-semibold">{study.name}</span>
+          </nav>
+        }
+        eyebrow={`Case Study · ${study.category}`}
+        title={study.name}
+        sub={study.shortDescription}
+        primary={
+          study.websiteUrl
+            ? { label: study.websiteLabel ?? "Visit Website", href: study.websiteUrl }
+            : { label: "Talk to a Strategist", href: "/talk-to-strategist" }
+        }
+        secondary={{ label: "Back to Case Studies", href: "/case-studies" }}
+        media={caseStudyVideo(study.slug)}
+        evidence={[study.industry, study.location, study.projectType]}
+      />
 
       {/* ── Sticky section nav ───────────────────────────────────────── */}
       <div className="sticky top-16 z-20 border-y border-slate-100 bg-white/90 backdrop-blur">
@@ -404,15 +357,6 @@ export function CaseStudyDetailPage() {
           </CTAButton>
         }
       />
-    </div>
-  );
-}
-
-function HeroMeta({ label, value }: { label: string; value: string }) {
-  return (
-    <div className="flex flex-col gap-0.5">
-      <dt className="text-[10px] font-bold uppercase tracking-widest text-[#94A3B8]">{label}</dt>
-      <dd className="text-[#0F172A] font-semibold text-sm leading-snug">{value}</dd>
     </div>
   );
 }
