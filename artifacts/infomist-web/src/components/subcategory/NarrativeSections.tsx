@@ -85,7 +85,7 @@ function prefersReducedMotion() {
   return typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 }
 
-function Reveal({
+export function Reveal({
   children,
   i = 0,
   as: Tag = "div",
