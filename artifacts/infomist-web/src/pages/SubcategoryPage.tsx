@@ -23,7 +23,6 @@ import {
   ImpactSection,
   WhySection,
   NarrativeFaq,
-  NarrativeCta,
 } from "@/components/subcategory/NarrativeSections";
 import { useMeta } from "@/components/site/useMeta";
 import { JsonLd, faqSchema, FaqAccordion } from "@/components/site/Faq";
@@ -138,14 +137,18 @@ export function SubcategoryPage() {
     </>
   );
 
-  /* ── AI-native narrative layout ─────────────────────────────────────── */
+  /* ── AI-native narrative layout (homepage white / navy / blue rhythm) ─ */
   if (narrative) {
     return (
-      <div className="w-full overflow-x-hidden" style={{ background: "#050B14" }}>
+      <div className="w-full overflow-x-hidden bg-white">
         <JsonLd data={faqSchema(sub.faqs)} />
         {hero}
         <ChallengeSection statement={narrative.challenge} frictions={narrative.frictions} />
-        <ApproachSection statement={narrative.approachStatement ?? DEFAULT_APPROACH} stages={APPROACH_STAGES} />
+        <ApproachSection
+          title={narrative.approachTitle}
+          statement={narrative.approachStatement ?? DEFAULT_APPROACH}
+          stages={narrative.approachStages ?? APPROACH_STAGES}
+        />
         <TransformationSection before={narrative.before} layer={narrative.layer} after={narrative.after} />
         <BuildSection steps={BUILD_STEPS} />
         <CapabilitiesSection items={narrative.capabilities} />
@@ -154,7 +157,12 @@ export function SubcategoryPage() {
         <ImpactSection items={narrative.businessImpact ?? DEFAULT_IMPACT} />
         <WhySection items={WHY_INFOMIST} />
         <NarrativeFaq faqs={sub.faqs} title={`Common questions about ${sub.displayName}`} />
-        <NarrativeCta categorySlug={category.slug} />
+        <DarkCTA
+          eyebrow="Start a Project"
+          title="Have a system worth engineering?"
+          sub="Tell us what you're trying to solve. We'll help map the AI, software and automation required to make it real."
+          cta={<CTAButton href="/talk-to-strategist" variant="lime" icon={ArrowRight}>Talk to an Engineer</CTAButton>}
+        />
       </div>
     );
   }

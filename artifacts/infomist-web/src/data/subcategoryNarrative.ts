@@ -25,8 +25,10 @@ export interface SubNarrative {
   challenge: string;
   /** 02 — 3–4 specific frictions */
   frictions: Friction[];
-  /** 04 — one line under "From data to action" (optional; a default is used) */
+  /** 04 — overrides for non-AI subcategories (design, video, print, …) */
+  approachTitle?: string;
   approachStatement?: string;
+  approachStages?: Stage[];
   /** 05 — before / intelligence layer / after */
   before: string[];
   layer: string[];
@@ -73,6 +75,19 @@ export const WHY_INFOMIST: Stage[] = [
 
 const DEFAULT_APPROACH =
   "We design intelligent systems that connect your data, your models and your business workflows into one operational layer.";
+
+/** Shared override for creative / design subcategories. */
+export const DESIGN_APPROACH = {
+  title: "From brief to system.",
+  statement:
+    "We turn brand and product intent into a system — components, rules and assets — so every future piece is fast and consistent.",
+  stages: [
+    { title: "Define", body: "Understand the brand, the audience and where the work has to perform." },
+    { title: "Design", body: "Build the visual language — type, colour, layout, motion." },
+    { title: "Systemise", body: "Turn it into components, templates and written guidelines." },
+    { title: "Apply", body: "Roll it out across every touchpoint and hand over the system." },
+  ] as Stage[],
+};
 
 /* ── per-subcategory narrative ────────────────────────────────────────── */
 
@@ -388,12 +403,443 @@ const N: Record<string, SubNarrative> = {
       { title: "AI-native SaaS", body: "Products where the intelligence is the point, engineered as such." },
     ],
   },
+
+  "ai-voice-agent-development": {
+    challenge: "Every unanswered call is a lead, a booking or a customer you don't get back.",
+    frictions: [
+      { title: "Call volume outpaces the team", body: "Inbound peaks overwhelm the people answering, and callers wait or hang up." },
+      { title: "Leads go cold after hours", body: "Calls outside business hours ring out — and the enquiry moves on to a competitor." },
+      { title: "Hiring and training is slow", body: "Every new agent is weeks of ramp-up before they handle calls unassisted." },
+      { title: "Inconsistent conversations", body: "Script adherence, tone and outcomes vary from one agent and one shift to the next." },
+    ],
+    before: ["Missed and abandoned calls", "No after-hours coverage", "Slow, costly hiring", "Inconsistent call quality"],
+    layer: ["Speech recognition", "LLM reasoning", "CRM & calendar tools", "Call routing"],
+    after: ["24/7 call handling", "Every enquiry answered instantly", "Qualification & booking automated", "Consistent, on-brand conversations"],
+    capabilities: [
+      "Inbound & outbound voice", "Real-time speech-to-text", "Natural conversation (GPT-4o / Claude)",
+      "Appointment booking", "Lead qualification", "Warm human transfer", "CRM & telephony integration", "Call analytics",
+    ],
+    architecture: ["Inbound call", "Speech-to-text", "LLM reasoning", "Tools & CRM", "Voice response", "Booked / routed action"],
+    useCases: [
+      { title: "Lead qualification", body: "Every inbound caller is greeted, qualified and routed in seconds." },
+      { title: "Appointment booking", body: "The agent checks real availability and books straight into the calendar." },
+      { title: "After-hours reception", body: "Nights and weekends covered with the same script and CRM logging." },
+      { title: "Overflow handling", body: "Spikes absorbed without callers ever hearing a hold queue." },
+    ],
+  },
+
+  "ai-chatbot-development": {
+    challenge: "Your support and sales teams answer the same questions all day while genuinely new ones wait.",
+    frictions: [
+      { title: "Repeat questions dominate", body: "A large share of tickets and chats are variations of the same handful of asks." },
+      { title: "Answers live in scattered docs", body: "Support pulls from a wiki, a help centre and tribal knowledge — inconsistently." },
+      { title: "Generic bots frustrate customers", body: "Rule-based chat can't handle rephrasing and dead-ends into 'talk to an agent'." },
+      { title: "No path from answer to action", body: "Even a correct answer doesn't create the order, ticket or booking behind it." },
+    ],
+    before: ["Agents on repeat questions", "Inconsistent answers", "Rigid rule-based bots", "Answer without action"],
+    layer: ["Intent detection", "Knowledge retrieval", "LLM", "Business tools"],
+    after: ["Deflected repeat volume", "Answers grounded in your content", "Natural, resilient conversation", "Actions completed in-chat"],
+    capabilities: [
+      "Website, app & WhatsApp chat", "Retrieval over your knowledge base", "Intent & entity extraction",
+      "LLM conversation", "Lead capture & qualification", "Human handoff", "CRM & helpdesk integration", "Conversation analytics",
+    ],
+    architecture: ["Message", "Intent", "Knowledge retrieval", "LLM", "Response", "Handoff / action"],
+    useCases: [
+      { title: "Customer support", body: "First-line resolution for the questions your docs already answer." },
+      { title: "Sales assistant", body: "Qualifies visitors and books demos before a rep is involved." },
+      { title: "WhatsApp commerce", body: "Order status, FAQs and re-orders handled in the channel customers use." },
+      { title: "Internal helpdesk", body: "IT and HR questions answered from policy, with tickets raised automatically." },
+    ],
+  },
+
+  "deep-learning": {
+    challenge: "Off-the-shelf models hit an accuracy ceiling on the problems that are specific to your data.",
+    frictions: [
+      { title: "Generic models plateau", body: "Pre-trained APIs get you 80% of the way and then stop improving on your edge cases." },
+      { title: "Data isn't model-ready", body: "Labels, splits and pipelines don't exist, so every experiment starts from scratch." },
+      { title: "Prototypes don't reach production", body: "A notebook that works never becomes a monitored, versioned, served model." },
+      { title: "No feedback loop", body: "Once deployed, nothing captures where the model is wrong so it can improve." },
+    ],
+    before: ["Accuracy ceiling on edge cases", "Ad-hoc data handling", "Notebook-only models", "No retraining loop"],
+    layer: ["Data pipelines", "Model training", "Evaluation", "Serving"],
+    after: ["Accuracy tuned to your data", "Reproducible training pipelines", "Versioned, monitored models", "Continuous improvement"],
+    capabilities: [
+      "Custom model architecture", "Training pipelines & MLOps", "Forecasting & prediction", "Recommendation systems",
+      "Pattern & anomaly detection", "Model evaluation & monitoring", "Inference APIs", "Retraining automation",
+    ],
+    architecture: ["Data", "Features", "Model training", "Evaluation", "Inference", "Decision"],
+    useCases: [
+      { title: "Demand forecasting", body: "Predict volume, load or churn on your own history, not a generic curve." },
+      { title: "Recommendation", body: "Rank products, content or actions for each user in real time." },
+      { title: "Anomaly detection", body: "Flag fraud, faults or outliers the moment the pattern breaks." },
+      { title: "Complex classification", body: "Categorise text, images or events where rules can't keep up." },
+    ],
+  },
+
+  "mobile-app-developer": {
+    challenge: "A mobile app is only useful when it's connected to the systems that actually run the business.",
+    frictions: [
+      { title: "Apps disconnected from the back office", body: "The app and the core systems hold different versions of the truth." },
+      { title: "Two platforms, double the work", body: "iOS and Android drift apart in features, quality and release cadence." },
+      { title: "Slow, risky releases", body: "Each store submission is a manual, anxious event rather than a routine." },
+      { title: "No intelligence in the experience", body: "The app collects data but never uses it to make the next action easier." },
+    ],
+    before: ["App out of sync with systems", "Divergent iOS / Android", "Manual, risky releases", "No in-app intelligence"],
+    layer: ["Application", "API layer", "Data", "AI / automation"],
+    after: ["Real-time connection to the business", "One codebase, both platforms", "Automated release pipelines", "Context-aware experiences"],
+    capabilities: [
+      "iOS & Android development", "React Native cross-platform", "API & offline sync", "Push & real-time features",
+      "App Store & Play submission", "CI/CD for mobile", "In-app AI features", "Analytics & crash monitoring",
+    ],
+    architecture: ["User", "App", "API", "Data", "AI / automation", "Business system"],
+    useCases: [
+      { title: "Field & operations apps", body: "The tools your on-site teams use, connected live to the back office." },
+      { title: "Customer apps", body: "Accounts, bookings and support in an app that reflects real system state." },
+      { title: "Internal tools", body: "Approvals, inventory and reporting in a pocket, not a spreadsheet." },
+      { title: "Marketplace & commerce", body: "Storefront apps wired to inventory, payments and fulfilment." },
+    ],
+  },
+
+  "enterprise-software-development": {
+    challenge: "Mission-critical systems can't be replaced in a big bang — but they can't stay as they are either.",
+    frictions: [
+      { title: "Legacy systems block change", body: "Core platforms are too risky to touch and too rigid to extend." },
+      { title: "Integration debt compounds", body: "Every new tool is bolted on with another brittle point-to-point connection." },
+      { title: "Security and compliance overhead", body: "Each change carries audit, access and data-residency requirements that slow delivery." },
+      { title: "Scale exposes the cracks", body: "Volume and concurrency surface failure modes the original design never anticipated." },
+    ],
+    before: ["Change-resistant legacy core", "Point-to-point integration debt", "Slow, compliance-heavy delivery", "Scaling failures"],
+    layer: ["Architecture", "Integration", "AI / automation", "Infrastructure"],
+    after: ["Legacy modernised incrementally", "One governed integration layer", "Delivery that keeps compliance", "Systems built for real scale"],
+    capabilities: [
+      "Enterprise architecture", "Legacy modernisation", "Integration & middleware", "Identity, access & audit",
+      "Cloud & on-prem infrastructure", "Automated testing at scale", "Observability", "AI feature integration",
+    ],
+    architecture: ["Requirements", "Architecture", "Build", "Integrate", "Deploy", "Operate"],
+    useCases: [
+      { title: "Core platform builds", body: "The system a large organisation runs on, engineered for its real constraints." },
+      { title: "Legacy modernisation", body: "Move critical systems forward in safe, reversible increments." },
+      { title: "Integration platforms", body: "Replace tangled connections with one governed data and event layer." },
+      { title: "Regulated delivery", body: "Ship into finance, health or public sector without cutting compliance corners." },
+    ],
+  },
+
+  "salesforce-consulting-services": {
+    challenge: "Salesforce only pays back when it's configured around your real sales process — not the demo org.",
+    frictions: [
+      { title: "Out-of-the-box, not your process", body: "Default objects and stages don't match how your team actually sells or serves." },
+      { title: "Low adoption", body: "Reps work around the CRM because entering data feels like overhead, not help." },
+      { title: "Data quality erodes", body: "Duplicates, blank fields and stale records make reporting untrustworthy." },
+      { title: "Automation gaps", body: "Manual steps between Salesforce and other tools keep the process from flowing." },
+    ],
+    before: ["Generic configuration", "Reps working around the CRM", "Unreliable data", "Manual cross-tool steps"],
+    layer: ["Process design", "Salesforce config", "Automation", "Integration"],
+    after: ["Configured to your real process", "A CRM the team actually uses", "Clean, trustworthy data", "Process that flows end to end"],
+    capabilities: [
+      "Salesforce consulting & audit", "Sales / Service / Marketing Cloud", "Custom objects & flows",
+      "Data migration & de-duplication", "Automation & approvals", "Integration with your stack", "Reporting & dashboards", "User training & rollout",
+    ],
+    architecture: ["Business process", "Salesforce config", "Data model", "Automation", "Integration", "Adoption"],
+    useCases: [
+      { title: "Implementation", body: "A first Salesforce rollout scoped to your process, data and team." },
+      { title: "Rescue & optimisation", body: "Fix an org that's drifted into low adoption and unreliable data." },
+      { title: "Cloud expansion", body: "Add Service or Marketing Cloud onto a working Sales Cloud base." },
+      { title: "Integration", body: "Connect Salesforce to billing, support and the rest of the stack." },
+    ],
+  },
+
+  "system-integration": {
+    challenge: "Your teams are the integration layer — moving data between systems that were never meant to connect.",
+    frictions: [
+      { title: "Manual data movement", body: "People export, reformat and re-import between systems every day." },
+      { title: "No single source of truth", body: "Customer, order and inventory data disagree depending on which system you ask." },
+      { title: "Brittle point-to-point links", body: "Each integration is bespoke, undocumented and breaks when either side changes." },
+      { title: "No real-time visibility", body: "By the time data lines up across systems, the moment to act has passed." },
+    ],
+    before: ["Manual data movement", "Conflicting sources of truth", "Brittle point-to-point links", "Delayed cross-system data"],
+    layer: ["Connectors", "Transformation", "Orchestration", "Event streaming"],
+    after: ["Automated data flow", "One governed data layer", "Documented, resilient integrations", "Real-time system-wide visibility"],
+    capabilities: [
+      "Integration architecture", "API development & gateways", "iPaaS & middleware", "Event streaming",
+      "Data transformation & mapping", "Legacy system connectors", "Error handling & retries", "Monitoring & alerting",
+    ],
+    architecture: ["Systems", "Connectors", "Transformation", "Orchestration", "Real-time data layer", "Action"],
+    useCases: [
+      { title: "ERP / CRM integration", body: "Keep finance, sales and operations working from the same records." },
+      { title: "E-commerce & fulfilment", body: "Orders, stock and shipping synchronised without manual reconciliation." },
+      { title: "Data consolidation", body: "One clean layer feeding analytics, reporting and AI." },
+      { title: "Legacy connectivity", body: "Expose old systems through modern APIs without replacing them." },
+    ],
+  },
+
+  "graphic-design-services": {
+    challenge: "Without a system, every new asset is a fresh negotiation about how the brand should look.",
+    frictions: [
+      { title: "Inconsistent output", body: "Assets from different people and freelancers don't look like the same brand." },
+      { title: "Slow turnaround", body: "Every request starts from a blank canvas instead of a component library." },
+      { title: "No single source of truth", body: "Logos, colours and templates live in scattered folders and inboxes." },
+      { title: "Design doesn't scale", body: "More channels and campaigns mean linearly more design hours." },
+    ],
+    before: ["Inconsistent assets", "Blank-canvas turnaround", "Scattered brand files", "Design that scales with headcount"],
+    layer: ["Brand system", "Component library", "Templates", "Guidelines"],
+    after: ["Consistent, on-brand output", "Fast, system-driven production", "One source of truth", "Design that scales with channels"],
+    capabilities: [
+      "Design systems", "Marketing asset production", "Social & campaign templates", "Presentation & document design",
+      "Iconography & illustration", "Brand guideline documentation", "Print & digital layout", "Asset library setup",
+    ],
+    architecture: ["Brand inputs", "System design", "Components", "Templates", "Assets", "Consistent output"],
+    useCases: [
+      { title: "Design system build", body: "The components and rules that make every future asset faster and on-brand." },
+      { title: "Campaign production", body: "Full asset sets across channels from one visual system." },
+      { title: "Sales & pitch collateral", body: "Decks and documents that look designed, not assembled." },
+      { title: "Rebrand rollout", body: "Apply a new identity consistently across every touchpoint." },
+    ],
+  },
+
+  "brand-identity-design": {
+    challenge: "A logo isn't a brand — and without the system around it, consistency falls apart on contact with reality.",
+    frictions: [
+      { title: "Identity without a system", body: "There's a logo, but no rules for type, colour, spacing or voice." },
+      { title: "Inconsistent application", body: "The brand looks different on the site, the deck and the invoice." },
+      { title: "Doesn't scale to new contexts", body: "Every new format needs a designer to decide how the brand behaves." },
+      { title: "Weak differentiation", body: "The identity blends into the category instead of standing apart from it." },
+    ],
+    before: ["Logo without a system", "Inconsistent application", "Designer needed for every format", "Blends into the category"],
+    layer: ["Positioning", "Identity system", "Guidelines", "Applications"],
+    after: ["A complete identity system", "Consistent across every touchpoint", "Scales to new formats by rule", "Distinct in the category"],
+    capabilities: [
+      "Brand positioning", "Logo & identity design", "Typography & colour systems", "Visual language & art direction",
+      "Brand guidelines", "Stationery & templates", "Digital brand application", "Rollout support",
+    ],
+    architecture: ["Positioning", "Identity system", "Applications", "Guidelines", "Rollout"],
+    useCases: [
+      { title: "New brand", body: "A complete identity for a launch — not just a mark, the whole system." },
+      { title: "Rebrand", body: "Evolve an existing identity and roll it out without losing equity." },
+      { title: "Sub-brands", body: "Related identities that hold together under one parent system." },
+      { title: "Brand guidelines", body: "The reference that keeps everyone on-brand without a designer in the room." },
+    ],
+  },
+
+  "ux-design": {
+    challenge: "Teams ship screens; users experience flows — and the gap between the two is where products fail.",
+    frictions: [
+      { title: "Designed screen by screen", body: "Individual pages look fine but the journey between them is confusing." },
+      { title: "Decisions without evidence", body: "Layout and flow are argued from opinion, not from user behaviour." },
+      { title: "No shared design language", body: "Every feature reinvents patterns, so the product feels inconsistent." },
+      { title: "Usability found late", body: "Problems surface in support tickets instead of in testing." },
+    ],
+    before: ["Screen-by-screen design", "Opinion-led decisions", "Reinvented patterns", "Usability issues found in production"],
+    layer: ["Research", "Flows & IA", "Prototype", "Design system"],
+    after: ["Journeys designed end to end", "Evidence-led decisions", "One shared design language", "Usability validated before build"],
+    capabilities: [
+      "User research & interviews", "Information architecture", "User flows & journey mapping", "Wireframing & prototyping",
+      "Usability testing", "Interaction & UI design", "Design systems", "Accessibility (WCAG)",
+    ],
+    architecture: ["Research", "Flows", "Wireframes", "Prototype", "Test", "Design system"],
+    useCases: [
+      { title: "New product design", body: "From research to a tested, buildable design system for a 0→1 product." },
+      { title: "Redesign", body: "Fix a product where usage data and support volume say the UX is failing." },
+      { title: "Design system", body: "The components and patterns that keep a growing product coherent." },
+      { title: "Usability audit", body: "Find and prioritise the friction costing you conversion and retention." },
+    ],
+  },
+
+  "video-production": {
+    challenge: "Most product video explains features; almost none of it makes someone feel why the product matters.",
+    frictions: [
+      { title: "Feature lists, not stories", body: "Videos walk through screens instead of showing the problem being solved." },
+      { title: "Inconsistent quality", body: "Output varies with whoever edited it — pacing, sound and grade all drift." },
+      { title: "Slow, linear production", body: "Every video is a from-scratch project with no reusable system." },
+      { title: "One format, one channel", body: "The asset isn't cut down for the places it actually needs to run." },
+    ],
+    before: ["Feature-walkthrough videos", "Inconsistent craft", "From-scratch every time", "Single format and channel"],
+    layer: ["Script & story", "Production", "Edit & post", "Delivery"],
+    after: ["Story-led product films", "Consistent, high craft", "A repeatable production system", "Cut for every channel that needs it"],
+    capabilities: [
+      "Concept & scriptwriting", "Story-led editing", "Motion graphics & animation", "Screen & product capture",
+      "Colour grading", "Sound design & mix", "Short-form & social cutdowns", "Subtitling & localisation",
+    ],
+    architecture: ["Brief", "Script", "Production", "Edit", "Grade & sound", "Delivery"],
+    useCases: [
+      { title: "Product films", body: "The hero video that makes a complex product make sense in 90 seconds." },
+      { title: "Launch campaigns", body: "A film plus the full set of social cutdowns from one shoot." },
+      { title: "Explainer & onboarding", body: "Motion-led pieces that shorten the path to 'I get it'." },
+      { title: "Customer stories", body: "Evidence-led films where the customer does the talking." },
+    ],
+  },
+
+  "brochure-design": {
+    challenge: "Print and publication work fails on the details — and the details are the whole job.",
+    frictions: [
+      { title: "Layout without a system", body: "Each page is composed by eye, so the document lacks rhythm and consistency." },
+      { title: "Content and design out of step", body: "Copy is poured in late and the layout never quite fits it." },
+      { title: "Prepress mistakes", body: "Bleed, colour profiles and resolution issues surface at the printer." },
+      { title: "No reusable template", body: "The next catalogue or report starts from zero." },
+    ],
+    before: ["Composed by eye", "Content poured in late", "Prepress surprises", "No reusable template"],
+    layer: ["Content structure", "Layout system", "Design", "Prepress"],
+    after: ["A consistent grid and rhythm", "Design and content built together", "Clean, print-ready files", "A template for the next edition"],
+    capabilities: [
+      "Editorial layout & grids", "Brochure & catalogue design", "Report & magazine design", "Corporate stationery",
+      "Infographics & data visuals", "Typesetting", "Prepress & print-ready files", "Template systems",
+    ],
+    architecture: ["Content", "Layout system", "Design", "Prepress", "Print-ready", "Publication"],
+    useCases: [
+      { title: "Corporate reports", body: "Annual and impact reports with a system that survives the content changes." },
+      { title: "Product catalogues", body: "Large, structured documents built on a repeatable grid." },
+      { title: "Brand collateral", body: "Brochures and stationery that match the digital identity exactly." },
+      { title: "Publications", body: "Magazines and books designed for both print and digital output." },
+    ],
+  },
+
+  "conversion-rate-optimization": {
+    challenge: "You're paying to bring people to the site; most of them leave without doing the thing that matters.",
+    frictions: [
+      { title: "Traffic without conversion", body: "Acquisition spend rises but the rate at which visitors act doesn't move." },
+      { title: "Changes made on opinion", body: "Design and copy decisions are argued, not tested against behaviour." },
+      { title: "Tracking you can't trust", body: "Analytics and events are incomplete, so you can't see where people drop." },
+      { title: "Wins that don't compound", body: "Individual experiments aren't rolled into a system that keeps improving." },
+    ],
+    before: ["Flat conversion rate", "Opinion-led changes", "Incomplete tracking", "Non-compounding wins"],
+    layer: ["Analytics", "Hypotheses", "Experiments", "Rollout"],
+    after: ["A rising conversion rate", "Evidence-led changes", "Tracking you can trust", "A compounding optimisation programme"],
+    capabilities: [
+      "Analytics & event tracking", "Funnel & drop-off analysis", "A/B & multivariate testing", "Landing page optimisation",
+      "Session & heatmap analysis", "Personalisation", "Experiment programme design", "Reporting & attribution",
+    ],
+    architecture: ["Traffic", "Analysis", "Hypothesis", "Experiment", "Measurement", "Rollout"],
+    useCases: [
+      { title: "Landing page optimisation", body: "Lift the conversion rate on the pages your paid traffic hits." },
+      { title: "Checkout & signup", body: "Find and remove the steps where people abandon." },
+      { title: "Experiment programme", body: "A standing testing cadence rather than one-off redesigns." },
+      { title: "Tracking foundation", body: "Clean analytics and events so every decision has evidence." },
+    ],
+  },
+
+  "social-media-marketing-agency": {
+    challenge: "Posting consistently is hard; posting consistently in a way that compounds into an audience is harder.",
+    frictions: [
+      { title: "Publishing, not strategy", body: "The calendar gets filled but there's no thesis about what the account is building." },
+      { title: "Content made in isolation", body: "Each post starts from scratch instead of from a repeatable format system." },
+      { title: "Engagement without insight", body: "Numbers go up and down and nobody knows which choices caused it." },
+      { title: "Channels managed separately", body: "Each platform is run in its own silo with its own logic." },
+    ],
+    before: ["Calendar-filling", "One-off content", "Vanity metrics", "Siloed channels"],
+    layer: ["Audience & strategy", "Content system", "Publishing", "Analysis"],
+    after: ["A clear account thesis", "Repeatable content formats", "Insight-driven decisions", "Channels run as one system"],
+    capabilities: [
+      "Channel strategy", "Content format systems", "Editorial calendars", "Community management",
+      "Short-form video", "Paid social integration", "Analytics & reporting", "Influencer & creator coordination",
+    ],
+    architecture: ["Audience", "Content", "Publishing", "Engagement", "Analysis", "Optimisation"],
+    useCases: [
+      { title: "Organic growth", body: "Build an owned audience with formats designed to compound." },
+      { title: "Brand presence", body: "A consistent, on-brand voice across every platform that matters." },
+      { title: "Product launches", body: "Coordinated social pushes tied to the wider campaign." },
+      { title: "Always-on management", body: "Day-to-day publishing, community and reporting handled." },
+    ],
+  },
+
+  "content-marketing-services": {
+    challenge: "Publishing more content isn't a strategy — and most of it never gets found, read or acted on.",
+    frictions: [
+      { title: "Volume over intent", body: "Content is produced to a quota, not to answer a question people are searching for." },
+      { title: "No production system", body: "Every piece is a bespoke effort with no brief, format or reuse." },
+      { title: "Not optimised to be found", body: "Strong writing with weak structure and no search consideration goes unseen." },
+      { title: "No path to conversion", body: "Readers arrive and leave with nothing connecting the article to a next step." },
+    ],
+    before: ["Quota-driven content", "Bespoke every time", "Unoptimised for search", "No conversion path"],
+    layer: ["Topic research", "Briefs", "Optimisation", "Distribution"],
+    after: ["Intent-driven topics", "A repeatable production system", "Built to be found", "A clear path from read to action"],
+    capabilities: [
+      "Topic & keyword research", "Content briefs", "Long-form writing & editing", "On-page & technical SEO",
+      "Content clusters & internal linking", "Distribution & repurposing", "Performance analytics", "Editorial workflow",
+    ],
+    architecture: ["Topic research", "Brief", "Production", "Optimisation", "Distribution", "Performance"],
+    useCases: [
+      { title: "SEO content programmes", body: "Clusters of content built to rank and bring qualified traffic." },
+      { title: "Thought leadership", body: "Long-form that establishes a point of view, not just presence." },
+      { title: "Content operations", body: "Briefs, workflow and standards so production scales without chaos." },
+      { title: "Repurposing", body: "One core piece turned into the formats each channel needs." },
+    ],
+  },
+
+  "influencer-marketing-agency": {
+    challenge: "Creator campaigns are easy to run and hard to run in a way you can actually measure and repeat.",
+    frictions: [
+      { title: "Match by follower count", body: "Creators are picked on reach, not on audience fit or genuine relevance." },
+      { title: "Campaigns run on gut", body: "Briefs, usage rights and deliverables are loose, so outcomes vary wildly." },
+      { title: "Attribution is murky", body: "It's unclear which creator, post or format actually drove results." },
+      { title: "No repeatable process", body: "Every campaign is assembled from scratch instead of run as a programme." },
+    ],
+    before: ["Reach-based matching", "Loose briefs", "Murky attribution", "From-scratch campaigns"],
+    layer: ["Creator match", "Brief & rights", "Content", "Tracking"],
+    after: ["Fit-based creator selection", "Tight briefs and clear rights", "Attribution you can act on", "A repeatable creator programme"],
+    capabilities: [
+      "Creator discovery & vetting", "Audience-fit analysis", "Briefing & contracting", "Content review & rights",
+      "Tracking links & codes", "Performance attribution", "Whitelisting & paid amplification", "Programme reporting",
+    ],
+    architecture: ["Brief", "Creator match", "Campaign", "Content", "Tracking", "Attribution"],
+    useCases: [
+      { title: "Launch campaigns", body: "Coordinated creator pushes timed to a product or brand moment." },
+      { title: "Always-on creator programmes", body: "An ongoing roster rather than one-off activations." },
+      { title: "Whitelisting & amplification", body: "Turn the best creator content into paid media." },
+      { title: "Measurement", body: "The tracking and reporting that make creator spend accountable." },
+    ],
+  },
+
+  "offshore-software-development": {
+    challenge: "Adding capacity usually adds coordination cost — a team that needs managing more than it delivers.",
+    frictions: [
+      { title: "Capacity without context", body: "New developers need weeks of ramp-up before they're productive on your codebase." },
+      { title: "Coordination overhead", body: "Time zones, hand-offs and status chasing eat the capacity you added." },
+      { title: "Quality drift", body: "Standards, testing and review discipline vary once the team grows." },
+      { title: "Knowledge leaves with people", body: "Churn resets context and the next person starts over." },
+    ],
+    before: ["Long ramp-up", "Coordination overhead", "Inconsistent quality", "Context lost to churn"],
+    layer: ["Squad assembly", "Onboarding", "Delivery cadence", "Integration"],
+    after: ["Productive from the first sprint", "Low-overhead collaboration", "Consistent engineering standards", "Knowledge that stays in the team"],
+    capabilities: [
+      "Dedicated engineering squads", "Senior developers & tech leads", "Designers & QA on the pod", "Delivery management",
+      "Your tools, your process", "Code review & standards", "Documentation discipline", "Flexible scaling",
+    ],
+    architecture: ["Requirements", "Squad assembly", "Onboarding", "Delivery cadence", "Integration", "Scale"],
+    useCases: [
+      { title: "Team extension", body: "Senior engineers who work inside your process, not alongside it." },
+      { title: "Dedicated product pod", body: "A cross-functional squad owning a product area end to end." },
+      { title: "Delivery acceleration", body: "Add throughput to a roadmap without a hiring cycle." },
+      { title: "Specialist skills", body: "AI, mobile or data expertise on tap for a defined engagement." },
+    ],
+  },
 };
+
+/* creative subcategories reframe the approach away from "data to action" */
+for (const s of ["graphic-design-services", "brand-identity-design", "ux-design", "brochure-design"]) {
+  N[s].approachTitle = DESIGN_APPROACH.title;
+  N[s].approachStatement = DESIGN_APPROACH.statement;
+  N[s].approachStages = DESIGN_APPROACH.stages;
+}
+N["video-production"].approachTitle = "From brief to broadcast.";
+N["video-production"].approachStatement =
+  "We take a rough brief to a finished film and every cutdown it needs, on a repeatable production system.";
+N["video-production"].approachStages = [
+  { title: "Story", body: "Find the idea and script it before anything is shot or edited." },
+  { title: "Produce", body: "Capture or build the footage, screens and assets the story needs." },
+  { title: "Post", body: "Edit, grade and mix to a consistent standard." },
+  { title: "Deliver", body: "Export the hero cut and every format each channel requires." },
+];
 
 /* aliases — close subcategories share a narrative shape */
 N["autonomous-ai-agents"] = N["ai-agents"];
 N["google-ads-agency"] = N["ppc-management-services"];
 N["facebook-ads-agency"] = N["ppc-management-services"];
+N["ios-app-development"] = N["mobile-app-developer"];
+N["android-app-development"] = N["mobile-app-developer"];
+N["cross-platform-mobile-app-development"] = N["mobile-app-developer"];
+N["salesforce-implementation-partner"] = N["salesforce-consulting-services"];
+N["ui-ux-design-agency"] = N["ux-design"];
+N["video-editing-services"] = N["video-production"];
+N["dedicated-development-team"] = N["offshore-software-development"];
 
 export function getSubNarrative(slug: string): SubNarrative | null {
   return N[slug] ?? null;
