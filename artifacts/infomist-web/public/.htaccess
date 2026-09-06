@@ -1,0 +1,60 @@
+# ---------------------------------------------------------------------------
+# Infomist - Apache config for Hostinger (shared hosting / hPanel).
+# Ships in the build output (public/ -> dist/public/). Upload the CONTENTS of
+# dist/public/ into public_html/ and this file goes with it. See DEPLOY.md.
+#
+# Contact + strategist forms POST straight to the n8n webhooks from the
+# browser. The api/ folder is real PHP (blogging auth + state, job
+# applications) - the rules below run it and never SPA-fallback it.
+# ---------------------------------------------------------------------------
+
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteBase /
+
+  # ── Never SPA-fallback the API — a missing endpoint is a real 404 ──
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteRule ^api/ - [R=404,L]
+
+  # ── SPA history fallback ──
+  # Real files and directories (assets, images, sitemap.xml, robots.txt) are
+  # served as-is; every other path falls through to index.html so client-side
+  # routes like /contact or /our-story work on refresh and deep links.
+  RewriteCond %{REQUEST_FILENAME} -f [OR]
+  RewriteCond %{REQUEST_FILENAME} -d
+  RewriteRule ^ - [L]
+  RewriteRule ^ /index.html [L]
+</IfModule>
+
+# ── Compression ──
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/css text/javascript application/javascript application/json image/svg+xml application/xml
+</IfModule>
+
+# ── Caching ──
+# Hashed asset filenames (index-XXXX.js/.css) can be cached hard; HTML must not.
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresByType text/css                 "access plus 1 year"
+  ExpiresByType application/javascript   "access plus 1 year"
+  ExpiresByType image/webp               "access plus 6 months"
+  ExpiresByType image/jpeg               "access plus 6 months"
+  ExpiresByType image/png                "access plus 6 months"
+  ExpiresByType image/svg+xml            "access plus 6 months"
+  ExpiresByType font/woff2               "access plus 1 year"
+</IfModule>
+
+<IfModule mod_headers.c>
+  <FilesMatch "\.(js|css|woff2)$">
+    Header set Cache-Control "public, max-age=31536000, immutable"
+  </FilesMatch>
+  <FilesMatch "\.html$">
+    Header set Cache-Control "no-cache, must-revalidate"
+  </FilesMatch>
+</IfModule>
+
+# ── Force HTTPS (uncomment after SSL is active in hPanel) ──
+# <IfModule mod_rewrite.c>
+#   RewriteCond %{HTTPS} off
+#   RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+# </IfModule>
