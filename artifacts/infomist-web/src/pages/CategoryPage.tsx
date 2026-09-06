@@ -13,9 +13,11 @@ import {
   GradientText,
   Eyebrow,
   IconTile,
+  SectionHead,
   DarkCTA,
   CTAButton,
   Pill,
+  accentFor,
 } from "@/components/site/primitives";
 
 export function CategoryPage() {
@@ -118,50 +120,45 @@ export function CategoryPage() {
         </>
       )}
 
-      {/* Sub-services — editorial list on a light-blue band */}
-      <section className="w-full" style={{ background: "#F1F6FD" }}>
-        <div className="max-w-[1280px] mx-auto px-5 sm:px-8 lg:px-12 py-[clamp(5rem,11vw,9rem)]">
-          <div className="rise-in mb-10 flex items-baseline justify-between gap-4 border-b border-[#DCE3EC] pb-4">
-            <p className="flex items-center gap-2.5 text-[11px] font-bold uppercase tracking-[0.18em] text-[#0284C7]">
-              <span className="tabular-nums text-[#94A3B8]">{category.tag}</span>
-              <span aria-hidden className="h-px w-6 bg-[#DCE3EC]" />
-              Services in this area
-            </p>
-            <span className="hidden font-mono text-[10px] uppercase tracking-[0.2em] text-[#AEB9C7] sm:block">
-              {String(category.subs.length).padStart(2, "0")} services
-            </span>
+      {/* Sub-services grid */}
+      <section className="w-full" style={{ background: "#FFFFFF" }}>
+        <div className="max-w-6xl mx-auto px-6 py-24 md:py-28">
+          <div className="rise-in">
+            <SectionHead eyebrow="Services in this area" title="What" gradientWord="we build" />
           </div>
-
-          <h2
-            className="rise-in font-black leading-[1.04] tracking-[-0.04em] text-[#0F172A] max-w-[14ch]"
-            style={{ fontSize: "clamp(2.15rem,5.4vw,4rem)" }}
-          >
-            What we build.
-          </h2>
-
-          <div className="mt-14 border-t border-[#DCE7F4]">
-            {category.subs.map((sub, i) => (
-              <Link
-                key={sub.slug}
-                href={`/solutions/${sub.slug}`}
-                className="rise-in group relative grid grid-cols-[2rem_1fr_auto] items-start gap-x-4 border-b border-l-2 border-l-transparent border-[#DCE7F4] py-7 pl-3 transition-[background-color,border-color,box-shadow] duration-300 hover:border-l-[#0EA5E9] hover:bg-white hover:shadow-[0_10px_34px_rgba(7,20,38,0.06)] md:grid-cols-[3.5rem_20rem_1fr_auto] md:gap-x-8 md:pl-5"
-                style={{ animationDelay: `${Math.min(i, 8) * 55}ms` }}
-              >
-                <span className="font-mono text-[13px] leading-7 text-[#94A3B8] transition-colors duration-300 group-hover:text-[#0284C7]">
-                  {String(i + 1).padStart(2, "0")}
-                </span>
-                <h3 className="text-base font-bold text-[#0F172A] transition-transform duration-300 group-hover:translate-x-1 md:text-lg">
-                  {sub.displayName}
-                </h3>
-                <p className="col-start-2 max-w-xl text-[15px] leading-relaxed text-[#475569] md:col-start-3">
-                  {sub.tagline ?? `${sub.timeline[0].phase} · ${sub.timeline[0].time}`}
-                </p>
-                <ArrowRight
-                  size={17}
-                  className="col-start-3 mt-1 shrink-0 -translate-x-1 self-start text-[#0EA5E9] opacity-0 transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100 md:col-start-4"
-                />
-              </Link>
-            ))}
+          <div className="mt-14 grid grid-cols-1 md:grid-cols-2 gap-5">
+            {category.subs.map((sub, i) => {
+              const accent = accentFor(i);
+              return (
+                <Link
+                  key={sub.slug}
+                  href={`/solutions/${sub.slug}`}
+                  className="rise-in group relative rounded-3xl p-[1.5px] transition-transform duration-300 hover:-translate-y-1.5"
+                  style={{ background: `linear-gradient(150deg, ${accent}3a, ${accent}0a)` }}
+                >
+                  <div className="rounded-[22px] bg-white h-full p-7 flex flex-col gap-4">
+                    <div className="flex items-start justify-between gap-3">
+                      <h3 className="text-lg font-bold text-[#0F172A] leading-snug">{sub.displayName}</h3>
+                      <ArrowRight size={18} strokeWidth={2.4} className="flex-shrink-0 mt-0.5 transition-transform duration-300 group-hover:translate-x-1" style={{ color: accent }} />
+                    </div>
+                    {sub.tagline ? (
+                      <p className="text-sm text-slate-500 leading-relaxed italic">{sub.tagline}</p>
+                    ) : (
+                      <div className="flex flex-wrap gap-1.5">
+                        {sub.stack.slice(0, 3).map((t) => (
+                          <span key={t} className="text-[11px] font-mono font-medium bg-slate-50 text-slate-500 px-2.5 py-1 rounded-lg border border-slate-100">
+                            {t}
+                          </span>
+                        ))}
+                      </div>
+                    )}
+                    <p className="text-sm text-slate-500 leading-relaxed mt-auto">
+                      {sub.timeline[0].phase} · <span className="font-medium text-slate-600">{sub.timeline[0].time}</span>
+                    </p>
+                  </div>
+                </Link>
+              );
+            })}
           </div>
         </div>
       </section>
