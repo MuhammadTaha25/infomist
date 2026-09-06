@@ -7,8 +7,6 @@ export const CASE_STUDY_VIDEOS: Record<string, string> = {
   "grey-wolf-consulting": "sub-brand",
   syncbenefits: "sub-web",
   "aegis-proptech": "sub-voice",
-  "meridian-health-systems": "sub-nlp",
-  "novabridge-capital": "sub-saas",
 };
 
 export function caseStudyVideo(slug: string): string {

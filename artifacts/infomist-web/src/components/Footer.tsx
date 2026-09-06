@@ -18,17 +18,17 @@ const FOOTER_COLUMNS = [
   {
     title: "Company",
     links: [
-      { label: "About Us", href: "/about" },
-      { label: "Leadership", href: "/leadership" },
-      { label: "Who We Work With", href: "/who-we-work-with" },
+      { label: "Our Story", href: "/our-story" },
+      { label: "Who We Serve", href: "/who-we-work-with" },
+      { label: "Solo Powerhouse", href: "/one-man-company" },
       { label: "Careers", href: "/careers" },
     ],
   },
   {
-    title: "Resources",
+    title: "Explore",
     links: [
       { label: "Case Studies", href: "/case-studies" },
-      { label: "Insights", href: "/resources" },
+      { label: "Insights", href: "/insights" },
       { label: "Contact", href: "/contact" },
     ],
   },
@@ -79,7 +79,7 @@ export function Footer() {
               <div className="flex flex-col gap-3">
                 <a
                   href="tel:+13312963732"
-                  className="flex items-center gap-2.5 text-sm text-slate-400 hover:text-[#0EA5E9] transition-colors duration-150 w-fit"
+                  className="flex items-center gap-2.5 text-xs text-slate-400 hover:text-[#0EA5E9] focus-visible:text-[#0EA5E9] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0EA5E9]/40 rounded transition-colors duration-150 w-fit"
                 >
                   <span className="w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0" style={{ background: "rgba(14,165,233,0.12)" }}>
                     <Phone size={13} color="#0EA5E9" />
@@ -88,7 +88,7 @@ export function Footer() {
                 </a>
                 <a
                   href="mailto:info@infomist.com"
-                  className="flex items-center gap-2.5 text-xs text-slate-400 hover:text-[#0EA5E9] transition-colors duration-150 w-fit break-all"
+                  className="flex items-center gap-2.5 text-xs text-slate-400 hover:text-[#0EA5E9] focus-visible:text-[#0EA5E9] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0EA5E9]/40 rounded transition-colors duration-150 w-fit break-all"
                 >
                   <span className="w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0" style={{ background: "rgba(14,165,233,0.12)" }}>
                     <Mail size={13} color="#0EA5E9" />
@@ -100,7 +100,7 @@ export function Footer() {
               <div className="w-full h-px" style={{ background: "rgba(255,255,255,0.08)" }} />
 
               <div className="flex flex-col gap-3">
-                <div className="flex items-start gap-2.5 text-sm text-slate-400">
+                <div className="flex items-start gap-2.5 text-xs text-slate-400">
                   <span className="w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0" style={{ background: "rgba(132,204,22,0.12)" }}>
                     <MapPin size={13} color="#84CC16" />
                   </span>
@@ -111,7 +111,7 @@ export function Footer() {
                     St#12, DHA Phase 1, Islamabad, Pakistan
                   </span>
                 </div>
-                <div className="flex items-start gap-2.5 text-sm text-slate-400">
+                <div className="flex items-start gap-2.5 text-xs text-slate-400">
                   <span className="w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0" style={{ background: "rgba(132,204,22,0.12)" }}>
                     <MapPin size={13} color="#84CC16" />
                   </span>

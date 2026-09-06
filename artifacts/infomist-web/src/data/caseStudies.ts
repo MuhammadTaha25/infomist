@@ -245,69 +245,6 @@ export const CASE_STUDIES: CaseStudy[] = [
     outcomes: ["Eliminated after-hours lead drop-off with a 24/7 voice agent"],
     order: 6,
   },
-  {
-    id: "meridian-health-systems",
-    slug: "meridian-health-systems",
-    name: "Meridian Health Systems",
-    category: "AI & Automation",
-    industry: "HealthTech",
-    location: "United States",
-    initials: "MHS",
-    color: "#22C55E",
-    glyph: "spark",
-    projectType: "RAG AI assistant",
-    scope: [
-      { title: "AI Agent Development", detail: "A patient-facing AI assistant that handles intake questions." },
-      { title: "RAG Systems", detail: "Retrieval-augmented answers grounded in the clinic's own information." },
-      { title: "EHR Integration", detail: "Structured intake data written into the existing EHR." },
-    ],
-    workflow: [
-      { label: "Patient", note: "Starts intake with the assistant" },
-      { label: "Assistant", note: "Interprets the request and gathers what's needed" },
-      { label: "Retrieval", note: "Pulls the relevant clinic information" },
-      { label: "LLM", note: "Produces a grounded, structured response" },
-      { label: "EHR", note: "Intake data written back to the record" },
-    ],
-    shortDescription:
-      "HIPAA-compliant RAG AI assistant that cut patient-intake admin time from 45 to 12 minutes.",
-    overview:
-      "Meridian Health Systems needed to reduce the administrative load of patient intake. Infomist built a HIPAA-compliant RAG AI assistant integrated with its EHR.",
-    challenge:
-      "Patient intake was slow and administratively heavy, taking around 45 minutes of staff time per patient.",
-    solution:
-      "A retrieval-augmented AI assistant, built to HIPAA-compliant standards and integrated with the EHR, that handles intake questions and structures the information staff need.",
-    services: ["AI Agent Development", "RAG Systems", "EHR Integration"],
-    outcomes: ["Patient-intake admin time cut from 45 minutes to 12"],
-    order: 7,
-  },
-  {
-    id: "novabridge-capital",
-    slug: "novabridge-capital",
-    name: "NovaBridge Capital",
-    category: "FinTech",
-    industry: "FinTech / Investment",
-    location: "United States",
-    initials: "NC",
-    color: "#A855F7",
-    glyph: "bars",
-    projectType: "Investor portal",
-    scope: [
-      { title: "Full-Stack Development", detail: "End-to-end build of the investor portal, front to back." },
-      { title: "Portal Architecture", detail: "Portal architecture designed for a regulated financial context." },
-      { title: "RegTech", detail: "An automated regulatory-reporting pipeline replacing manual assembly." },
-    ],
-    shortDescription:
-      "Full-stack investor portal with real-time dashboards and automated regulatory reporting — delivered in 10 weeks.",
-    overview:
-      "NovaBridge Capital needed an investor portal with live reporting and automated compliance output. Infomist delivered a full-stack portal in 10 weeks.",
-    challenge:
-      "Investors needed real-time visibility of their positions, and the firm needed regulatory reporting produced without manual assembly each period.",
-    solution:
-      "A full-stack investor portal with real-time dashboards and an automated regulatory-reporting pipeline, architected for a regulated financial context.",
-    services: ["Full-Stack Development", "Portal Architecture", "RegTech"],
-    outcomes: ["Investor portal delivered in 10 weeks"],
-    order: 8,
-  },
 ];
 
 export const CASE_STUDY_CATEGORIES = [

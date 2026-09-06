@@ -108,6 +108,9 @@ function MarketingSite() {
               <Route path="/" component={HomePage} />
               <Route path="/solutions" component={SolutionsPage} />
               <Route path="/case-studies" component={CaseStudiesPage} />
+              {/* Retired reference projects — redirect to the library. */}
+              <Route path="/case-studies/meridian-health-systems">{() => <Redirect to="/case-studies" />}</Route>
+              <Route path="/case-studies/novabridge-capital">{() => <Redirect to="/case-studies" />}</Route>
               <Route path="/case-studies/:slug" component={CaseStudyRouter} />
               <Route path="/one-man-company" component={OneManCompanyPage} />
               <Route path="/our-story" component={OurStoryPage} />
