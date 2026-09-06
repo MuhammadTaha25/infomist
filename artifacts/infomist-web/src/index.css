@@ -141,7 +141,7 @@
     -moz-osx-font-smoothing: grayscale;
     letter-spacing: -0.005em;
   }
-  /* Manrope is optically wide at large sizes — pull display type tight for the
+  /* Manrope is optically wide at large sizes, pull display type tight for the
      premium editorial feel the design language calls for. */
   h1 { letter-spacing: -0.045em; }
   h2 { letter-spacing: -0.035em; }
@@ -175,7 +175,7 @@
   100% { transform: translate(0px, 0px)   scale(1); }
 }
 
-/* ── Reveal — a gentle one-shot lift on load. No opacity in the keyframes and
+/* ── Reveal, a gentle one-shot lift on load. No opacity in the keyframes and
    no fill-mode, so content is ALWAYS fully visible whether or not the animation
    runs (never stuck hidden under throttling / reduced-motion / no-JS). */
 @keyframes rise-in {
@@ -189,7 +189,7 @@
   .rise-in { animation: none !important; }
 }
 
-/* ── Hero slider — cross-fade between slides ── */
+/* ── Hero slider, cross-fade between slides ── */
 @keyframes hero-slide-in {
   from { opacity: 0; transform: scale(1.015); }
   to   { opacity: 1; transform: scale(1); }
@@ -198,7 +198,7 @@
   animation: hero-slide-in 0.65s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* ── Hero SVG scene motion — all subtle, seamless, ~3s loops ── */
+/* ── Hero SVG scene motion, all subtle, seamless, ~3s loops ── */
 @keyframes hero-drift {
   0%, 100% { transform: translate3d(0, 0, 0); }
   50%      { transform: translate3d(-10px, 6px, 0); }
@@ -282,16 +282,16 @@ a[href*="replit.com"],
 }
 
 /* ── Type weight ceiling ──────────────────────────────────────────────────
-   The design system tops out at 800 (Hero H1). Manrope 900 is never used —
+   The design system tops out at 800 (Hero H1). Manrope 900 is never used, 
    remap Tailwind's `font-black` so existing markup follows the rule without
    touching every component. Unlayered, so it wins over the utility layer. */
 .font-black { font-weight: 800; }
 
-/* ══ Infomist — subcategory narrative motion ══════════════════════════════
+/* ══ Infomist, subcategory narrative motion ══════════════════════════════
    Section colour tokens live in the typed TONE map in NarrativeSections.tsx;
    only the motion primitives need to be global. */
 
-/* Scroll reveal — armed only by JS (and only when motion is allowed), so with
+/* Scroll reveal, armed only by JS (and only when motion is allowed), so with
    no-JS / reduced-motion the element just stays visible. */
 [data-nv-reveal] {
   opacity: 0;
@@ -309,7 +309,7 @@ a[href*="replit.com"],
 .nv-pulse-x { animation: nv-pulse-x 2.6s linear infinite; }
 .nv-pulse-y { animation: nv-pulse-y 2.6s linear infinite; }
 
-/* Hero — gentle settle of the video + a drawn accent line on load. */
+/* Hero, gentle settle of the video + a drawn accent line on load. */
 @keyframes nv-hero-media { from { transform: scale(1.06); } to { transform: scale(1); } }
 @keyframes nv-hero-line { from { transform: scaleX(0); } to { transform: scaleX(1); } }
 .nv-hero-media { animation: nv-hero-media 1500ms cubic-bezier(0.16, 1, 0.3, 1) both; }
