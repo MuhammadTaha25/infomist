@@ -6,6 +6,7 @@ import { PageHeroVideo } from "@/components/hero/PageHeroVideo";
 import { SUBCATEGORY_VIDEOS } from "@/data/subcategoryVideos";
 import {
   getSubNarrative,
+  archNodes,
   APPROACH_STAGES,
   BUILD_STEPS,
   DEFAULT_IMPACT,
@@ -152,7 +153,7 @@ export function SubcategoryPage() {
         <TransformationSection before={narrative.before} layer={narrative.layer} after={narrative.after} />
         <BuildSection steps={BUILD_STEPS} />
         <CapabilitiesSection items={narrative.capabilities} />
-        <ArchitectureSection nodes={narrative.architecture} />
+        <ArchitectureSection nodes={archNodes(sub.slug, narrative.architecture)} />
         <UseCasesSection items={narrative.useCases} />
         <ImpactSection items={narrative.businessImpact ?? DEFAULT_IMPACT} />
         <WhySection items={WHY_INFOMIST} />

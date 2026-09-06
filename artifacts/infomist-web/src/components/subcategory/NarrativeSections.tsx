@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState, type ElementType, type ReactNode } from "react";
 import { Link } from "wouter";
 import { ArrowRight, ArrowUpRight } from "lucide-react";
-import type { Friction, Stage, UseCase } from "@/data/subcategoryNarrative";
+import type { ArchNode, Friction, Stage, UseCase } from "@/data/subcategoryNarrative";
 import type { Faq } from "@/data/solutionsData";
 
 /* ═══ tone system — matches the homepage's white / light-blue / navy rhythm ══ */
@@ -244,7 +244,7 @@ function EditorialRow({
     <Reveal i={i}>
       <Cmp
         {...(href ? { href } : {})}
-        className="group grid grid-cols-[2rem_1fr_auto] items-start gap-x-4 border-b py-7 transition-[background-color,border-color] duration-300 md:grid-cols-[3.5rem_1fr_auto] md:gap-x-8 md:px-3"
+        className="group relative grid grid-cols-[2rem_1fr_auto] items-start gap-x-4 border-b py-7 pl-3 transition-[background-color,border-color] duration-300 md:grid-cols-[3.5rem_1fr_auto] md:gap-x-8 md:pl-5"
         style={{ borderColor: t.rule, ["--rn" as string]: t.num, ["--rt" as string]: t.title }}
         onMouseEnter={(e: React.MouseEvent<HTMLElement>) => {
           e.currentTarget.style.background = t.hoverBg;
@@ -259,10 +259,18 @@ function EditorialRow({
           e.currentTarget.style.setProperty("--rt", t.title);
         }}
       >
-        <span className="font-mono text-[13px] leading-7 transition-colors duration-300" style={{ color: "var(--rn)" }}>
+        <span
+          aria-hidden
+          className="absolute bottom-4 left-0 top-4 w-[2px] origin-top scale-y-0 transition-transform duration-300 group-hover:scale-y-100"
+          style={{ background: t.accent }}
+        />
+        <span
+          className="font-mono text-[13px] leading-7 transition-[color,transform] duration-300 group-hover:translate-x-1"
+          style={{ color: "var(--rn)" }}
+        >
           {n}
         </span>
-        <div className="flex flex-col gap-1.5">
+        <div className="flex flex-col gap-1.5 transition-transform duration-300 group-hover:translate-x-1">
           <h3
             className="text-base font-bold uppercase tracking-[0.03em] transition-colors duration-300 md:text-lg"
             style={{ color: "var(--rt)" }}
@@ -310,31 +318,49 @@ export function ApproachSection({
   stages: Stage[];
 }) {
   const t = TONE.tint;
+  const [hovered, setHovered] = useState<number | null>(null);
   return (
     <Band tone="tint" n="02" label="The Infomist Approach" title={title} intro={statement}>
-      <div className="relative mt-16">
-        <div aria-hidden className="absolute left-0 right-0 top-6 hidden h-px lg:block" style={{ background: t.nodeBorder }} />
+      <div className="relative mt-16" onMouseLeave={() => setHovered(null)}>
+        <div
+          aria-hidden
+          className="absolute left-0 right-0 top-[1.6rem] hidden h-px transition-colors duration-300 lg:block"
+          style={{ background: hovered !== null ? "rgba(14,165,233,0.45)" : t.nodeBorder }}
+        />
         <div className="grid gap-x-6 gap-y-8 sm:grid-cols-2 lg:grid-cols-4">
-          {stages.map((s, idx) => (
-            <Reveal key={s.title} i={idx}>
-              <div
-                className="group relative flex flex-col gap-3 rounded-xl border p-5 transition-all duration-300 hover:-translate-y-0.5"
-                style={{ background: t.nodeBg, borderColor: t.nodeBorder }}
-                onMouseEnter={(e) => (e.currentTarget.style.borderColor = "rgba(14,165,233,0.4)")}
-                onMouseLeave={(e) => (e.currentTarget.style.borderColor = t.nodeBorder)}
-              >
-                <span className="font-mono text-[11px]" style={{ color: t.num }}>
-                  {String(idx + 1).padStart(2, "0")}
-                </span>
-                <h3 className="text-[13px] font-bold uppercase tracking-[0.12em]" style={{ color: t.accent }}>
-                  {s.title}
-                </h3>
-                <p className="text-[14px] leading-relaxed" style={{ color: t.body }}>
-                  {s.body}
-                </p>
-              </div>
-            </Reveal>
-          ))}
+          {stages.map((s, idx) => {
+            const near = hovered !== null && Math.abs(hovered - idx) <= 1;
+            const dim = hovered !== null && !near;
+            const isHover = hovered === idx;
+            return (
+              <Reveal key={s.title} i={idx}>
+                <div
+                  onMouseEnter={() => setHovered(idx)}
+                  className="relative flex flex-col gap-3 rounded-xl border p-5 transition-all duration-300"
+                  style={{
+                    background: isHover ? "#FFFFFF" : t.nodeBg,
+                    borderColor: isHover ? "rgba(14,165,233,0.45)" : t.nodeBorder,
+                    opacity: dim ? 0.5 : 1,
+                    transform: isHover ? "translateY(-3px)" : "none",
+                    boxShadow: isHover ? "0 12px 34px rgba(7,20,38,0.08)" : "none",
+                  }}
+                >
+                  <span
+                    className="font-mono text-[11px] transition-colors duration-300"
+                    style={{ color: near ? t.numHover : t.num }}
+                  >
+                    {String(idx + 1).padStart(2, "0")}
+                  </span>
+                  <h3 className="text-[13px] font-bold uppercase tracking-[0.12em]" style={{ color: t.accent }}>
+                    {s.title}
+                  </h3>
+                  <p className="text-[14px] leading-relaxed" style={{ color: t.body }}>
+                    {s.body}
+                  </p>
+                </div>
+              </Reveal>
+            );
+          })}
         </div>
       </div>
     </Band>
@@ -426,40 +452,56 @@ export function TransformationSection({
 
 export function BuildSection({ steps }: { steps: Stage[] }) {
   const t = TONE.light;
+  const [hovered, setHovered] = useState<number | null>(null);
   return (
     <Band tone="light" n="04" label="How We Build It" title="Engineered from the ground up.">
-      <div className="relative mt-16">
-        <div aria-hidden className="absolute left-0 right-0 top-3 hidden h-px md:block" style={{ background: t.nodeBorder }} />
+      <div className="relative mt-16" onMouseLeave={() => setHovered(null)}>
+        <div
+          aria-hidden
+          className="absolute left-0 right-0 top-3 hidden h-px transition-colors duration-300 md:block"
+          style={{ background: hovered !== null ? "rgba(14,165,233,0.4)" : t.nodeBorder }}
+        />
         <ol className="grid gap-x-5 gap-y-9 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
-          {steps.map((s, idx) => (
-            <Reveal key={s.title} i={idx} as="li">
-              <div className="group cursor-default">
-                <span
-                  className="relative z-10 mb-4 flex h-7 w-7 items-center justify-center rounded-full border bg-white font-mono text-[11px] transition-all duration-300 group-hover:scale-110"
-                  style={{ borderColor: t.nodeBorder, color: t.body }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.borderColor = t.accent;
-                    e.currentTarget.style.color = t.accent;
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.borderColor = t.nodeBorder;
-                    e.currentTarget.style.color = t.body;
-                  }}
+          {steps.map((s, idx) => {
+            const near = hovered !== null && Math.abs(hovered - idx) <= 1;
+            const isHover = hovered === idx;
+            return (
+              <Reveal key={s.title} i={idx} as="li">
+                <div
+                  className="group cursor-default transition-opacity duration-300"
+                  style={{ opacity: hovered !== null && !near ? 0.55 : 1 }}
+                  onMouseEnter={() => setHovered(idx)}
                 >
-                  {idx + 1}
-                </span>
-                <h3
-                  className="text-[13px] font-bold uppercase tracking-[0.12em] transition-colors duration-300"
-                  style={{ color: t.title }}
-                >
-                  {s.title}
-                </h3>
-                <p className="mt-2 text-[14px] leading-relaxed transition-colors duration-300" style={{ color: t.body }}>
-                  {s.body}
-                </p>
-              </div>
-            </Reveal>
-          ))}
+                  <span
+                    className="relative z-10 mb-4 flex h-7 w-7 items-center justify-center rounded-full border bg-white font-mono text-[11px] transition-all duration-300"
+                    style={{
+                      borderColor: near ? t.accent : t.nodeBorder,
+                      color: near ? t.accent : t.body,
+                      transform: isHover ? "scale(1.15)" : "scale(1)",
+                    }}
+                  >
+                    {idx + 1}
+                    {isHover ? (
+                      <span
+                        aria-hidden
+                        className="absolute -inset-1 rounded-full"
+                        style={{ boxShadow: "0 0 0 4px rgba(14,165,233,0.12)" }}
+                      />
+                    ) : null}
+                  </span>
+                  <h3
+                    className="text-[13px] font-bold uppercase tracking-[0.12em] transition-colors duration-300"
+                    style={{ color: isHover ? t.titleHover : t.title }}
+                  >
+                    {s.title}
+                  </h3>
+                  <p className="mt-2 text-[14px] leading-relaxed" style={{ color: t.body }}>
+                    {s.body}
+                  </p>
+                </div>
+              </Reveal>
+            );
+          })}
         </ol>
       </div>
     </Band>
@@ -507,46 +549,85 @@ export function CapabilitiesSection({ items }: { items: string[] }) {
 
 /* ═══ 06 · SYSTEM ARCHITECTURE (navy) ═══════════════════════════════════ */
 
-function Connector({ vertical }: { vertical?: boolean }) {
+function Connector({ vertical, active }: { vertical?: boolean; active: boolean }) {
+  const line = active ? "rgba(96,165,250,0.55)" : "rgba(255,255,255,0.12)";
   return (
     <div
       aria-hidden
       className={
         vertical
-          ? "relative mx-auto my-1 h-6 w-px bg-white/[0.12] md:hidden"
-          : "relative mx-1 hidden h-px flex-1 self-center bg-white/[0.12] md:block"
+          ? "relative mx-auto my-1 h-6 w-px transition-colors duration-300 md:hidden"
+          : "relative mx-1.5 hidden h-px flex-1 self-center transition-colors duration-300 md:block"
       }
+      style={{ background: line }}
     >
       <span
         className={`absolute h-[3px] w-[3px] rounded-full bg-[#60A5FA] ${vertical ? "nv-pulse-y left-1/2 -translate-x-1/2" : "nv-pulse-x top-1/2 -translate-y-1/2"}`}
+        style={{ opacity: active ? 1 : 0.5 }}
       />
     </div>
   );
 }
 
-export function ArchitectureSection({ nodes }: { nodes: string[] }) {
+export function ArchitectureSection({ nodes }: { nodes: ArchNode[] }) {
+  const [hovered, setHovered] = useState<number | null>(null);
+
   return (
     <Band tone="navy" n="06" label="System Architecture" title="How the system runs." glow>
       <Reveal>
-        <div className="group/arch mt-16 flex flex-col md:flex-row md:flex-wrap md:items-stretch">
-          {nodes.map((node, idx) => (
-            <div key={node} className="flex flex-col md:flex-row md:items-stretch">
-              <div className="flex min-w-[150px] max-w-[220px] flex-col gap-1.5 rounded-lg border border-white/[0.1] bg-white/[0.03] px-4 py-3.5 transition-all duration-300 hover:-translate-y-0.5 hover:border-[rgba(96,165,250,0.45)] hover:bg-white/[0.06] group-hover/arch:[&:not(:hover)]:opacity-45">
-                <span className="font-mono text-[10px] uppercase tracking-[0.12em] text-[#3d5578]">
-                  {String(idx + 1).padStart(2, "0")}
-                  {idx === 0 ? " / input" : idx === nodes.length - 1 ? " / output" : " / stage"}
-                </span>
-                <span className="text-[13px] font-semibold text-[#CBD5E1]">{node}</span>
+        <div
+          className="mt-16 flex flex-col md:flex-row md:flex-wrap md:items-stretch"
+          onMouseLeave={() => setHovered(null)}
+        >
+          {nodes.map((node, idx) => {
+            const near = hovered !== null && Math.abs(hovered - idx) <= 1;
+            const dim = hovered !== null && !near;
+            const isHover = hovered === idx;
+            return (
+              <div key={node.label + idx} className="flex flex-col md:flex-row md:items-stretch">
+                <div
+                  onMouseEnter={() => setHovered(idx)}
+                  className="flex min-w-[148px] max-w-[220px] cursor-default flex-col gap-1.5 rounded-lg border px-4 py-3.5 transition-all duration-300"
+                  style={{
+                    borderColor: isHover ? "rgba(96,165,250,0.5)" : "rgba(255,255,255,0.1)",
+                    background: isHover ? "rgba(96,165,250,0.09)" : "rgba(255,255,255,0.03)",
+                    opacity: dim ? 0.4 : 1,
+                    transform: isHover ? "translateY(-3px)" : "none",
+                  }}
+                >
+                  <span className="flex items-center gap-1.5 font-mono text-[10px] uppercase tracking-[0.12em] text-[#3d5578]">
+                    <span>{String(idx + 1).padStart(2, "0")}</span>
+                    <span
+                      className="rounded-sm px-1 py-px text-[9px] transition-colors duration-300"
+                      style={{
+                        background: near ? "rgba(96,165,250,0.16)" : "rgba(255,255,255,0.04)",
+                        color: near ? "#93C5FD" : "#4b6591",
+                      }}
+                    >
+                      {node.kind}
+                    </span>
+                  </span>
+                  <span
+                    className="text-[13px] font-semibold transition-colors duration-300"
+                    style={{ color: isHover ? "#F4F8FC" : "#CBD5E1" }}
+                  >
+                    {node.label}
+                  </span>
+                </div>
+                {idx < nodes.length - 1 ? (
+                  <>
+                    <Connector active={hovered !== null && (hovered === idx || hovered === idx + 1)} />
+                    <Connector vertical active={hovered !== null && (hovered === idx || hovered === idx + 1)} />
+                  </>
+                ) : null}
               </div>
-              {idx < nodes.length - 1 ? (
-                <>
-                  <Connector />
-                  <Connector vertical />
-                </>
-              ) : null}
-            </div>
-          ))}
+            );
+          })}
         </div>
+        <p className="mt-8 text-[13px] leading-relaxed text-[#64748B]">
+          Every layer is a real component we build and operate — models, pipelines, APIs, data stores
+          and the integrations that connect them to your business systems.
+        </p>
       </Reveal>
     </Band>
   );
@@ -563,12 +644,28 @@ export function UseCasesSection({ items }: { items: UseCase[] }) {
           <Reveal key={u.title} i={idx}>
             <Link
               href="/talk-to-strategist"
-              className="group grid grid-cols-[2rem_1fr_auto] items-start gap-x-4 border-b py-7 transition-colors duration-300 md:grid-cols-[3.5rem_15rem_1fr_auto] md:gap-x-8 md:px-3"
-              style={{ borderColor: t.rule }}
-              onMouseEnter={(e) => (e.currentTarget.style.background = t.hoverBg)}
-              onMouseLeave={(e) => (e.currentTarget.style.background = "")}
+              className="group relative grid grid-cols-[2rem_1fr_auto] items-start gap-x-4 border-b py-7 pl-3 transition-colors duration-300 md:grid-cols-[3.5rem_15rem_1fr_auto] md:gap-x-8 md:pl-5"
+              style={{ borderColor: t.rule, ["--un" as string]: t.num }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.background = t.hoverBg;
+                e.currentTarget.style.borderColor = t.ruleHover;
+                e.currentTarget.style.setProperty("--un", t.numHover);
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.background = "";
+                e.currentTarget.style.borderColor = t.rule;
+                e.currentTarget.style.setProperty("--un", t.num);
+              }}
             >
-              <span className="font-mono text-[13px] leading-7" style={{ color: t.num }}>
+              <span
+                aria-hidden
+                className="absolute bottom-4 left-0 top-4 w-[2px] origin-top scale-y-0 transition-transform duration-300 group-hover:scale-y-100"
+                style={{ background: t.accent }}
+              />
+              <span
+                className="font-mono text-[13px] leading-7 transition-[color,transform] duration-300 group-hover:translate-x-1"
+                style={{ color: "var(--un)" }}
+              >
                 {String(idx + 1).padStart(2, "0")}
               </span>
               <h3
@@ -577,12 +674,12 @@ export function UseCasesSection({ items }: { items: UseCase[] }) {
               >
                 {u.title}
               </h3>
-              <p className="col-start-2 max-w-xl text-[15px] leading-relaxed md:col-start-3" style={{ color: t.body }}>
+              <p className="col-start-2 max-w-xl text-[15px] leading-relaxed transition-transform duration-300 group-hover:translate-x-1 md:col-start-3" style={{ color: t.body }}>
                 {u.body}
               </p>
               <ArrowUpRight
                 size={17}
-                className="mt-1 shrink-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+                className="mt-1 shrink-0 -translate-x-1 opacity-0 transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100"
                 style={{ color: t.accent }}
               />
             </Link>

@@ -53,7 +53,9 @@ export function PageHeroVideo({
     <section className="relative w-full overflow-hidden" style={{ background: NAVY }}>
       {/* video layer (desktop) */}
       <div className="pointer-events-none absolute inset-0 hidden md:block" aria-hidden="true">
-        <HeroVideo media={media} active />
+        <div className="nv-hero-media absolute inset-0">
+          <HeroVideo media={media} active />
+        </div>
         <div
           className="absolute inset-0"
           style={{
@@ -76,7 +78,8 @@ export function PageHeroVideo({
         {breadcrumb && <div className="mb-8 text-sm text-[#8FA3BC]">{breadcrumb}</div>}
 
         <div className={`flex flex-col max-w-xl ${compact ? "gap-4" : "gap-6"}`}>
-          <span className="text-xs font-bold uppercase" style={{ letterSpacing: "0.24em", color: CYAN }}>
+          <span className="flex items-center gap-3 text-xs font-bold uppercase" style={{ letterSpacing: "0.24em", color: CYAN }}>
+            <span aria-hidden className="nv-hero-line h-px w-8 bg-current" />
             {eyebrow}
           </span>
 

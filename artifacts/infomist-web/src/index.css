@@ -309,7 +309,13 @@ a[href*="replit.com"],
 .nv-pulse-x { animation: nv-pulse-x 2.6s linear infinite; }
 .nv-pulse-y { animation: nv-pulse-y 2.6s linear infinite; }
 
+/* Hero — gentle settle of the video + a drawn accent line on load. */
+@keyframes nv-hero-media { from { transform: scale(1.06); } to { transform: scale(1); } }
+@keyframes nv-hero-line { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+.nv-hero-media { animation: nv-hero-media 1500ms cubic-bezier(0.16, 1, 0.3, 1) both; }
+.nv-hero-line { transform-origin: left; animation: nv-hero-line 700ms cubic-bezier(0.16, 1, 0.3, 1) 200ms both; }
+
 @media (prefers-reduced-motion: reduce) {
   [data-nv-reveal] { opacity: 1 !important; transform: none !important; transition: none !important; }
-  .nv-pulse-x, .nv-pulse-y { animation: none !important; }
+  .nv-pulse-x, .nv-pulse-y, .nv-hero-media, .nv-hero-line { animation: none !important; }
 }

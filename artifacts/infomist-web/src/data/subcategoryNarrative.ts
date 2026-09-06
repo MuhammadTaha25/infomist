@@ -845,4 +845,43 @@ export function getSubNarrative(slug: string): SubNarrative | null {
   return N[slug] ?? null;
 }
 
+/* ── architecture node kinds ──────────────────────────────────────────────
+   A small technical tag per node (SOURCE / MODEL / VECTOR DB / API / …).
+   Explicit for the flows where the label matters; derived by position
+   (SOURCE → PROCESS → OUTPUT) for the rest. */
+
+export interface ArchNode {
+  label: string;
+  kind: string;
+}
+
+const ARCH_KIND: Record<string, string[]> = {
+  "computer-vision": ["SOURCE", "MODEL", "INFERENCE", "INFERENCE", "REASONING", "RULE", "ACTION"],
+  "nlp-solutions": ["SOURCE", "PIPELINE", "PIPELINE", "MODEL", "VECTOR DB", "RETRIEVAL", "LLM", "OUTPUT"],
+  "ai-agents": ["INTENT", "REASONING", "PLANNER", "TOOLS", "API", "REVIEW", "ACTION"],
+  "autonomous-ai-agents": ["INTENT", "REASONING", "PLANNER", "TOOLS", "API", "REVIEW", "ACTION"],
+  "generative-ai": ["SOURCE", "LAYER", "OUTPUT", "ACTION"],
+  "ai-automation-services": ["TRIGGER", "DATA", "MODEL", "DECISION", "WORKFLOW", "API", "RESULT"],
+  "business-process-automation": ["TRIGGER", "DATA", "MODEL", "DECISION", "WORKFLOW", "API", "RESULT"],
+  "crm-integration": ["SOURCE", "MODEL", "LOGIC", "WORKFLOW", "CRM"],
+  "ai-voice-agent-development": ["CALL", "STT", "LLM", "TOOLS", "TTS", "ACTION"],
+  "ai-chatbot-development": ["INPUT", "NLU", "RETRIEVAL", "LLM", "OUTPUT", "HANDOFF"],
+  "deep-learning": ["DATA", "FEATURES", "TRAINING", "EVAL", "SERVING", "DECISION"],
+  "software-development": ["INPUT", "DESIGN", "ENGINEERING", "BUILD", "QA", "DEPLOY"],
+  "custom-software-development": ["INPUT", "DESIGN", "ENGINEERING", "BUILD", "INTEGRATION", "SYSTEM"],
+  "website-development": ["CLIENT", "APP", "API", "DATA", "AUTOMATION", "SYSTEM"],
+  "saas-development": ["CLIENT", "APP", "API", "TENANT DB", "AUTOMATION", "BILLING"],
+  "system-integration": ["SYSTEMS", "CONNECTORS", "TRANSFORM", "ORCHESTRATION", "DATA LAYER", "ACTION"],
+  "digital-marketing-agency": ["SOURCE", "DATA", "MODEL", "PERSONALISATION", "WORKFLOW", "OUTCOME"],
+  "ppc-management-services": ["SOURCE", "ANALYSIS", "MODEL", "OPTIMISATION", "ACTION"],
+};
+
+export function archNodes(slug: string, arch: string[]): ArchNode[] {
+  const kinds = ARCH_KIND[slug];
+  return arch.map((label, i) => ({
+    label,
+    kind: kinds?.[i] ?? (i === 0 ? "SOURCE" : i === arch.length - 1 ? "OUTPUT" : "PROCESS"),
+  }));
+}
+
 export { DEFAULT_APPROACH };
