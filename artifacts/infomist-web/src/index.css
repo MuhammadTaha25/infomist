@@ -286,3 +286,67 @@ a[href*="replit.com"],
    remap Tailwind's `font-black` so existing markup follows the rule without
    touching every component. Unlayered, so it wins over the utility layer. */
 .font-black { font-weight: 800; }
+
+/* ══ Infomist — AI-native design tokens ═══════════════════════════════════
+   Centralised so section components never hard-code the navy system. */
+:root {
+  --nv-bg-0: #050B14;
+  --nv-bg-1: #07111E;
+  --nv-bg-2: #081321;
+  --nv-bg-3: #091727;
+  --nv-cta: #060D18;
+  --nv-surface: #0B1929;
+  --nv-surface-hi: #102238;
+  --nv-text: #F4F7FB;
+  --nv-text-2: #A7B5C7;
+  --nv-text-3: #718198;
+  --nv-label: #7FA7D9;
+  --nv-accent: #3B82F6;
+  --nv-accent-hi: #60A5FA;
+  --nv-cyan: #22D3EE;
+  --nv-border: rgba(255, 255, 255, 0.08);
+  --nv-border-2: rgba(255, 255, 255, 0.12);
+  --nv-border-hover: rgba(96, 165, 250, 0.35);
+  --nv-border-active: rgba(59, 130, 246, 0.6);
+  --nv-t-fast: 180ms;
+  --nv-t: 300ms;
+  --nv-t-slow: 620ms;
+  --nv-ease: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Scroll reveal — the element is armed only by JS (and only when motion is
+   allowed), so with no-JS / reduced-motion it simply stays visible. */
+[data-nv-reveal] {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity var(--nv-t-slow) var(--nv-ease), transform var(--nv-t-slow) var(--nv-ease);
+}
+[data-nv-reveal][data-nv-in] {
+  opacity: 1;
+  transform: none;
+}
+
+/* Traveling pulse along an architecture connector. */
+@keyframes nv-pulse-x { from { left: -3px; } to { left: 100%; } }
+@keyframes nv-pulse-y { from { top: -3px; } to { top: 100%; } }
+.nv-pulse-x { animation: nv-pulse-x 2.6s linear infinite; }
+.nv-pulse-y { animation: nv-pulse-y 2.6s linear infinite; }
+
+/* Very subtle technical grid, faded top-down. */
+.nv-grid::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.022) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.022) 1px, transparent 1px);
+  background-size: 56px 56px;
+  -webkit-mask-image: radial-gradient(ellipse 80% 62% at 50% 0%, #000 25%, transparent 82%);
+  mask-image: radial-gradient(ellipse 80% 62% at 50% 0%, #000 25%, transparent 82%);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-nv-reveal] { opacity: 1 !important; transform: none !important; transition: none !important; }
+  .nv-pulse-x, .nv-pulse-y { animation: none !important; }
+}
