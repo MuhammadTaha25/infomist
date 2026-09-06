@@ -3,12 +3,16 @@ import { Link } from "wouter";
 import { ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
 import { HERO_SLIDES, HERO_TRUST } from "@/data/heroSlides";
 import { HeroVideo } from "@/components/hero/HeroVideo";
-import { useIsMobile } from "@/hooks/use-mobile";
+
+/** Homepage hero runs the first 4 slides, auto-advancing every 5s. */
+const SLIDES = HERO_SLIDES.slice(0, 4);
 
 const NAVY = "#071426";
 const CYAN = "#27C7E8";
 const GREEN = "#6ED36A";
-const ROTATE_MS = 7000;
+/** Homepage sliders auto-advance every 5s exactly. One timer per slider —
+ *  the effect below re-arms it on every index change (manual or auto). */
+const ROTATE_MS = 5000;
 
 function useReducedMotion() {
   const [reduced, setReduced] = useState(
@@ -24,30 +28,36 @@ function useReducedMotion() {
 }
 
 /**
- * Dark-navy homepage hero. One stage, N slides — each slide is a headline +
- * CTA pair (left, text-safe) over its own short muted loop (right). Auto-
- * rotates every 7s; pauses on hover, focus and for reduced-motion users.
- * Only the active clip is mounted (see HeroVideo).
+ * Dark-navy homepage hero. One stage, N slides.
+ *  • phone / tablet — the slide's muted clip plays full-bleed BEHIND the copy,
+ *    under a navy wash that keeps the headline + CTAs legible.
+ *  • xl+ — the clip retreats to a capped column on the right and dissolves
+ *    into the same navy the copy sits on (no box, no seam).
+ * Auto-rotates every 5s; pauses on hover, focus and for reduced-motion users.
+ * Only the active clip decodes (see HeroVideo) — the rest are <img> posters.
+ *
+ * Large-screen behaviour: the copy container and the clip both stop growing at
+ * a comfortable maximum — extra viewport width becomes navy breathing room
+ * rather than a giant hero.
  */
 export function HeroSlider() {
   const [index, setIndex] = useState(0);
   const [paused, setPaused] = useState(false);
   const reduced = useReducedMotion();
-  const isMobile = useIsMobile();
   const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  const count = HERO_SLIDES.length;
+  const count = SLIDES.length;
   const go = useCallback((next: number) => setIndex((next + count) % count), [count]);
 
   useEffect(() => {
-    if (paused || reduced) return;
+    if (paused || reduced || count <= 1) return;
     timer.current = setTimeout(() => setIndex((i) => (i + 1) % count), ROTATE_MS);
     return () => {
       if (timer.current) clearTimeout(timer.current);
     };
   }, [index, paused, reduced, count]);
 
-  const slide = HERO_SLIDES[index];
+  const slide = SLIDES[index];
 
   return (
     <section
@@ -60,44 +70,65 @@ export function HeroSlider() {
       onFocusCapture={() => setPaused(true)}
       onBlurCapture={() => setPaused(false)}
     >
-      {/* video layer (desktop) — stacked, crossfaded */}
-      <div className="pointer-events-none absolute inset-0 hidden md:block" aria-hidden="true">
-        {HERO_SLIDES.map((s, i) => (
-          <div
-            key={s.id}
-            className="absolute inset-0 transition-opacity duration-700"
-            style={{ opacity: i === index ? 1 : 0 }}
-          >
-            <HeroVideo media={s.media} active={i === index} posterOnly={isMobile} objectPosition="72% 50%" />
-          </div>
-        ))}
-        {/* navy scrim so the left column stays readable — kept translucent
-            enough that the clip still reads as texture behind the copy */}
+      {/* bounded stage — beyond this width the extra space is navy breathing
+          room, not a bigger hero */}
+      <div className="relative mx-auto w-full max-w-[96rem]">
+        {/* faint grid on the copy side (xl only) so the left never sits flat */}
         <div
-          className="absolute inset-0"
-          style={{
-            background: `linear-gradient(90deg, rgba(7,20,38,0.93) 0%, rgba(7,20,38,0.88) 24%, rgba(7,20,38,0.66) 46%, rgba(7,20,38,0.28) 70%, rgba(7,20,38,0.10) 100%)`,
-          }}
-        />
-        {/* faint left-edge grid so the copy column never looks empty */}
-        <div
-          className="absolute inset-y-0 left-0 w-1/2"
+          className="pointer-events-none absolute inset-y-0 left-0 w-1/2 hidden xl:block"
+          aria-hidden="true"
           style={{
             backgroundImage:
               "linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px)",
             backgroundSize: "48px 48px",
-            maskImage: "linear-gradient(90deg, #000 0%, transparent 90%)",
-            WebkitMaskImage: "linear-gradient(90deg, #000 0%, transparent 90%)",
+            maskImage: "linear-gradient(90deg, #000 0%, transparent 82%)",
+            WebkitMaskImage: "linear-gradient(90deg, #000 0%, transparent 82%)",
           }}
         />
-        <div
-          className="absolute inset-x-0 bottom-0 h-32"
-          style={{ background: `linear-gradient(180deg, rgba(7,20,38,0) 0%, ${NAVY} 100%)` }}
-        />
-      </div>
 
-      <div className="relative z-10 mx-auto max-w-6xl px-6 pt-28 pb-16 md:pt-36 md:pb-24 md:min-h-[38rem] flex flex-col justify-center">
-        <div key={slide.id} className="hero-slide-enter flex flex-col gap-6 max-w-xl">
+        {/* ── VIDEO LAYER ──────────────────────────────────────────────────
+            Full-bleed behind the copy on phone / tablet; on xl+ it retreats
+            to a capped column on the right. One active clip decodes at a time
+            (see HeroVideo) — the rest are still <img> posters, so it stays
+            light. */}
+        <div
+          className="pointer-events-none absolute inset-0 xl:inset-auto xl:inset-y-0 xl:right-0 xl:w-[46%] xl:max-w-[48rem]"
+          aria-hidden="true"
+        >
+          {SLIDES.map((s, i) => (
+            <div
+              key={s.id}
+              className="absolute inset-0 transition-opacity duration-700"
+              style={{ opacity: i === index ? 1 : 0 }}
+            >
+              <HeroVideo
+                media={s.media}
+                active={i === index}
+                positionClass="object-center xl:object-[72%_50%]"
+              />
+            </div>
+          ))}
+
+          {/* phone / tablet — full-frame navy wash so the white copy + CTAs
+              stay legible over the moving clip */}
+          <div
+            className="absolute inset-0 xl:hidden"
+            style={{
+              background:
+                "linear-gradient(180deg, rgba(7,20,38,0.40) 0%, rgba(7,20,38,0.52) 38%, rgba(7,20,38,0.78) 72%, rgba(7,20,38,0.94) 100%)",
+            }}
+          />
+          {/* xl — left edge dissolves into the copy's navy, no hard seam */}
+          <div
+            className="absolute inset-y-0 left-0 hidden w-2/5 xl:block"
+            style={{ background: `linear-gradient(90deg, ${NAVY} 0%, ${NAVY} 12%, rgba(7,20,38,0.5) 52%, rgba(7,20,38,0) 100%)` }}
+          />
+          <div className="absolute inset-x-0 top-0 hidden h-20 xl:block" style={{ background: `linear-gradient(180deg, ${NAVY} 0%, rgba(7,20,38,0) 100%)` }} />
+          <div className="absolute inset-x-0 bottom-0 hidden h-28 xl:block" style={{ background: `linear-gradient(0deg, ${NAVY} 0%, rgba(7,20,38,0) 100%)` }} />
+        </div>
+
+      <div className="relative z-10 mx-auto max-w-6xl px-6 pt-28 pb-16 md:pt-32 md:pb-20 min-h-[32rem] sm:min-h-[34rem] xl:min-h-[38rem] flex flex-col justify-center">
+        <div key={slide.id} className="hero-slide-enter flex flex-col items-start gap-6 max-w-xl text-left">
           <span
             className="text-xs font-bold uppercase"
             style={{ letterSpacing: "0.24em", color: CYAN }}
@@ -107,7 +138,7 @@ export function HeroSlider() {
 
           <h1
             className="font-black text-[#F4F8FC] leading-[1.04]"
-            style={{ fontSize: "clamp(2.1rem, 5.4vw, 3.6rem)", letterSpacing: "-0.04em" }}
+            style={{ fontSize: "clamp(2.05rem, 4.8vw, 3.7rem)", letterSpacing: "-0.04em" }}
           >
             {slide.title}{" "}
             {slide.accent && (
@@ -154,19 +185,11 @@ export function HeroSlider() {
           </div>
         </div>
 
-        {/* mobile media */}
-        <div className="md:hidden mt-8 relative aspect-[16/10] w-full overflow-hidden rounded-2xl" style={{ border: "1px solid rgba(255,255,255,0.08)" }}>
-          {HERO_SLIDES.map((s, i) => (
-            <div key={s.id} className="absolute inset-0 transition-opacity duration-700" style={{ opacity: i === index ? 1 : 0 }}>
-              <HeroVideo media={s.media} active={i === index} posterOnly objectPosition="72% 50%" />
-            </div>
-          ))}
-        </div>
-
-        {/* controls */}
+        {/* controls — only when there's more than one slide */}
+        {count > 1 && (
         <div className="mt-8 flex items-center gap-4">
           <div className="flex items-center gap-2" role="tablist" aria-label="Select slide">
-            {HERO_SLIDES.map((s, i) => (
+            {SLIDES.map((s, i) => (
               <button
                 key={s.id}
                 type="button"
@@ -203,6 +226,8 @@ export function HeroSlider() {
             </button>
           </div>
         </div>
+        )}
+      </div>
       </div>
     </section>
   );
