@@ -10,28 +10,30 @@ const NAVY = "linear-gradient(160deg, #0B1220 0%, #0F172A 46%, #101B2E 100%)";
 function Label({ n, children, dark }: { n: string; children: ReactNode; dark?: boolean }) {
   return (
     <p
-      className="mb-9 flex items-center gap-2.5 text-[11px] font-bold uppercase tracking-[0.16em]"
-      style={{ color: dark ? "#7FA7D9" : "#0EA5E9" }}
+      className="flex items-center gap-2.5 text-[11px] font-bold uppercase tracking-[0.18em]"
+      style={{ color: dark ? "#7FA7D9" : "#0284C7" }}
     >
       <span className="tabular-nums" style={{ color: dark ? "#3d5578" : "#94A3B8" }}>
         {n}
       </span>
-      <span aria-hidden className="h-px w-6" style={{ background: dark ? "rgba(255,255,255,0.12)" : "#E2E8F0" }} />
+      <span aria-hidden className="h-px w-6" style={{ background: dark ? "rgba(255,255,255,0.12)" : "#DCE3EC" }} />
       {children}
     </p>
   );
 }
 
+/* Major editorial statement — deliberately oversized, always left-aligned. */
 const H2_LIGHT =
-  "font-black leading-[1.08] tracking-[-0.035em] text-[#0F172A] [font-size:clamp(1.85rem,4.2vw,3rem)]";
+  "font-black leading-[1.04] tracking-[-0.04em] text-[#0F172A] [font-size:clamp(2.15rem,5.4vw,4rem)]";
 const H2_DARK =
-  "font-black leading-[1.08] tracking-[-0.035em] text-[#F4F8FC] [font-size:clamp(1.85rem,4.2vw,3rem)]";
+  "font-black leading-[1.04] tracking-[-0.04em] text-[#F4F8FC] [font-size:clamp(2.15rem,5.4vw,4rem)]";
 
 function Shell({
   id,
   bg,
   n,
   label,
+  note,
   dark,
   children,
 }: {
@@ -39,6 +41,8 @@ function Shell({
   bg: string;
   n: string;
   label: string;
+  /** small right-aligned engineering annotation, e.g. "SYSTEM / 01" */
+  note?: string;
   dark?: boolean;
   children: ReactNode;
 }) {
@@ -57,11 +61,21 @@ function Shell({
           }}
         />
       ) : null}
-      <div className="relative mx-auto w-full max-w-[1280px] px-5 py-[clamp(4.5rem,10vw,8rem)] sm:px-8 lg:px-12">
+      <div className="relative mx-auto w-full max-w-[1320px] px-5 py-[clamp(5rem,11vw,9rem)] sm:px-8 lg:px-14">
         <Reveal>
-          <Label n={n} dark={dark}>
-            {label}
-          </Label>
+          <div className="mb-10 flex items-baseline justify-between gap-4 border-b pb-4" style={{ borderColor: dark ? "rgba(255,255,255,0.08)" : "#EDF1F6" }}>
+            <Label n={n} dark={dark}>
+              {label}
+            </Label>
+            {note ? (
+              <span
+                className="hidden font-mono text-[10px] uppercase tracking-[0.2em] sm:block"
+                style={{ color: dark ? "#3d5578" : "#AEB9C7" }}
+              >
+                {note}
+              </span>
+            ) : null}
+          </div>
         </Reveal>
         {children}
       </div>
@@ -73,19 +87,21 @@ function Shell({
 
 export function StorySection() {
   return (
-    <Shell bg="#FFFFFF" n="02" label="Our Story">
+    <Shell bg="#FFFFFF" n="02" label="Our Story" note="Origin / 02">
       <Reveal>
-        <h2 className={`${H2_LIGHT} max-w-[40rem]`}>From software services to intelligent systems.</h2>
+        <h2 className={`${H2_LIGHT} max-w-[18ch]`}>
+          From software services to <span className="text-[#0EA5E9]">intelligent systems.</span>
+        </h2>
       </Reveal>
-      <div className="mt-10 grid gap-x-16 gap-y-6 lg:grid-cols-[1fr_1.15fr]">
+      <div className="mt-14 grid gap-x-20 gap-y-6 lg:grid-cols-[0.85fr_1.15fr]">
         <Reveal>
-          <p className="text-[17px] leading-relaxed text-[#334155]">
+          <p className="text-[19px] font-medium leading-relaxed text-[#1E293B]">
             Infomist began in 2001 as a one-room web studio — a single computer, a handful of
             international clients and an obsession with getting the details right.
           </p>
         </Reveal>
         <Reveal i={1}>
-          <div className="flex flex-col gap-5 text-[16px] leading-relaxed text-[#475569]">
+          <div className="flex flex-col gap-5 text-[16px] leading-[1.75] text-[#475569]">
             <p>
               That focus evolved — from building digital products, into software engineering, and
               then into the automation, data and integration work that connects a business's systems
@@ -121,9 +137,9 @@ const EVOLUTION = [
 export function EvolutionSection() {
   const [hovered, setHovered] = useState<number | null>(EVOLUTION.length - 1);
   return (
-    <Shell bg="#F1F6FD" n="03" label="Our Evolution">
+    <Shell bg="#F1F6FD" n="03" label="Our Evolution" note="Timeline / 03">
       <Reveal>
-        <h2 className={H2_LIGHT}>How the company has changed.</h2>
+        <h2 className={`${H2_LIGHT} max-w-[16ch]`}>How the practice has evolved.</h2>
       </Reveal>
 
       <div className="relative mt-16" onMouseLeave={() => setHovered(EVOLUTION.length - 1)}>
@@ -176,56 +192,133 @@ export function EvolutionSection() {
   );
 }
 
-/* ── 04 · VISION → MISSION (connected, navy) ──────────────────────────── */
+/* ── 04 · THE SHIFT (light, editorial split) ─────────────────────────── */
 
-export function VisionMissionSection() {
+export function TheShiftSection() {
   return (
-    <Shell id="vision" bg={NAVY} n="04" label="Our Direction" dark>
-      <div className="grid gap-x-16 gap-y-14 lg:grid-cols-[0.8fr_1.2fr]">
+    <Shell bg="#FFFFFF" n="04" label="The Shift" note="Architecture / 04">
+      <Reveal>
+        <h2 className={`${H2_LIGHT} max-w-[20ch]`}>
+          From building digital experiences to engineering intelligent systems.
+        </h2>
+      </Reveal>
+
+      <div className="mt-16 grid gap-x-4 gap-y-10 md:grid-cols-[1fr_auto_1fr] md:items-center">
         <Reveal>
-          <p className="text-[11px] font-bold uppercase tracking-[0.24em] text-[#7FA7D9]">
-            Vision <span className="mx-2 text-white/20">·</span> Mission
-          </p>
-          <div className="mt-6 flex flex-col items-start gap-3 font-mono text-[12px] uppercase tracking-[0.2em] text-[#4b6591]">
-            <span className="text-[#93C5FD]">Vision</span>
-            <span aria-hidden className="ml-1 h-8 w-px bg-white/15" />
-            <span className="text-[#93C5FD]">Mission</span>
-            <span aria-hidden className="ml-1 h-8 w-px bg-white/15" />
-            <span>Engineering</span>
+          <div className="rounded-2xl border border-[#E8ECF2] p-7">
+            <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-[#94A3B8]">Traditional software</p>
+            <ul className="mt-5 flex flex-col gap-3 text-[16px] text-[#64748B]">
+              <li>Software</li>
+              <li>Features</li>
+              <li>Integrations</li>
+            </ul>
+            <p className="mt-6 text-[13px] leading-relaxed text-[#94A3B8]">
+              AI is added at the end as one more feature on top of a finished system.
+            </p>
           </div>
         </Reveal>
 
-        <div className="flex flex-col gap-14">
-          <Reveal>
-            <div className="group">
-              <p className="text-[11px] font-bold uppercase tracking-[0.16em] text-[#7FA7D9]">Vision</p>
-              <span aria-hidden className="mt-3 block h-px w-10 bg-[#60A5FA] transition-all duration-300 group-hover:w-16" />
-              <h2 className={`${H2_DARK} mt-5 max-w-xl transition-transform duration-300 group-hover:translate-x-1`}>
-                Building the intelligent software systems of the future.
-              </h2>
-              <p className="mt-4 max-w-lg text-[16px] leading-relaxed text-[#94A3B8]">
-                To shape a future where software is not simply digital infrastructure, but
-                intelligent, adaptive and autonomous systems that continuously create business value.
-              </p>
-            </div>
-          </Reveal>
+        <Reveal i={1}>
+          <div aria-hidden className="flex items-center justify-center py-2 md:flex-col">
+            <span className="h-px w-10 bg-[#CBD9EC] md:h-10 md:w-px" />
+            <span className="mx-2 text-[11px] font-bold uppercase tracking-[0.18em] text-[#0EA5E9] md:my-2 md:mx-0 md:[writing-mode:vertical-rl]">
+              rethink
+            </span>
+            <span className="h-px w-10 bg-[#CBD9EC] md:h-10 md:w-px" />
+          </div>
+        </Reveal>
 
-          <Reveal i={1}>
-            <div className="group">
-              <p className="text-[11px] font-bold uppercase tracking-[0.16em] text-[#7FA7D9]">Mission</p>
-              <span aria-hidden className="mt-3 block h-px w-10 bg-[#60A5FA] transition-all duration-300 group-hover:w-16" />
-              <h2 className={`${H2_DARK} mt-5 max-w-xl transition-transform duration-300 group-hover:translate-x-1`}>
-                Engineering intelligent systems that turn complexity into action.
-              </h2>
-              <p className="mt-4 max-w-lg text-[16px] leading-relaxed text-[#94A3B8]">
-                Infomist engineers AI-native software systems that combine artificial intelligence,
-                software engineering, automation, data and infrastructure into production-ready
-                solutions. We don't simply add AI to existing software — we rethink how software is
-                designed, built and operated when intelligence is part of the architecture from the
-                beginning.
-              </p>
-            </div>
-          </Reveal>
+        <Reveal i={2}>
+          <div
+            className="rounded-2xl border p-7"
+            style={{ borderColor: "rgba(14,165,233,0.28)", background: "linear-gradient(160deg,rgba(14,165,233,0.06),rgba(14,165,233,0.01))" }}
+          >
+            <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-[#0284C7]">AI-native systems</p>
+            <ul className="mt-5 flex flex-col gap-3 text-[16px] font-medium text-[#0F172A]">
+              <li>AI</li>
+              <li>Software</li>
+              <li>Data</li>
+              <li>Automation</li>
+              <li>Infrastructure</li>
+            </ul>
+            <p className="mt-6 text-[13px] leading-relaxed text-[#475569]">
+              Intelligence is a design input from the architecture stage — the system is built
+              around it.
+            </p>
+          </div>
+        </Reveal>
+      </div>
+    </Shell>
+  );
+}
+
+/* ── 05 · VISION → MISSION (connected, navy) ──────────────────────────── */
+
+function DirectionRail() {
+  return (
+    <Reveal>
+      <div className="flex flex-col items-start gap-2 font-mono text-[11px] uppercase tracking-[0.2em] text-[#4b6591]">
+        <span className="text-[#93C5FD]">Vision</span>
+        <span aria-hidden className="ml-[3px] h-10 w-px bg-gradient-to-b from-[#60A5FA]/60 to-white/10" />
+        <span className="text-[#93C5FD]">Mission</span>
+        <span aria-hidden className="ml-[3px] h-10 w-px bg-gradient-to-b from-[#60A5FA]/60 to-white/10" />
+        <span>Engineering</span>
+      </div>
+    </Reveal>
+  );
+}
+
+function DirectionBlock({
+  kicker,
+  heading,
+  body,
+  i,
+}: {
+  kicker: string;
+  heading: string;
+  body: string;
+  i: number;
+}) {
+  return (
+    <Reveal i={i}>
+      <div className="group relative pl-6">
+        <span
+          aria-hidden
+          className="absolute left-0 top-1.5 h-2 w-2 rounded-full border border-[#60A5FA] bg-[#0B1220] transition-all duration-300 group-hover:bg-[#60A5FA]"
+        />
+        <span
+          aria-hidden
+          className="absolute left-[3.5px] top-4 h-[calc(100%-1rem)] w-px bg-white/10"
+        />
+        <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-[#7FA7D9]">{kicker}</p>
+        <span aria-hidden className="mt-3 block h-px w-10 bg-[#60A5FA] transition-all duration-300 group-hover:w-20" />
+        <h2 className={`${H2_DARK} mt-5 max-w-[16ch] transition-transform duration-300 group-hover:translate-x-1`}>
+          {heading}
+        </h2>
+        <p className="mt-5 max-w-lg text-[16px] leading-[1.75] text-[#94A3B8]">{body}</p>
+      </div>
+    </Reveal>
+  );
+}
+
+export function VisionMissionSection() {
+  return (
+    <Shell id="vision" bg={NAVY} n="05" label="Our Direction" note="Direction / 05" dark>
+      <div className="grid gap-x-16 gap-y-16 lg:grid-cols-[0.55fr_1.45fr]">
+        <DirectionRail />
+        <div className="flex flex-col gap-16">
+          <DirectionBlock
+            i={0}
+            kicker="Vision"
+            heading="Building the intelligent software systems of the future."
+            body="To shape a future where software is not simply digital infrastructure, but intelligent, adaptive and autonomous systems that continuously create business value."
+          />
+          <DirectionBlock
+            i={1}
+            kicker="Mission"
+            heading="Engineering intelligent systems that turn complexity into action."
+            body="Infomist engineers AI-native software systems that combine artificial intelligence, software engineering, automation, data and infrastructure into production-ready solutions. We don't simply add AI to existing software — we rethink how software is designed, built and operated when intelligence is part of the architecture from the beginning."
+          />
         </div>
       </div>
     </Shell>
@@ -244,10 +337,10 @@ const PRINCIPLES = [
 export function PhilosophySection() {
   const [hovered, setHovered] = useState<number | null>(null);
   return (
-    <Shell bg="#FFFFFF" n="05" label="How We Think">
+    <Shell bg="#FFFFFF" n="06" label="How We Think" note="Principles / 06">
       <Reveal>
-        <h2 className={`${H2_LIGHT} max-w-xl [font-size:clamp(2rem,5vw,3.4rem)]`}>
-          Built as systems. Not services.
+        <h2 className={`${H2_LIGHT} max-w-[13ch] [font-size:clamp(2.6rem,7vw,5rem)]`}>
+          Built as systems. <span className="text-[#94A3B8]">Not services.</span>
         </h2>
       </Reveal>
       <Reveal i={1}>
@@ -304,7 +397,7 @@ const ENGINEER = [
 
 export function WhatWeEngineerSection() {
   return (
-    <Shell bg="#F1F6FD" n="06" label="What We Engineer">
+    <Shell bg="#F1F6FD" n="07" label="What We Engineer" note="System / 07">
       <div className="grid gap-x-16 gap-y-10 lg:grid-cols-[0.85fr_1.15fr]">
         <Reveal>
           <h2 className={H2_LIGHT}>One engineering practice.</h2>
@@ -356,7 +449,7 @@ const BUILD = [
 export function HowWeBuildSection() {
   const [hovered, setHovered] = useState<number | null>(null);
   return (
-    <Shell bg={NAVY} n="07" label="How We Build" dark>
+    <Shell bg={NAVY} n="08" label="How We Build" note="Process / 08" dark>
       <Reveal>
         <h2 className={H2_DARK}>Engineered from the ground up.</h2>
       </Reveal>
@@ -411,10 +504,10 @@ const WHY = [
 
 export function WhyInfomistSection() {
   return (
-    <Shell bg="#FFFFFF" n="08" label="Why Infomist">
+    <Shell bg="#FFFFFF" n="09" label="Why Infomist" note="Difference / 09">
       <Reveal>
-        <h2 className={`${H2_LIGHT} max-w-2xl [font-size:clamp(1.9rem,4.6vw,3rem)]`}>
-          Intelligence isn't a feature. It's part of the system.
+        <h2 className={`${H2_LIGHT} max-w-[18ch]`}>
+          Intelligence isn't a feature. <span className="text-[#0EA5E9]">It's part of the system.</span>
         </h2>
       </Reveal>
       <div className="group/why mt-14 grid gap-x-12 gap-y-12 md:grid-cols-12">

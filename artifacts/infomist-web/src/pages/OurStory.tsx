@@ -1,13 +1,14 @@
-import { ArrowRight } from "lucide-react";
 import { useMeta } from "@/components/site/useMeta";
 import { PageFaq } from "@/components/PageFaq";
 import { PageHeroVideo } from "@/components/hero/PageHeroVideo";
 import { FounderSection } from "@/components/FounderSection";
 import { OurLeadership } from "@/components/OurLeadership";
-import { DarkCTA, CTAButton } from "@/components/site/primitives";
+import { DarkCTA } from "@/components/site/primitives";
+import { MagneticButton } from "@/components/about/MagneticButton";
 import {
   StorySection,
   EvolutionSection,
+  TheShiftSection,
   VisionMissionSection,
   PhilosophySection,
   WhatWeEngineerSection,
@@ -58,9 +59,10 @@ export function OurStoryPage() {
         evidence={["Since 2001", "Islamabad · Dublin", "AI-native engineering", "Production systems"]}
       />
 
-      {/* 02–08 · narrative */}
+      {/* 02–09 · narrative */}
       <StorySection />
       <EvolutionSection />
+      <TheShiftSection />
       <VisionMissionSection />
       <PhilosophySection />
       <WhatWeEngineerSection />
@@ -82,9 +84,14 @@ export function OurStoryPage() {
       {/* 11 · CTA */}
       <DarkCTA
         eyebrow="Build What's Next"
-        title="Ready to engineer something intelligent?"
-        sub="Let's turn complex problems into intelligent, production-ready systems."
-        cta={<CTAButton href="/talk-to-strategist" variant="lime" icon={ArrowRight}>Start a Project</CTAButton>}
+        title="Have a complex problem? Let's engineer the system."
+        sub="Turn complex business challenges into intelligent, production-ready software systems."
+        cta={
+          <div className="flex flex-col items-center gap-3 sm:flex-row">
+            <MagneticButton href="/talk-to-strategist">Start a Project</MagneticButton>
+            <MagneticButton href="/solutions" variant="ghost">Explore Our Solutions</MagneticButton>
+          </div>
+        }
       />
     </div>
   );
