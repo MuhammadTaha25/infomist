@@ -22,6 +22,7 @@ import { PersonaPage } from "@/pages/PersonaPage";
 import { InsightDetailPage } from "@/pages/InsightDetail";
 import { CATEGORIES } from "@/data/solutionsData";
 import { ScrollToTop } from "@/components/ScrollToTop";
+import { SiteSchema } from "@/components/site/SiteSchema";
 import { BloggingApp } from "@/blogging/BloggingApp";
 
 const queryClient = new QueryClient();
@@ -99,6 +100,7 @@ function MarketingSite() {
   return (
     <>
         <ScrollToTop />
+        <SiteSchema />
         <div className="w-full min-h-screen bg-white font-sans">
           <NavBar />
           <main>
