@@ -1,6 +1,6 @@
 /**
  * Careers data. `JOBS` holds the currently open roles; clear the array (or filter
- * it down) when a role closes — the Careers page renders a premium empty state
+ * it down) when a role closes, the Careers page renders a premium empty state
  * automatically when there is nothing open. `findJob` mirrors `findSubcategory`
  * in `solutionsData.ts` for the /careers/:slug detail route.
  */
@@ -15,7 +15,7 @@ export interface Job {
   /** one-line card summary */
   summary: string;
   skills: string[];
-  /** 1–2 sentence intro on the detail page */
+  /** 1-2 sentence intro on the detail page */
   about: string;
   responsibilities: string[];
   requirements: string[];
@@ -32,7 +32,7 @@ export const JOBS: Job[] = [
       "Build and integrate AI-powered solutions that solve real-world business problems.",
     skills: ["Python", "AI", "LLMs", "Automation"],
     about:
-      "You'll design and ship AI features that go into production for real clients — assistants, retrieval systems, and decision workflows built around a specific business outcome rather than a demo.",
+      "You'll design and ship AI features that go into production for real clients, assistants, retrieval systems, and decision workflows built around a specific business outcome rather than a demo.",
     responsibilities: [
       "Design, build, and integrate AI features into client software and internal tools.",
       "Work with large language models, retrieval, and prompt/response evaluation.",
@@ -61,7 +61,7 @@ export const JOBS: Job[] = [
       "Design and develop scalable software experiences for modern digital products.",
     skills: ["JavaScript", "React", "Node.js"],
     about:
-      "You'll build web applications and product features that clients depend on day to day — with an emphasis on clean architecture, performance, and maintainability.",
+      "You'll build web applications and product features that clients depend on day to day, with an emphasis on clean architecture, performance, and maintainability.",
     responsibilities: [
       "Build and maintain web applications across the front and back end.",
       "Translate designs and requirements into reliable, well-structured code.",
@@ -89,7 +89,7 @@ export const JOBS: Job[] = [
       "Work with modern automation and AI technologies while contributing to real-world projects.",
     skills: ["AI", "Automation", "n8n"],
     about:
-      "A hands-on internship for someone early in their career who wants to learn how automation and AI are used in production — you'll contribute to real client work with support from the team.",
+      "A hands-on internship for someone early in their career who wants to learn how automation and AI are used in production, you'll contribute to real client work with support from the team.",
     responsibilities: [
       "Help build and test automation workflows for internal and client use.",
       "Learn to connect apps, data sources, and AI services into working pipelines.",

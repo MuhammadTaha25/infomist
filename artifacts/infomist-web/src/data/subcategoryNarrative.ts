@@ -1,6 +1,5 @@
 /**
- * Long-form "AI-native engineering" narrative for solution subcategory pages —
- * the data behind the CHALLENGE → APPROACH → TRANSFORMATION → HOW WE BUILD →
+ * Long-form "AI-native engineering" narrative for solution subcategory pages,  * the data behind the CHALLENGE → APPROACH → TRANSFORMATION → HOW WE BUILD →
  * CAPABILITIES → ARCHITECTURE → USE CASES → IMPACT structure.
  *
  * Design system is shared; content is per-subcategory. A slug without an entry
@@ -21,32 +20,32 @@ export interface UseCase {
 }
 
 export interface SubNarrative {
-  /** 02 — large challenge statement */
+  /** 02, large challenge statement */
   challenge: string;
-  /** 02 — 3–4 specific frictions */
+  /** 02, 3-4 specific frictions */
   frictions: Friction[];
-  /** 04 — overrides for non-AI subcategories (design, video, print, …) */
+  /** 04, overrides for non-AI subcategories (design, video, print, …) */
   approachTitle?: string;
   approachStatement?: string;
   approachStages?: Stage[];
-  /** 05 — before / intelligence layer / after */
+  /** 05, before / intelligence layer / after */
   before: string[];
   layer: string[];
   after: string[];
-  /** 07 — 6–8 technical capabilities */
+  /** 07, 6-8 technical capabilities */
   capabilities: string[];
-  /** 08 — ordered architecture flow nodes */
+  /** 08, ordered architecture flow nodes */
   architecture: string[];
-  /** 09 — 3–6 use cases */
+  /** 09, 3-6 use cases */
   useCases: UseCase[];
-  /** 10 — optional override of the default four impact areas */
+  /** 10, optional override of the default four impact areas */
   businessImpact?: Stage[];
 }
 
 /* ── shared, every page ───────────────────────────────────────────────── */
 
 export const APPROACH_STAGES: Stage[] = [
-  { title: "Ingest", body: "Your data — documents, records, events, images — enters one system." },
+  { title: "Ingest", body: "Your data, documents, records, events, images, enters one system." },
   { title: "Understand", body: "AI models interpret that information in your business context." },
   { title: "Decide", body: "The intelligence layer identifies the next action worth taking." },
   { title: "Execute", body: "Software and automation turn the decision into a real outcome." },
@@ -55,7 +54,7 @@ export const APPROACH_STAGES: Stage[] = [
 export const BUILD_STEPS: Stage[] = [
   { title: "Discover", body: "Understand the business problem, the data, and the workflow it lives in." },
   { title: "Architect", body: "Define the AI, software, data, integration and infrastructure layers." },
-  { title: "Build", body: "Develop the production system — models, interfaces, pipelines and APIs." },
+  { title: "Build", body: "Develop the production system, models, interfaces, pipelines and APIs." },
   { title: "Integrate", body: "Connect the existing business systems and the people who use them." },
   { title: "Optimize", body: "Measure performance, monitor behaviour, and improve continuously." },
 ];
@@ -68,9 +67,9 @@ export const DEFAULT_IMPACT: Stage[] = [
 ];
 
 export const WHY_INFOMIST: Stage[] = [
-  { title: "AI-native", body: "AI is considered at the architecture level — not added after the software is built." },
+  { title: "AI-native", body: "AI is considered at the architecture level, not added after the software is built." },
   { title: "Full-stack", body: "Models, applications, APIs, automation and infrastructure are engineered as one system." },
-  { title: "Production-minded", body: "We build systems that run inside real business workflows — not prototypes that stall at the demo." },
+  { title: "Production-minded", body: "We build systems that run inside real business workflows, not prototypes that stall at the demo." },
 ];
 
 const DEFAULT_APPROACH =
@@ -80,10 +79,10 @@ const DEFAULT_APPROACH =
 export const DESIGN_APPROACH = {
   title: "From brief to system.",
   statement:
-    "We turn brand and product intent into a system — components, rules and assets — so every future piece is fast and consistent.",
+    "We turn brand and product intent into a system, components, rules and assets, so every future piece is fast and consistent.",
   stages: [
     { title: "Define", body: "Understand the brand, the audience and where the work has to perform." },
-    { title: "Design", body: "Build the visual language — type, colour, layout, motion." },
+    { title: "Design", body: "Build the visual language, type, colour, layout, motion." },
     { title: "Systemise", body: "Turn it into components, templates and written guidelines." },
     { title: "Apply", body: "Roll it out across every touchpoint and hand over the system." },
   ] as Stage[],
@@ -109,7 +108,7 @@ const N: Record<string, SubNarrative> = {
     ],
     architecture: ["Image / video", "Vision model", "Detection", "Classification", "AI reasoning", "Business rule", "Action"],
     useCases: [
-      { title: "Manufacturing", body: "Automated visual inspection on the line — defects flagged the moment they appear." },
+      { title: "Manufacturing", body: "Automated visual inspection on the line, defects flagged the moment they appear." },
       { title: "Retail", body: "Shelf, planogram and inventory intelligence from existing camera feeds." },
       { title: "Security", body: "Real-time detection of visual events that matter, routed to the right team." },
       { title: "Logistics", body: "Package, dock and yard monitoring turned into operational signals." },
@@ -119,9 +118,9 @@ const N: Record<string, SubNarrative> = {
   "nlp-solutions": {
     challenge: "Your organisation's knowledge is trapped in documents that search can't actually understand.",
     frictions: [
-      { title: "Knowledge locked in documents", body: "Answers exist somewhere in PDFs, wikis and tickets — but not where people need them." },
+      { title: "Knowledge locked in documents", body: "Answers exist somewhere in PDFs, wikis and tickets, but not where people need them." },
       { title: "Search without context", body: "Keyword search returns matches, not answers, and misses anything phrased differently." },
-      { title: "Generic LLMs lack your knowledge", body: "Off-the-shelf models don't know your products, policies or history — so they guess." },
+      { title: "Generic LLMs lack your knowledge", body: "Off-the-shelf models don't know your products, policies or history, so they guess." },
       { title: "Information stays un-operational", body: "Even when the answer is found, nothing connects it to the next business action." },
     ],
     before: ["Knowledge scattered across tools", "Keyword-only search", "Generic, unreliable AI answers", "Manual information lookup"],
@@ -165,7 +164,7 @@ const N: Record<string, SubNarrative> = {
   },
 
   "generative-ai": {
-    challenge: "AI experiments are everywhere in the business — and almost none of them are wired into a workflow.",
+    challenge: "AI experiments are everywhere in the business, and almost none of them are wired into a workflow.",
     frictions: [
       { title: "Knowledge scattered across tools", body: "The context a model needs to be useful is spread across a dozen systems." },
       { title: "Time lost searching", body: "Employees spend real hours locating information before they can use it." },
@@ -242,7 +241,7 @@ const N: Record<string, SubNarrative> = {
       { title: "Fragmented customer information", body: "The full picture of a customer is split across the CRM, support, billing and email." },
       { title: "Manual follow-ups", body: "Whether a lead gets chased depends on someone remembering to do it." },
       { title: "Reps without context", body: "Sales opens the CRM to stale data and no signal on what changed." },
-      { title: "Data that doesn't act", body: "A field updates and nothing happens — no workflow, no alert, no next step." },
+      { title: "Data that doesn't act", body: "A field updates and nothing happens, no workflow, no alert, no next step." },
     ],
     before: ["Customer data in silos", "Manual segmentation", "Disconnected tools", "Delayed follow-ups"],
     layer: ["AI analysis", "CRM", "Automation", "Customer data"],
@@ -303,7 +302,7 @@ const N: Record<string, SubNarrative> = {
     useCases: [
       { title: "Performance monitoring", body: "Spend and conversion anomalies flagged the hour they happen." },
       { title: "Bid & budget management", body: "Routine adjustments automated against your rules and targets." },
-      { title: "Reporting", body: "One view across Google, Meta and the rest — no manual consolidation." },
+      { title: "Reporting", body: "One view across Google, Meta and the rest, no manual consolidation." },
       { title: "Experimentation", body: "Tests structured, tracked and read consistently across accounts." },
     ],
   },
@@ -333,7 +332,7 @@ const N: Record<string, SubNarrative> = {
   },
 
   "custom-software-development": {
-    challenge: "Off-the-shelf tools force your business to work the way the software works — not the other way round.",
+    challenge: "Off-the-shelf tools force your business to work the way the software works, not the other way round.",
     frictions: [
       { title: "Process forced to fit the tool", body: "Generic software imposes workflows that don't match how you actually operate." },
       { title: "Integration gaps", body: "The tools you rely on don't connect, so people bridge them manually." },
@@ -408,7 +407,7 @@ const N: Record<string, SubNarrative> = {
     challenge: "Every unanswered call is a lead, a booking or a customer you don't get back.",
     frictions: [
       { title: "Call volume outpaces the team", body: "Inbound peaks overwhelm the people answering, and callers wait or hang up." },
-      { title: "Leads go cold after hours", body: "Calls outside business hours ring out — and the enquiry moves on to a competitor." },
+      { title: "Leads go cold after hours", body: "Calls outside business hours ring out, and the enquiry moves on to a competitor." },
       { title: "Hiring and training is slow", body: "Every new agent is weeks of ramp-up before they handle calls unassisted." },
       { title: "Inconsistent conversations", body: "Script adherence, tone and outcomes vary from one agent and one shift to the next." },
     ],
@@ -432,7 +431,7 @@ const N: Record<string, SubNarrative> = {
     challenge: "Your support and sales teams answer the same questions all day while genuinely new ones wait.",
     frictions: [
       { title: "Repeat questions dominate", body: "A large share of tickets and chats are variations of the same handful of asks." },
-      { title: "Answers live in scattered docs", body: "Support pulls from a wiki, a help centre and tribal knowledge — inconsistently." },
+      { title: "Answers live in scattered docs", body: "Support pulls from a wiki, a help centre and tribal knowledge, inconsistently." },
       { title: "Generic bots frustrate customers", body: "Rule-based chat can't handle rephrasing and dead-ends into 'talk to an agent'." },
       { title: "No path from answer to action", body: "Even a correct answer doesn't create the order, ticket or booking behind it." },
     ],
@@ -501,7 +500,7 @@ const N: Record<string, SubNarrative> = {
   },
 
   "enterprise-software-development": {
-    challenge: "Mission-critical systems can't be replaced in a big bang — but they can't stay as they are either.",
+    challenge: "Mission-critical systems can't be replaced in a big bang, but they can't stay as they are either.",
     frictions: [
       { title: "Legacy systems block change", body: "Core platforms are too risky to touch and too rigid to extend." },
       { title: "Integration debt compounds", body: "Every new tool is bolted on with another brittle point-to-point connection." },
@@ -525,7 +524,7 @@ const N: Record<string, SubNarrative> = {
   },
 
   "salesforce-consulting-services": {
-    challenge: "Salesforce only pays back when it's configured around your real sales process — not the demo org.",
+    challenge: "Salesforce only pays back when it's configured around your real sales process, not the demo org.",
     frictions: [
       { title: "Out-of-the-box, not your process", body: "Default objects and stages don't match how your team actually sells or serves." },
       { title: "Low adoption", body: "Reps work around the CRM because entering data feels like overhead, not help." },
@@ -549,7 +548,7 @@ const N: Record<string, SubNarrative> = {
   },
 
   "system-integration": {
-    challenge: "Your teams are the integration layer — moving data between systems that were never meant to connect.",
+    challenge: "Your teams are the integration layer, moving data between systems that were never meant to connect.",
     frictions: [
       { title: "Manual data movement", body: "People export, reformat and re-import between systems every day." },
       { title: "No single source of truth", body: "Customer, order and inventory data disagree depending on which system you ask." },
@@ -597,7 +596,7 @@ const N: Record<string, SubNarrative> = {
   },
 
   "brand-identity-design": {
-    challenge: "A logo isn't a brand — and without the system around it, consistency falls apart on contact with reality.",
+    challenge: "A logo isn't a brand, and without the system around it, consistency falls apart on contact with reality.",
     frictions: [
       { title: "Identity without a system", body: "There's a logo, but no rules for type, colour, spacing or voice." },
       { title: "Inconsistent application", body: "The brand looks different on the site, the deck and the invoice." },
@@ -613,7 +612,7 @@ const N: Record<string, SubNarrative> = {
     ],
     architecture: ["Positioning", "Identity system", "Applications", "Guidelines", "Rollout"],
     useCases: [
-      { title: "New brand", body: "A complete identity for a launch — not just a mark, the whole system." },
+      { title: "New brand", body: "A complete identity for a launch, not just a mark, the whole system." },
       { title: "Rebrand", body: "Evolve an existing identity and roll it out without losing equity." },
       { title: "Sub-brands", body: "Related identities that hold together under one parent system." },
       { title: "Brand guidelines", body: "The reference that keeps everyone on-brand without a designer in the room." },
@@ -621,7 +620,7 @@ const N: Record<string, SubNarrative> = {
   },
 
   "ux-design": {
-    challenge: "Teams ship screens; users experience flows — and the gap between the two is where products fail.",
+    challenge: "Teams ship screens; users experience flows, and the gap between the two is where products fail.",
     frictions: [
       { title: "Designed screen by screen", body: "Individual pages look fine but the journey between them is confusing." },
       { title: "Decisions without evidence", body: "Layout and flow are argued from opinion, not from user behaviour." },
@@ -648,7 +647,7 @@ const N: Record<string, SubNarrative> = {
     challenge: "Most product video explains features; almost none of it makes someone feel why the product matters.",
     frictions: [
       { title: "Feature lists, not stories", body: "Videos walk through screens instead of showing the problem being solved." },
-      { title: "Inconsistent quality", body: "Output varies with whoever edited it — pacing, sound and grade all drift." },
+      { title: "Inconsistent quality", body: "Output varies with whoever edited it, pacing, sound and grade all drift." },
       { title: "Slow, linear production", body: "Every video is a from-scratch project with no reusable system." },
       { title: "One format, one channel", body: "The asset isn't cut down for the places it actually needs to run." },
     ],
@@ -669,7 +668,7 @@ const N: Record<string, SubNarrative> = {
   },
 
   "brochure-design": {
-    challenge: "Print and publication work fails on the details — and the details are the whole job.",
+    challenge: "Print and publication work fails on the details, and the details are the whole job.",
     frictions: [
       { title: "Layout without a system", body: "Each page is composed by eye, so the document lacks rhythm and consistency." },
       { title: "Content and design out of step", body: "Copy is poured in late and the layout never quite fits it." },
@@ -741,7 +740,7 @@ const N: Record<string, SubNarrative> = {
   },
 
   "content-marketing-services": {
-    challenge: "Publishing more content isn't a strategy — and most of it never gets found, read or acted on.",
+    challenge: "Publishing more content isn't a strategy, and most of it never gets found, read or acted on.",
     frictions: [
       { title: "Volume over intent", body: "Content is produced to a quota, not to answer a question people are searching for." },
       { title: "No production system", body: "Every piece is a bespoke effort with no brief, format or reuse." },
@@ -789,7 +788,7 @@ const N: Record<string, SubNarrative> = {
   },
 
   "offshore-software-development": {
-    challenge: "Adding capacity usually adds coordination cost — a team that needs managing more than it delivers.",
+    challenge: "Adding capacity usually adds coordination cost, a team that needs managing more than it delivers.",
     frictions: [
       { title: "Capacity without context", body: "New developers need weeks of ramp-up before they're productive on your codebase." },
       { title: "Coordination overhead", body: "Time zones, hand-offs and status chasing eat the capacity you added." },
@@ -829,7 +828,7 @@ N["video-production"].approachStages = [
   { title: "Deliver", body: "Export the hero cut and every format each channel requires." },
 ];
 
-/* aliases — close subcategories share a narrative shape */
+/* aliases, close subcategories share a narrative shape */
 N["autonomous-ai-agents"] = N["ai-agents"];
 N["google-ads-agency"] = N["ppc-management-services"];
 N["facebook-ads-agency"] = N["ppc-management-services"];

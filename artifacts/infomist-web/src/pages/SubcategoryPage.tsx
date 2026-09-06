@@ -42,7 +42,7 @@ export function SubcategoryPage() {
   const match = slug ? findSubcategory(slug) : null;
 
   useMeta(
-    match ? match.sub.metaTitle : "Infomist — Services",
+    match ? match.sub.metaTitle : "Infomist, Services",
     match ? match.sub.metaDescription : "Infomist delivers custom software, AI, design, and growth services.",
   );
 
@@ -79,7 +79,7 @@ export function SubcategoryPage() {
       breadcrumb={breadcrumb}
       eyebrow={`${category.tag} · ${category.name}`}
       title={sub.displayName}
-      sub={sub.tagline ?? `A focused engagement built around ${sub.displayName.toLowerCase()} — scoped, staffed and shipped by senior engineers.`}
+      sub={sub.tagline ?? `A focused engagement built around ${sub.displayName.toLowerCase()}, scoped, staffed and shipped by senior engineers.`}
       primary={{ label: narrative ? "Discuss Your Use Case" : "Talk to a Strategist", href: "/talk-to-strategist" }}
       secondary={{ label: `Explore ${category.name}`, href: `/solutions/${category.slug}` }}
       media={heroVideo}
@@ -126,7 +126,7 @@ export function SubcategoryPage() {
             </h1>
             <p className="text-[#0EA5E9] text-lg md:text-xl font-semibold max-w-2xl">{category.blurb}</p>
             <p className="text-[#475569] text-base md:text-lg max-w-2xl leading-relaxed">
-              A focused engagement built specifically around {sub.displayName.toLowerCase()} — scoped, staffed, and
+              A focused engagement built specifically around {sub.displayName.toLowerCase()}, scoped, staffed, and
               shipped by senior engineers, not a generic playbook.
             </p>
             <div className="pt-1">
@@ -182,7 +182,7 @@ export function SubcategoryPage() {
               icon={AlertTriangle}
               tone="slate"
               eyebrow="The Problem → The Fix"
-              title="Where teams get stuck —"
+              title="Where teams get stuck,"
               gradientWord="and what changes."
             />
           </div>
@@ -342,7 +342,7 @@ export function SubcategoryPage() {
       <DarkCTA
         eyebrow={`Ready to build ${sub.displayName.toLowerCase()}?`}
         title="Let's scope your project with a systems architect."
-        sub="One focused call to map your requirements, timeline, and stack — no obligation, no generic sales pitch."
+        sub="One focused call to map your requirements, timeline, and stack, no obligation, no generic sales pitch."
         cta={<CTAButton href="/talk-to-strategist" variant="lime" icon={ArrowRight}>Talk to a Strategist</CTAButton>}
       />
     </div>

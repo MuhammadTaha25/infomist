@@ -8,7 +8,7 @@ import { CATEGORIES } from "@/data/solutionsData";
 
 /**
  * The "Deploy a Project" / Contact form POSTs straight to the Infomist n8n
- * webhook — no server-side proxy. Override at build time with
+ * webhook, no server-side proxy. Override at build time with
  * VITE_N8N_CONTACT_WEBHOOK. The n8n Webhook node must allow CORS (Options →
  * "Allowed Origins (CORS)" → * or the site domain).
  */
@@ -23,24 +23,24 @@ const CONTACT_FAQS = [
   },
   {
     q: "Does Infomist have an office in Europe, or only Pakistan?",
-    a: "Both — Infomist is headquartered in Islamabad, Pakistan (St#12, DHA Phase 1) and has a Dublin, Ireland office (17B Main Street, Blanchardstown, Dublin 15).",
+    a: "Both, Infomist is headquartered in Islamabad, Pakistan (St#12, DHA Phase 1) and has a Dublin, Ireland office (17B Main Street, Blanchardstown, Dublin 15).",
   },
   {
     q: "How soon will Infomist respond after I submit the contact form?",
-    a: "The team typically reviews and responds to project enquiries within 1–2 business days.",
+    a: "The team typically reviews and responds to project enquiries within 1-2 business days.",
   },
   {
     q: "What information should I include when contacting Infomist about a project?",
-    a: "Your service category, sub-category, and as much detail as possible about goals, timeline, and budget — so the right specialist on the team can respond.",
+    a: "Your service category, sub-category, and as much detail as possible about goals, timeline, and budget, so the right specialist on the team can respond.",
   },
   {
     q: "Can I schedule a call instead of filling out the contact form?",
-    a: "Yes — use the \"Talk to a Strategist\" page instead for a guided 4-step scheduling flow where you pick your topic, preferred channel, contact details, and a time slot.",
+    a: "Yes, use the \"Talk to a Strategist\" page instead for a guided 4-step scheduling flow where you pick your topic, preferred channel, contact details, and a time slot.",
   },
 ];
 
 
-/* ─── Category → sub-category data — derived directly from the Solutions Directory's
+/* ─── Category → sub-category data, derived directly from the Solutions Directory's
    own data source (solutionsData.ts) so the Contact form can never drift out of sync
    with the real main categories and sub-services shown on /solutions and
    /solutions-directory. ─── */
@@ -48,7 +48,7 @@ const SUBCATEGORIES: Record<string, string[]> = Object.fromEntries(
   CATEGORIES.map((cat) => [cat.name, [...cat.subs.map((sub) => sub.name), "Custom"]])
 );
 
-/* "One Man Company" — the AI-powered solo-founder model (/one-man-company).
+/* "One Man Company", the AI-powered solo-founder model (/one-man-company).
    Its sub-category is OPTIONAL; these mirror the model's departments. */
 const ONE_MAN_COMPANY = "One Man Company";
 const ONE_MAN_COMPANY_SUBS = [
@@ -138,7 +138,7 @@ function ContactForm() {
         }),
       });
     } catch {
-      // Fire-and-forget — always show success to the user
+      // Fire-and-forget, always show success to the user
     } finally {
       setSubmitting(false);
       setSubmitted(true);
@@ -159,7 +159,7 @@ function ContactForm() {
         </div>
         <h3 className="text-2xl font-black text-[#0F172A]">Message Sent.</h3>
         <p className="text-[#475569] max-w-sm leading-relaxed">
-          Thanks for reaching out — a member of the Infomist team will get back to you within one
+          Thanks for reaching out, a member of the Infomist team will get back to you within one
           business day.
         </p>
         <button
@@ -374,11 +374,7 @@ function OfficeCard({
           </div>
           <a
             href={`mailto:${email}`}
-            className={
-              phone
-                ? "text-xs font-medium text-[#94A3B8] hover:text-[#0EA5E9] transition-colors duration-150"
-                : "text-sm font-semibold text-[#0F172A] hover:text-[#0EA5E9] transition-colors duration-150"
-            }
+            className="text-sm font-semibold text-[#0F172A] hover:text-[#0EA5E9] transition-colors duration-150"
           >
             {email}
           </a>
@@ -392,7 +388,7 @@ function OfficeCard({
 /* ─── Page ────────────────────────────────────────────────────────────── */
 export function ContactPage() {
   useMeta(
-    "Contact Us | Infomist — Software, AI & Growth Engineering",
+    "Contact Us | Infomist, Software, AI & Growth Engineering",
     "Get in touch with Infomist. Tell us about your website, mobile app, AI automation, or digital marketing project and our team will respond within one business day."
   );
 
@@ -401,9 +397,9 @@ export function ContactPage() {
       <PageHeroVideo
         compact
         eyebrow="Contact Us"
-        title="Start with the business problem —"
+        title="Start with the business problem,"
         accent="not a service list."
-        sub="Tell us what's slowing the business down. The right specialist maps it to automate, integrate or build — usually within one business day."
+        sub="Tell us what's slowing the business down. The right specialist maps it to automate, integrate or build, usually within one business day."
         primary={{ label: "Talk to a Strategist", href: "/talk-to-strategist" }}
         secondary={{ label: "See Our Work", href: "/case-studies" }}
         media="hero-contact"

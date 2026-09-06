@@ -9,7 +9,7 @@ import {
 } from "lucide-react";
 
 /* ─────────────────────────────────────────────────────────────────────────
-   "Who We Work With" — buyer-routing data model.
+   "Who We Work With", buyer-routing data model.
 
    One persona = one decision-maker. Each persona owns its own positioning,
    a set of challenges (the interactive router), capability pathways that link
@@ -28,7 +28,7 @@ export interface CapabilityLink {
 
 export interface CapabilityPathway {
   title: string;
-  /** who this pathway is for — business framing, not a feature list */
+  /** who this pathway is for, business framing, not a feature list */
   forWho: string;
   services: CapabilityLink[];
 }
@@ -36,7 +36,7 @@ export interface CapabilityPathway {
 export interface PersonaChallenge {
   id: string;
   label: string;
-  /** short flow describing how we'd approach it — no hype, no metrics */
+  /** short flow describing how we'd approach it, no hype, no metrics */
   approach: string;
   /** capability pathway titles that are most relevant to this challenge */
   capabilities: string[];
@@ -83,7 +83,7 @@ export interface Persona {
 export const WWW_SEO = {
   title: "Who We Work With | Infomist",
   description:
-    "Infomist works with CEOs, CTOs, COOs, CMOs, and product and content leaders — mapping strategic, technical, and creative capability to the outcome you own.",
+    "Infomist works with CEOs, CTOs, COOs, CMOs, and product and content leaders, mapping strategic, technical, and creative capability to the outcome you own.",
   path: "/who-we-work-with",
   image: "/og/who-we-work-with.jpg",
 };
@@ -98,9 +98,9 @@ export const PERSONAS: Persona[] = [
     navLabel: "CEO / Founder",
     eyebrow: "For CEOs & Founders",
     cardDesc:
-      "A technology partner that moves fast, owns outcomes, and speaks the language of the business — not just the codebase.",
+      "A technology partner that moves fast, owns outcomes, and speaks the language of the business, not just the codebase.",
     heroTitle:
-      "Technology should move the business forward — not become another thing you have to manage.",
+      "Technology should move the business forward, not become another thing you have to manage.",
     heroBody:
       "We work with founders and executive teams who need senior technical thinking, faster execution, and systems that hold up as the company scales.",
     positioning:
@@ -202,7 +202,7 @@ export const PERSONAS: Persona[] = [
     faqs: [
       {
         q: "Can you work with our existing development team?",
-        a: "Yes. We can embed alongside an in-house team — taking a workstream, adding senior capacity, or providing architecture and review — and we document decisions so your team stays in control.",
+        a: "Yes. We can embed alongside an in-house team, taking a workstream, adding senior capacity, or providing architecture and review, and we document decisions so your team stays in control.",
       },
       {
         q: "Can you help us decide what technology we actually need?",
@@ -230,7 +230,7 @@ export const PERSONAS: Persona[] = [
       { label: "Custom Software Development", href: "/solutions/custom-software-development" },
       { label: "AI Automation Services", href: "/solutions/ai-automation-services" },
       { label: "Case studies", href: "/case-studies" },
-      { label: "The team behind Infomist", href: "/leadership" },
+      { label: "The team behind Infomist", href: "/our-story#our-leadership" },
       { label: "Talk to a Strategist", href: "/talk-to-strategist" },
     ],
     seo: {
@@ -254,7 +254,7 @@ export const PERSONAS: Persona[] = [
     heroTitle:
       "Add senior engineering capacity without adding management overhead.",
     heroBody:
-      "We work with engineering leaders who need to move faster on a specific workstream, reduce technical risk, or bring a capability in-house — with people who work the way your team already does.",
+      "We work with engineering leaders who need to move faster on a specific workstream, reduce technical risk, or bring a capability in-house, with people who work the way your team already does.",
     positioning:
       "You own delivery and technical risk. We plug in at the workstream level with engineers who document, integrate, and hand over cleanly.",
     challenges: [
@@ -358,7 +358,7 @@ export const PERSONAS: Persona[] = [
       },
       {
         q: "Do you document architectural decisions?",
-        a: "Yes — decision records, architecture diagrams, and runbooks are part of delivery, not an afterthought.",
+        a: "Yes, decision records, architecture diagrams, and runbooks are part of delivery, not an afterthought.",
       },
       {
         q: "Can you take a single workstream rather than the whole project?",
@@ -366,7 +366,7 @@ export const PERSONAS: Persona[] = [
       },
       {
         q: "What does a modernization engagement look like?",
-        a: "An assessment first, then an incremental migration with a rollback path at each step — not a big-bang rewrite.",
+        a: "An assessment first, then an incremental migration with a rollback path at each step, not a big-bang rewrite.",
       },
       {
         q: "How do you handle handover?",
@@ -398,9 +398,9 @@ export const PERSONAS: Persona[] = [
     navLabel: "COO / Operations",
     eyebrow: "For COOs & Operations Managers",
     cardDesc:
-      "Automation that actually reduces manual load and connects the tools your team already uses — not another dashboard.",
+      "Automation that actually reduces manual load and connects the tools your team already uses, not another dashboard.",
     heroTitle:
-      "Cut the manual work out of operations — without ripping out your systems.",
+      "Cut the manual work out of operations, without ripping out your systems.",
     heroBody:
       "We work with operations leaders who are losing hours to repetitive tasks, disconnected tools, and data that lives in five places. We automate the workflow and connect the systems around it.",
     positioning:
@@ -518,7 +518,7 @@ export const PERSONAS: Persona[] = [
       },
       {
         q: "How is progress measured?",
-        a: "Against a baseline we capture before starting — cycle time, hours per task, error rate — so the impact is visible.",
+        a: "Against a baseline we capture before starting, cycle time, hours per task, error rate, so the impact is visible.",
       },
     ],
     proofTags: ["automation", "operations", "integration", "ai"],
@@ -546,11 +546,11 @@ export const PERSONAS: Persona[] = [
     navLabel: "CMO / Marketing",
     eyebrow: "For CMOs & Marketing Leads",
     cardDesc:
-      "SEO, paid, and web work measured against pipeline and revenue — not impressions.",
+      "SEO, paid, and web work measured against pipeline and revenue, not impressions.",
     heroTitle:
       "Growth work that's accountable to pipeline, not vanity metrics.",
     heroBody:
-      "We work with marketing leaders who need their site, search, and paid channels to produce qualified pipeline — and to be able to show where it came from.",
+      "We work with marketing leaders who need their site, search, and paid channels to produce qualified pipeline, and to be able to show where it came from.",
     positioning:
       "You own pipeline. We build the site, search, and paid programs that generate it and the measurement that proves it.",
     challenges: [
@@ -659,7 +659,7 @@ export const PERSONAS: Persona[] = [
     faqs: [
       {
         q: "How do you measure success?",
-        a: "Against pipeline and revenue metrics agreed with you and sales up front — qualified leads, cost per qualified lead, and contribution to closed revenue — not impressions or raw traffic.",
+        a: "Against pipeline and revenue metrics agreed with you and sales up front, qualified leads, cost per qualified lead, and contribution to closed revenue, not impressions or raw traffic.",
       },
       {
         q: "Can you work with our existing martech stack?",
@@ -667,7 +667,7 @@ export const PERSONAS: Persona[] = [
       },
       {
         q: "Do you do both SEO and paid?",
-        a: "Yes, and we treat them as one system — paid buys data and coverage quickly, SEO compounds. We balance spend based on what's producing qualified pipeline.",
+        a: "Yes, and we treat them as one system, paid buys data and coverage quickly, SEO compounds. We balance spend based on what's producing qualified pipeline.",
       },
       {
         q: "Will you rebuild our website or work with it?",
@@ -703,9 +703,9 @@ export const PERSONAS: Persona[] = [
     navLabel: "Product / Design",
     eyebrow: "For Heads of Product & Design",
     cardDesc:
-      "Design grounded in usability research and conversion data — and a handoff engineering can actually build.",
+      "Design grounded in usability research and conversion data, and a handoff engineering can actually build.",
     heroTitle:
-      "Design decisions backed by research — and a handoff engineering can build from.",
+      "Design decisions backed by research, and a handoff engineering can build from.",
     heroBody:
       "We work with product and design leaders who need discovery done properly, a design system that scales, and a design-to-development handoff that doesn't lose fidelity.",
     positioning:
@@ -810,7 +810,7 @@ export const PERSONAS: Persona[] = [
       },
       {
         q: "Do you run your own research?",
-        a: "Yes — interviews, usability testing, and analysis of real usage data. We can also work from research your team has already done.",
+        a: "Yes, interviews, usability testing, and analysis of real usage data. We can also work from research your team has already done.",
       },
       {
         q: "Can you work alongside our in-house design team?",
@@ -818,11 +818,11 @@ export const PERSONAS: Persona[] = [
       },
       {
         q: "How do you deliver a design system?",
-        a: "In design and code together, with tokens, components, usage rules, and adoption documentation — so it's used rather than shelved.",
+        a: "In design and code together, with tokens, components, usage rules, and adoption documentation, so it's used rather than shelved.",
       },
       {
         q: "What does discovery produce?",
-        a: "A framed problem, research findings, prioritized opportunities, and tested prototypes for the riskiest assumptions — enough to commit to a build with confidence.",
+        a: "A framed problem, research findings, prioritized opportunities, and tested prototypes for the riskiest assumptions, enough to commit to a build with confidence.",
       },
     ],
     proofTags: ["design", "product-strategy", "conversion", "web"],
@@ -854,7 +854,7 @@ export const PERSONAS: Persona[] = [
     heroTitle:
       "On-brand content and video, produced on a schedule you can rely on.",
     heroBody:
-      "We work with content and brand managers who need a repeatable production process — so output stays consistent, on-brand, and on time without burning out the team.",
+      "We work with content and brand managers who need a repeatable production process, so output stays consistent, on-brand, and on time without burning out the team.",
     positioning:
       "You own output and brand consistency. We give you a production system that keeps the pipeline full and on-brand.",
     challenges: [
@@ -972,7 +972,7 @@ export const PERSONAS: Persona[] = [
       },
       {
         q: "Can you handle multiple channels and formats?",
-        a: "Yes — we produce once and adapt each asset to the aspect ratios and formats each channel needs.",
+        a: "Yes, we produce once and adapt each asset to the aspect ratios and formats each channel needs.",
       },
       {
         q: "How do you keep the pipeline organized?",
@@ -990,7 +990,7 @@ export const PERSONAS: Persona[] = [
     seo: {
       title: "For Marketing & Content Managers | Infomist",
       description:
-        "A repeatable production system for on-brand video and content — consistent output, predictable turnaround, and organized creative operations.",
+        "A repeatable production system for on-brand video and content, consistent output, predictable turnaround, and organized creative operations.",
       image: "/og/persona-content-marketing.jpg",
     },
   },
